@@ -41,13 +41,13 @@
                     <i class="fa-solid fa-leaf text-2xl text-green-100"></i>
                 </div>
                 <div>
-                    <h1 class="text-xl md:text-2xl font-bold tracking-tight">CercoModel Pro <span class="text-xs bg-emerald-500/30 text-emerald-200 px-2 py-0.5 rounded-md font-normal border border-emerald-400/20">v2.6</span></h1>
+                    <h1 class="text-xl md:text-2xl font-bold tracking-tight">CercoModel Pro <span class="text-xs bg-emerald-500/30 text-emerald-200 px-2 py-0.5 rounded-md font-normal border border-emerald-400/20">v2.7</span></h1>
                     <p class="text-green-200 text-xs md:text-sm">Risque Cercosporiose &bull; Tolérance Variétale &bull; Suivi Fongicides</p>
                 </div>
             </div>
             <div class="flex items-center gap-2">
                 <span class="bg-green-950/60 text-green-300 text-xs px-3 py-1.5 rounded-full border border-green-700/50 flex items-center gap-1.5">
-                    <i class="fa-solid fa-floppy-disk text-emerald-400"></i> Sauvegarde navigateur
+                    <i class="fa-solid fa-floppy-disk text-emerald-400"></i> Sauvegarde Active
                 </span>
                 <span class="hidden sm:inline-block bg-green-950/60 text-green-300 text-xs px-3 py-1.5 rounded-full border border-green-700/50">
                     <i class="fa-solid fa-cloud-sun text-amber-300 mr-1"></i> Open-Meteo API
@@ -79,7 +79,7 @@
                         <i class="fa-solid fa-sliders text-green-600"></i> Paramètres Parcelle
                     </h2>
                     <div class="flex items-center gap-2">
-                        <button type="button" onclick="resetAllData()" class="text-slate-400 hover:text-amber-600 text-xs transition cursor-pointer" title="Réinitialiser toutes les données sauvegardées">
+                        <button type="button" onclick="openResetModal()" class="text-slate-400 hover:text-amber-600 text-xs transition cursor-pointer" title="Réinitialiser toutes les données sauvegardées">
                             <i class="fa-solid fa-rotate-left"></i>
                         </button>
                         <button type="button" onclick="deleteCurrentParcelle()" id="delete-parcelle-btn" class="text-slate-400 hover:text-red-600 text-xs transition cursor-pointer" title="Supprimer cette parcelle">
@@ -127,15 +127,13 @@
                             <span>Variété / Tolérance ITB</span>
                             <i class="fa-solid fa-dna text-emerald-600"></i>
                         </label>
-                        <select id="variety-preset" onchange="handleInputChange()" class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg text-xs focus:bg-white focus:ring-2 focus:ring-green-500 outline-none transition mb-2">
-                            <option value="T" data-coeff="0.65">Tolérante / TPS (ex: Courbet, Daphné, Nouvelle gén.)</option>
-                            <option value="MT" data-coeff="1.00" selected>Moyennement Tolérante (Témoin classique ITB)</option>
+                        <select id="variety-preset" class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg text-xs focus:bg-white focus:ring-2 focus:ring-green-500 outline-none transition mb-2">
+                            <option value="T" data-coeff="0.65">Tolérante / TPS (ex: Courbet, Daphné, Nv. gén.)</option>
+                            <option value="MT" data-coeff="1.00" selected>Moyennement Tolérante (Témoin)</option>
                             <option value="S" data-coeff="1.18">Sensible (S)</option>
                             <option value="TS" data-coeff="1.35">Très Sensible (TS)</option>
                         </select>
-
-                        <!-- Nom personnalisé de variété -->
-                        <input type="text" id="variety-name" placeholder="Nom de la variété (optionnel)" onchange="handleInputChange()" class="w-full px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs outline-none focus:bg-white">
+                        <input type="text" id="variety-name" placeholder="Nom de la variété (optionnel)" class="w-full px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs outline-none focus:bg-white">
                     </div>
 
                     <!-- Section Traitements Fongicides -->
@@ -148,8 +146,6 @@
                                 <i class="fa-solid fa-plus mr-0.5"></i> Ajouter
                             </button>
                         </div>
-
-                        <!-- Liste des traitements enregistrés -->
                         <div id="treatments-list-container" class="space-y-1.5 max-h-36 overflow-y-auto pr-1">
                             <!-- Généré en JS -->
                         </div>
@@ -161,25 +157,36 @@
                         <span id="error-text">Une erreur est survenue.</span>
                     </div>
 
-                    <!-- Boutons d'action -->
-                    <button type="submit" id="submit-btn" class="w-full bg-green-600 hover:bg-green-700 active:bg-green-800 text-white font-semibold py-3 px-3 rounded-xl shadow-xs transition duration-150 flex items-center justify-center gap-2 text-xs cursor-pointer">
-                        <i class="fa-solid fa-rotate text-sm"></i> Calculer & Mettre à jour
-                    </button>
+                    <!-- Boutons d'action : Sauvegarde Explicite + Calcul -->
+                    <div class="pt-2">
+                        <div class="flex gap-2">
+                            <button type="button" onclick="manualSave()" class="w-1/3 bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300 font-semibold py-2.5 px-2 rounded-xl shadow-xs transition duration-150 flex flex-col items-center justify-center gap-1 cursor-pointer group">
+                                <i class="fa-solid fa-floppy-disk text-slate-400 group-hover:text-emerald-600 transition-colors"></i>
+                                <span class="text-[9px] uppercase tracking-wider">Sauver</span>
+                            </button>
+                            <button type="submit" id="submit-btn" class="w-2/3 bg-green-600 hover:bg-green-700 active:bg-green-800 text-white font-semibold py-2.5 px-3 rounded-xl shadow-xs transition duration-150 flex flex-col items-center justify-center gap-1 cursor-pointer">
+                                <i class="fa-solid fa-chart-line"></i>
+                                <span class="text-[10px] uppercase tracking-wider">Modéliser</span>
+                            </button>
+                        </div>
+                        <div id="save-feedback" class="hidden opacity-0 text-emerald-600 text-[11px] font-semibold text-center mt-2 transition-opacity duration-300">
+                            <i class="fa-solid fa-check-circle"></i> Configuration sauvegardée
+                        </div>
+                    </div>
                 </form>
             </div>
             
             <!-- Explication du Modèle -->
             <div class="bg-slate-50 p-3 rounded-xl text-xs text-slate-600 border border-slate-200/80 space-y-1.5 mt-4">
                 <p class="font-bold text-slate-800 flex items-center gap-1.5">
-                    <i class="fa-solid fa-circle-check text-emerald-600"></i> Sauvegarde Automatique :
+                    <i class="fa-solid fa-shield-halved text-emerald-600"></i> Mode Hors-Ligne :
                 </p>
                 <p class="text-[11px] text-slate-600 leading-relaxed">
-                    Toutes vos parcelles et historiques de traitements sont conservés localement dans votre navigateur.
+                    Cliquez sur <strong>"Sauver"</strong> pour conserver votre paramétrage en local sur cet appareil.
                 </p>
             </div>
         </div>
 
-        <!-- Panneau de Résultats & Graphiques (Main Content) -->
         <div class="lg:col-span-3 bg-white rounded-2xl shadow-sm border border-slate-200/80 p-5 flex flex-col justify-between min-h-[500px] relative">
             
             <!-- Écran de chargement -->
@@ -194,7 +201,6 @@
                 
                 <!-- Badges de Synthèse -->
                 <div class="grid grid-cols-1 sm:grid-cols-4 gap-3">
-                    <!-- Badge 1: Phénologie -->
                     <div class="bg-slate-50 border border-slate-200/80 p-3 rounded-xl flex items-center gap-3">
                         <div class="bg-green-100 text-green-800 p-2.5 rounded-lg shrink-0">
                             <i class="fa-solid fa-wheat-awn text-base"></i>
@@ -205,7 +211,6 @@
                         </div>
                     </div>
                     
-                    <!-- Badge 2: Pression Nette Actuelle -->
                     <div id="risk-badge" class="bg-slate-50 border border-slate-200/80 p-3 rounded-xl flex items-center gap-3 transition-colors duration-200">
                         <div id="risk-icon-wrapper" class="bg-slate-200 text-slate-700 p-2.5 rounded-lg shrink-0">
                             <i class="fa-solid fa-triangle-exclamation text-base"></i>
@@ -216,7 +221,6 @@
                         </div>
                     </div>
 
-                    <!-- Badge 3: Protection Fongicide -->
                     <div id="protection-badge" class="bg-slate-50 border border-slate-200/80 p-3 rounded-xl flex items-center gap-3">
                         <div id="protection-icon-wrapper" class="bg-emerald-100 text-emerald-800 p-2.5 rounded-lg shrink-0">
                             <i class="fa-solid fa-shield-virus text-base"></i>
@@ -227,7 +231,6 @@
                         </div>
                     </div>
 
-                    <!-- Badge 4: Tendance 7 Jours -->
                     <div id="trend-badge" class="bg-slate-50 border border-slate-200/80 p-3 rounded-xl flex items-center gap-3">
                         <div id="trend-icon-wrapper" class="bg-blue-100 text-blue-700 p-2.5 rounded-lg shrink-0">
                             <i class="fa-solid fa-chart-line text-base"></i>
@@ -243,75 +246,61 @@
                 <div class="bg-gradient-to-br from-slate-50 to-emerald-50/40 border border-emerald-100 rounded-xl p-4">
                     <div class="flex items-center justify-between mb-3">
                         <h3 class="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-2">
-                            <i class="fa-solid fa-calendar-week text-emerald-600"></i> Focus Prévisions Météo & Risque Post-Traitement à 7 Jours
+                            <i class="fa-solid fa-calendar-week text-emerald-600"></i> Focus Prévisions Météo & Risque Post-Traitement
                         </h3>
-                        <span class="text-[11px] text-slate-500 bg-white px-2 py-0.5 rounded border border-slate-200">Météo + Rémanence</span>
+                        <span class="text-[11px] text-slate-500 bg-white px-2 py-0.5 rounded border border-slate-200">7 Jours</span>
                     </div>
                     <div id="forecast-cards-container" class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2">
                         <!-- Généré dynamiquement en JS -->
                     </div>
                 </div>
 
-                <!-- ONGLET DE NAVIGATION ENTRE GRAPHIQUES -->
+                <!-- ONGLET DE NAVIGATION -->
                 <div class="border-b border-slate-200">
                     <nav class="flex space-x-2 sm:space-x-4 overflow-x-auto pb-1" aria-label="Tabs">
                         <button onclick="switchTab('all')" id="tab-btn-all" class="tab-btn py-2 px-3 text-xs font-semibold rounded-t-lg border-b-2 border-green-600 text-green-700 bg-green-50/50 whitespace-nowrap cursor-pointer">
-                            <i class="fa-solid fa-border-all mr-1.5"></i> Tous les graphiques
+                            <i class="fa-solid fa-border-all mr-1.5"></i> Synthèse
                         </button>
                         <button onclick="switchTab('daily')" id="tab-btn-daily" class="tab-btn py-2 px-3 text-xs font-semibold rounded-t-lg border-b-2 border-transparent text-slate-500 hover:text-slate-700 whitespace-nowrap cursor-pointer">
-                            <i class="fa-solid fa-chart-bar mr-1.5"></i> 1. Risque Quotidien & Traitements
+                            <i class="fa-solid fa-chart-bar mr-1.5"></i> Risque Quotidien
                         </button>
                         <button onclick="switchTab('cumul')" id="tab-btn-cumul" class="tab-btn py-2 px-3 text-xs font-semibold rounded-t-lg border-b-2 border-transparent text-slate-500 hover:text-slate-700 whitespace-nowrap cursor-pointer">
-                            <i class="fa-solid fa-chart-line mr-1.5"></i> 2. Pression Nette vs Potentielle
+                            <i class="fa-solid fa-chart-line mr-1.5"></i> Pression Cumulée
                         </button>
                         <button onclick="switchTab('weather')" id="tab-btn-weather" class="tab-btn py-2 px-3 text-xs font-semibold rounded-t-lg border-b-2 border-transparent text-slate-500 hover:text-slate-700 whitespace-nowrap cursor-pointer">
-                            <i class="fa-solid fa-cloud-sun-rain mr-1.5"></i> 3. Facteurs Météo
+                            <i class="fa-solid fa-cloud-sun-rain mr-1.5"></i> Données Météo
                         </button>
                     </nav>
                 </div>
 
                 <!-- CONTENEUR DES GRAPHIQUES -->
                 <div class="space-y-6">
-                    
-                    <!-- Graphique 1: Risque Quotidien -->
                     <div id="chart-card-daily" class="bg-white p-4 rounded-xl border border-slate-200/90 shadow-2xs">
                         <div class="flex items-center justify-between mb-2">
                             <h4 class="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-2">
                                 <span class="w-2.5 h-2.5 rounded-full bg-green-600"></span> Score Quotidien (Ajusté Variété & Fongicide)
                             </h4>
-                            <span class="text-[11px] text-slate-400">Barres vertes = Risque brut | Barres orange = Infiltration/Dessèchement</span>
                         </div>
-                        <div class="w-full relative h-[250px]">
-                            <canvas id="dailyRiskChart"></canvas>
-                        </div>
+                        <div class="w-full relative h-[250px]"><canvas id="dailyRiskChart"></canvas></div>
                     </div>
 
-                    <!-- Graphique 2: Pression Cumulée Protégée -->
                     <div id="chart-card-cumul" class="bg-white p-4 rounded-xl border border-slate-200/90 shadow-2xs">
                         <div class="flex items-center justify-between mb-2">
                             <h4 class="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-2">
-                                <span class="w-2.5 h-2.5 rounded-full bg-rose-600"></span> Pression Épidémique : Potentielle (Sans Soin) vs Nette Protégée
+                                <span class="w-2.5 h-2.5 rounded-full bg-rose-600"></span> Évolution Épidémique : Potentielle vs Nette
                             </h4>
-                            <span class="text-[11px] text-slate-400">Ligne pointillée = Seuil T1 (18 Pts) | Points verts = Traitements</span>
                         </div>
-                        <div class="w-full relative h-[250px]">
-                            <canvas id="cumulRiskChart"></canvas>
-                        </div>
+                        <div class="w-full relative h-[250px]"><canvas id="cumulRiskChart"></canvas></div>
                     </div>
 
-                    <!-- Graphique 3: Données Météorologiques -->
                     <div id="chart-card-weather" class="bg-white p-4 rounded-xl border border-slate-200/90 shadow-2xs">
                         <div class="flex items-center justify-between mb-2">
                             <h4 class="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-2">
-                                <span class="w-2.5 h-2.5 rounded-full bg-sky-500"></span> Facteurs Météo (Températures & Humectation)
+                                <span class="w-2.5 h-2.5 rounded-full bg-sky-500"></span> Facteurs Météo Clés
                             </h4>
-                            <span class="text-[11px] text-slate-400">Durée d'humidité foliaire (HR &ge; 85% / Rosée)</span>
                         </div>
-                        <div class="w-full relative h-[260px]">
-                            <canvas id="weatherChart"></canvas>
-                        </div>
+                        <div class="w-full relative h-[260px]"><canvas id="weatherChart"></canvas></div>
                     </div>
-
                 </div>
             </div>
             
@@ -321,7 +310,7 @@
                     <i class="fa-solid fa-seedling text-4xl"></i>
                 </div>
                 <h3 class="text-slate-700 font-semibold text-sm mb-1">Prêt pour la modélisation</h3>
-                <p class="text-slate-400 text-xs max-w-sm">Renseignez votre parcelle, variété et traitements pour générer les graphiques d'impact.</p>
+                <p class="text-slate-400 text-xs max-w-sm">Renseignez votre parcelle, variété et traitements puis cliquez sur Modéliser pour générer les graphiques d'impact.</p>
             </div>
         </div>
     </main>
@@ -331,7 +320,7 @@
         <div class="bg-white rounded-2xl max-w-md w-full p-5 shadow-2xl border border-slate-100 space-y-4">
             <div class="flex items-center justify-between border-b border-slate-100 pb-3">
                 <h3 class="text-sm font-bold text-slate-800 flex items-center gap-2">
-                    <i class="fa-solid fa-spray-can-sparkles text-emerald-600"></i> Ajouter un Traitement Fongicide
+                    <i class="fa-solid fa-spray-can-sparkles text-emerald-600"></i> Ajouter un Traitement
                 </h3>
                 <button type="button" onclick="closeAddTreatmentModal()" class="text-slate-400 hover:text-slate-600 text-sm">
                     <i class="fa-solid fa-xmark"></i>
@@ -363,9 +352,24 @@
         </div>
     </div>
 
+    <!-- MODAL : CONFIRMATION RESET -->
+    <div id="reset-modal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-sm w-full p-5 shadow-2xl border border-slate-100 text-center space-y-4">
+            <div class="w-12 h-12 rounded-full bg-red-100 text-red-600 flex items-center justify-center mx-auto text-xl">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <h3 class="text-sm font-bold text-slate-800">Réinitialiser les données ?</h3>
+            <p class="text-xs text-slate-500">Toutes vos parcelles et historiques de traitements seront définitivement supprimés de cet appareil. Cette action est irréversible.</p>
+            <div class="flex justify-center gap-2 pt-2">
+                <button type="button" onclick="closeResetModal()" class="px-4 py-2 rounded-lg text-xs font-medium text-slate-600 bg-slate-100 hover:bg-slate-200">Annuler</button>
+                <button type="button" onclick="executeReset()" class="px-4 py-2 rounded-lg text-xs font-semibold text-white bg-red-600 hover:bg-red-700">Oui, supprimer</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer class="text-center text-xs text-slate-400 py-3 border-t border-slate-200/60 bg-white">
-        CercoModel Pro &bull; Évaluation épidémiologique, Tolérance Variétale ITB & Protection Fongicide
+        CercoModel Pro &bull; Évaluation épidémiologique & Tolérance Variétale ITB
     </footer>
 
     <script>
@@ -383,7 +387,7 @@
         let defaultEndDate = new Date(todayObj);
         defaultEndDate.setDate(todayObj.getDate() + 7);
 
-        // Parcelles par défaut (utilisées seulement s'il n'y a rien en cache)
+        // Parcelles par défaut
         let defaultParcellesList = [
             { 
                 id: 'p1', 
@@ -395,18 +399,6 @@
                 lon: '2.780',
                 varietyName: 'Courbet',
                 sensitivity: 'T',
-                treatments: []
-            },
-            { 
-                id: 'p2', 
-                name: 'Parcelle Sud - Reims', 
-                sowingDate: toLocalISODate(defaultSowing), 
-                endDate: toLocalISODate(defaultEndDate),
-                city: 'Reims (France)', 
-                lat: '49.258', 
-                lon: '4.032',
-                varietyName: 'Témoin classique',
-                sensitivity: 'MT',
                 treatments: []
             }
         ];
@@ -432,7 +424,7 @@
         let cumulChartInstance = null;
         let weatherChartInstance = null;
 
-        // --- GESTION DU LOCAL STORAGE ---
+        // --- STREAMING_CHUNK:Storage and Event Functions ---
         function saveToLocalStorage() {
             try {
                 localStorage.setItem(STORAGE_KEY_PARCELLES, JSON.stringify(parcelles));
@@ -465,15 +457,23 @@
             return false;
         }
 
-        function resetAllData() {
-            if (confirm("Voulez-vous réinitialiser toutes vos parcelles enregistrées ?")) {
-                localStorage.removeItem(STORAGE_KEY_PARCELLES);
-                localStorage.removeItem(STORAGE_KEY_ACTIVE);
-                parcelles = JSON.parse(JSON.stringify(defaultParcellesList));
-                activeParcelleId = 'p1';
-                renderParcelleSelector();
-                selectParcelle('p1');
-            }
+        function openResetModal() {
+            document.getElementById('reset-modal').classList.remove('hidden');
+        }
+
+        function closeResetModal() {
+            document.getElementById('reset-modal').classList.add('hidden');
+        }
+
+        function executeReset() {
+            localStorage.removeItem(STORAGE_KEY_PARCELLES);
+            localStorage.removeItem(STORAGE_KEY_ACTIVE);
+            parcelles = JSON.parse(JSON.stringify(defaultParcellesList));
+            activeParcelleId = 'p1';
+            
+            closeResetModal();
+            renderParcelleSelector();
+            selectParcelle('p1', true); // true = force load without overriding
         }
 
         function renderParcelleSelector() {
@@ -489,17 +489,23 @@
                     : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-50'
                 }`;
                 badge.innerHTML = `<i class="fa-solid fa-location-dot ${isActive ? 'text-green-300' : 'text-slate-400'}"></i> ${p.name}`;
-                badge.onclick = () => selectParcelle(p.id);
+                badge.onclick = () => selectParcelle(p.id, false);
                 container.appendChild(badge);
             });
         }
 
-        function selectParcelle(id) {
-            saveCurrentInputsToActiveParcelle();
+        // LE CŒUR DU CORRECTIF EST ICI : L'argument isInitialLoad empêche l'effacement.
+        function selectParcelle(id, isInitialLoad = false) {
+            if (!isInitialLoad) {
+                saveCurrentInputsToActiveParcelle();
+            }
+            
             const target = parcelles.find(p => p.id === id);
             if (!target) return;
 
             activeParcelleId = id;
+            
+            // Remplissage du formulaire avec les données chargées
             parcelleNameInput.value = target.name;
             sowingInput.value = target.sowingDate;
             endDateInput.value = target.endDate || toLocalISODate(defaultEndDate);
@@ -509,10 +515,15 @@
             varietyPresetInput.value = target.sensitivity || 'MT';
             varietyNameInput.value = target.varietyName || '';
 
-            saveToLocalStorage();
+            if (!isInitialLoad) {
+                saveToLocalStorage();
+            }
+            
             renderParcelleSelector();
             renderTreatmentsList();
-            document.getElementById('model-form').dispatchEvent(new Event('submit'));
+            
+            // Lance un calcul automatique au démarrage / changement d'onglet
+            document.getElementById('model-form').dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
         }
 
         function saveCurrentInputsToActiveParcelle() {
@@ -526,18 +537,23 @@
                 current.lon = lonInput.value;
                 current.sensitivity = varietyPresetInput.value;
                 current.varietyName = varietyNameInput.value;
-                saveToLocalStorage();
             }
         }
 
-        function handleInputChange() {
+        // --- Fonction de Sauvegarde Manuelle explicite ---
+        function manualSave() {
             saveCurrentInputsToActiveParcelle();
-        }
+            saveToLocalStorage();
+            renderParcelleSelector(); // Rafraîchit les noms dans les onglets
 
-        // Écouteurs pour sauvegarde automatique sur changement de texte ou de date
-        parcelleNameInput.addEventListener('change', handleInputChange);
-        sowingInput.addEventListener('change', handleInputChange);
-        endDateInput.addEventListener('change', handleInputChange);
+            // Feedback UI
+            const feedback = document.getElementById('save-feedback');
+            feedback.classList.remove('hidden', 'opacity-0');
+            setTimeout(() => {
+                feedback.classList.add('opacity-0');
+                setTimeout(() => feedback.classList.add('hidden'), 300);
+            }, 2000);
+        }
 
         function createNewParcellePrompt() {
             saveCurrentInputsToActiveParcelle();
@@ -556,7 +572,7 @@
             };
             parcelles.push(newParcelle);
             saveToLocalStorage();
-            selectParcelle(newId);
+            selectParcelle(newId, false);
         }
 
         function deleteCurrentParcelle() {
@@ -567,10 +583,10 @@
             parcelles = parcelles.filter(p => p.id !== activeParcelleId);
             activeParcelleId = parcelles[0].id;
             saveToLocalStorage();
-            selectParcelle(activeParcelleId);
+            selectParcelle(activeParcelleId, false);
         }
 
-        // --- GESTION DES TRAITEMENTS FONGICIDES ---
+        // --- STREAMING_CHUNK:Treatments Management ---
         function renderTreatmentsList() {
             const container = document.getElementById('treatments-list-container');
             container.innerHTML = '';
@@ -581,7 +597,6 @@
                 return;
             }
 
-            // Trier par date
             current.treatments.sort((a,b) => new Date(a.date) - new Date(b.date));
 
             current.treatments.forEach((t, idx) => {
@@ -631,13 +646,7 @@
                 return;
             }
 
-            const newTreatment = {
-                id: 't_' + Date.now(),
-                date: date,
-                duration: duration,
-                efficiency: efficiency
-            };
-
+            const newTreatment = { id: 't_' + Date.now(), date: date, duration: duration, efficiency: efficiency };
             if (!current.treatments) current.treatments = [];
             current.treatments.push(newTreatment);
             
@@ -645,8 +654,7 @@
             closeAddTreatmentModal();
             renderTreatmentsList();
 
-            // Relancer le calcul
-            document.getElementById('model-form').dispatchEvent(new Event('submit'));
+            document.getElementById('model-form').dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
         }
 
         function removeTreatment(tId) {
@@ -655,19 +663,8 @@
             current.treatments = current.treatments.filter(t => t.id !== tId);
             saveToLocalStorage();
             renderTreatmentsList();
-            document.getElementById('model-form').dispatchEvent(new Event('submit'));
+            document.getElementById('model-form').dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
         }
-
-        // Initialize App with LocalStorage support
-        const hasLoadedStorage = loadFromLocalStorage();
-        if (!hasLoadedStorage) {
-            parcelles = JSON.parse(JSON.stringify(defaultParcellesList));
-            activeParcelleId = 'p1';
-            saveToLocalStorage();
-        }
-
-        renderParcelleSelector();
-        selectParcelle(activeParcelleId);
 
         function toLocalISODate(dateObj) {
             const year = dateObj.getFullYear();
@@ -685,7 +682,7 @@
             errorDiv.classList.add('hidden');
         }
 
-        // --- GESTION DE L'AUTOCOMPLÉTION VILLE ---
+        // --- STREAMING_CHUNK:City Autocomplete ---
         let debounceTimer;
         cityInput.addEventListener('input', function() {
             clearTimeout(debounceTimer);
@@ -712,7 +709,6 @@
                                     latInput.value = place.latitude;
                                     lonInput.value = place.longitude;
                                     suggestionsList.classList.add('hidden');
-                                    saveCurrentInputsToActiveParcelle();
                                 });
                                 suggestionsList.appendChild(li);
                             });
@@ -734,30 +730,21 @@
             }
         });
 
-        // --- APIS MÉTÉO & SOUMISSION ---
+        // --- STREAMING_CHUNK:Main Data Fetch & Submit ---
         document.getElementById('model-form').addEventListener('submit', async function(e) {
             e.preventDefault();
             hideError();
 
-            saveCurrentInputsToActiveParcelle();
+            // L'utilisateur a cliqué sur "Modéliser", on sauvegarde explicitement son formulaire
+            manualSave();
 
             const sowingDateStr = sowingInput.value;
             const endDateStr = endDateInput.value;
             const lat = latInput.value;
             const lon = lonInput.value;
 
-            if (!sowingDateStr) {
-                showError("Veuillez sélectionner une date de semis.");
-                return;
-            }
-
-            if (!endDateStr) {
-                showError("Veuillez sélectionner une date de fin d'estimation.");
-                return;
-            }
-
-            if (!lat || !lon) {
-                showError("Veuillez sélectionner une commune valide.");
+            if (!sowingDateStr || !endDateStr || !lat || !lon) {
+                showError("Veuillez remplir tous les champs obligatoires et sélectionner une commune.");
                 return;
             }
 
@@ -789,24 +776,17 @@
                 const eightyFiveDaysAgo = new Date(today);
                 eightyFiveDaysAgo.setDate(today.getDate() - 85);
 
-                let hourlyData = { 
-                    time: [], 
-                    temperature_2m: [], 
-                    relative_humidity_2m: [], 
-                    dew_point_2m: [] 
-                };
-
+                let hourlyData = { time: [], temperature_2m: [], relative_humidity_2m: [], dew_point_2m: [] };
                 let forecastStart = startDate;
 
+                // Archive Data
                 if (startDate < eightyFiveDaysAgo) {
                     const archiveEnd = new Date(eightyFiveDaysAgo);
                     archiveEnd.setDate(eightyFiveDaysAgo.getDate() - 1);
-
                     const actualArchiveEnd = (effectiveEndDate < archiveEnd) ? effectiveEndDate : archiveEnd;
 
                     const archStartStr = toLocalISODate(startDate);
                     const archEndStr = toLocalISODate(actualArchiveEnd);
-
                     const archiveUrl = `https://archive-api.open-meteo.com/v1/archive?latitude=${lat}&longitude=${lon}&start_date=${archStartStr}&end_date=${archEndStr}&hourly=temperature_2m,relative_humidity_2m,dew_point_2m&timezone=auto`;
 
                     const archRes = await fetch(archiveUrl);
@@ -819,14 +799,13 @@
                         hourlyData.relative_humidity_2m.push(...archData.hourly.relative_humidity_2m);
                         hourlyData.dew_point_2m.push(...archData.hourly.dew_point_2m);
                     }
-
                     forecastStart = eightyFiveDaysAgo;
                 }
 
+                // Forecast Data
                 if (forecastStart <= effectiveEndDate) {
                     const forecastStartStr = toLocalISODate(forecastStart);
                     const forecastEndStr = toLocalISODate(effectiveEndDate);
-
                     const forecastUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&start_date=${forecastStartStr}&end_date=${forecastEndStr}&hourly=temperature_2m,relative_humidity_2m,dew_point_2m&timezone=auto`;
 
                     const foreRes = await fetch(forecastUrl);
@@ -841,9 +820,7 @@
                     }
                 }
 
-                if (hourlyData.time.length === 0) {
-                    throw new Error("Aucune donnée météorologique n'a pu être chargée pour cette période.");
-                }
+                if (hourlyData.time.length === 0) throw new Error("Aucune donnée météo pour cette période.");
 
                 runAgronomicModel(hourlyData);
 
@@ -857,16 +834,15 @@
             }
         });
 
-        // --- ALGORITHME ÉPIDÉMIOLOGIQUE AVEC VARIÉTÉ & FONGICIDE ---
+        // --- STREAMING_CHUNK:Epidemiological Agronomic Model ---
         function runAgronomicModel(hourlyData) {
             const currentParcelle = parcelles.find(p => p.id === activeParcelleId);
             
-            // 1. Facteur de Sensibilité Variétale (ITB)
             const sensClass = currentParcelle ? currentParcelle.sensitivity : 'MT';
             let varCoeff = 1.0;
-            if (sensClass === 'T') varCoeff = 0.65;       // Tolérante / TPS : -35% d'impact
-            else if (sensClass === 'S') varCoeff = 1.18;  // Sensible : +18%
-            else if (sensClass === 'TS') varCoeff = 1.35; // Très Sensible : +35%
+            if (sensClass === 'T') varCoeff = 0.65;
+            else if (sensClass === 'S') varCoeff = 1.18;
+            else if (sensClass === 'TS') varCoeff = 1.35;
 
             const times = hourlyData.time;
             const temps = hourlyData.temperature_2m;
@@ -876,7 +852,6 @@
             let accumulatedDegreeDays = 0;
             let canopyClosed = false;
             let canopyDate = null;
-
             const dailyResults = {};
 
             for (let i = 0; i < times.length; i++) {
@@ -889,14 +864,7 @@
                 if (temp === null || temp === undefined || rh === null || dew === null) continue;
 
                 if (!dailyResults[dateStr]) {
-                    dailyResults[dateStr] = {
-                        temps: [],
-                        rh: [],
-                        dew: [],
-                        isLeafWet: [],
-                        minT: 999,
-                        maxT: -999
-                    };
+                    dailyResults[dateStr] = { temps: [], rh: [], dew: [], isLeafWet: [], minT: 999, maxT: -999 };
                 }
 
                 dailyResults[dateStr].temps.push(temp);
@@ -929,7 +897,6 @@
             sortedDates.forEach((date, dateIdx) => {
                 const dayData = dailyResults[date];
 
-                // Phénologie : Cumul thermique (Base 5°C)
                 const meanT = (dayData.minT + dayData.maxT) / 2;
                 if (meanT > 5) {
                     accumulatedDegreeDays += (meanT - 5);
@@ -959,24 +926,15 @@
 
                     if (wetHours >= 5) {
                         if (avgWetTemp < 15) {
-                            if (wetHours >= 12) dailyRiskScore = 2;
-                            else if (wetHours >= 8) dailyRiskScore = 1;
+                            if (wetHours >= 12) dailyRiskScore = 2; else if (wetHours >= 8) dailyRiskScore = 1;
                         } else if (avgWetTemp >= 15 && avgWetTemp < 18) {
-                            if (wetHours >= 12) dailyRiskScore = 3;
-                            else if (wetHours >= 8) dailyRiskScore = 2;
-                            else dailyRiskScore = 1;
+                            if (wetHours >= 12) dailyRiskScore = 3; else if (wetHours >= 8) dailyRiskScore = 2; else dailyRiskScore = 1;
                         } else if (avgWetTemp >= 18 && avgWetTemp < 22) {
-                            if (wetHours >= 12) dailyRiskScore = 5;
-                            else if (wetHours >= 8) dailyRiskScore = 4;
-                            else dailyRiskScore = 2;
+                            if (wetHours >= 12) dailyRiskScore = 5; else if (wetHours >= 8) dailyRiskScore = 4; else dailyRiskScore = 2;
                         } else if (avgWetTemp >= 22 && avgWetTemp <= 28) {
-                            if (wetHours >= 12) dailyRiskScore = 8;
-                            else if (wetHours >= 8) dailyRiskScore = 6;
-                            else dailyRiskScore = 3;
+                            if (wetHours >= 12) dailyRiskScore = 8; else if (wetHours >= 8) dailyRiskScore = 6; else dailyRiskScore = 3;
                         } else if (avgWetTemp > 28) {
-                            if (wetHours >= 12) dailyRiskScore = 5;
-                            else if (wetHours >= 8) dailyRiskScore = 4;
-                            else dailyRiskScore = 2;
+                            if (wetHours >= 12) dailyRiskScore = 5; else if (wetHours >= 8) dailyRiskScore = 4; else dailyRiskScore = 2;
                         }
                     }
 
@@ -986,11 +944,8 @@
                     } else {
                         let hotAndDryHours = 0;
                         for (let h = 0; h < dayData.temps.length; h++) {
-                            if (dayData.temps[h] >= 26 && dayData.rh[h] <= 55) {
-                                hotAndDryHours++;
-                            }
+                            if (dayData.temps[h] >= 26 && dayData.rh[h] <= 55) hotAndDryHours++;
                         }
-
                         if (hotAndDryHours >= 8) inhibitionScore = 2;
                         else if (hotAndDryHours >= 5) inhibitionScore = 1;
                     }
@@ -1005,7 +960,7 @@
                     }
                 }
 
-                // 2. Traitement fongicide : Détection multi-passage
+                // Détection d'un traitement
                 const appliedToday = activeTreatments.filter(t => t.date === date);
                 if (appliedToday.length > 0) {
                     treatmentEvents.push({
@@ -1013,15 +968,12 @@
                         date: date,
                         label: `Traitement (${appliedToday.map(t => t.duration + 'j').join(', ')})`
                     });
-
-                    // Effet curatif immédiat : assainit la pression cumulée
                     appliedToday.forEach(t => {
                         const curEff = (t.efficiency || 80) / 100;
                         protectedCumulativeRisk *= (1 - curEff * 0.7);
                     });
                 }
 
-                // Rémanence active à la date 'date' parmi TOUS les traitements
                 let activeProtectionEfficiency = 0;
                 activeTreatments.forEach(t => {
                     const tDate = new Date(t.date);
@@ -1030,23 +982,17 @@
 
                     if (diffDays >= 0 && diffDays <= t.duration) {
                         let decay = 1.0;
-                        if (diffDays > (t.duration - 4)) {
-                            decay = (t.duration - diffDays) / 4;
-                        }
+                        if (diffDays > (t.duration - 4)) decay = (t.duration - diffDays) / 4;
                         const eff = ((t.efficiency || 80) / 100) * decay;
-                        if (eff > activeProtectionEfficiency) {
-                            activeProtectionEfficiency = eff;
-                        }
+                        if (eff > activeProtectionEfficiency) activeProtectionEfficiency = eff;
                     }
                 });
 
-                // Calcul du Risque Net Protégé du jour
                 let protectedDailyNet = netRisk;
                 if (netRisk > 0 && activeProtectionEfficiency > 0) {
                     protectedDailyNet = netRisk * (1 - activeProtectionEfficiency);
                 }
 
-                // Cumuls
                 rawCumulativeRisk += netRisk;
                 if (rawCumulativeRisk < 0) rawCumulativeRisk = 0;
 
@@ -1065,12 +1011,11 @@
             updateUI(canopyDate, chartDailyRisk, chartRawCumul, chartProtectedCumul, chartMaxTemp, chartMinTemp, chartWetHours, chartDates, treatmentEvents, activeTreatments);
         }
 
-        // --- MISE À JOUR DE L'INTERFACE ---
+        // --- STREAMING_CHUNK:UI Updates & Charts ---
         function updateUI(canopyDate, dailyRisk, rawCumul, protectedCumul, maxTemps, minTemps, wetHours, dates, treatmentEvents, activeTreatments) {
             document.getElementById('results-content').classList.remove('hidden');
             document.getElementById('results-content').classList.add('flex');
 
-            // 1. Phénologie
             const canopyDisplay = document.getElementById('canopy-date-display');
             if (canopyDate) {
                 const dateObj = new Date(canopyDate);
@@ -1079,19 +1024,14 @@
                 canopyDisplay.innerText = "Non atteinte (< 800°C-j)";
             }
 
-            // 2. Risque Actuel (Aujourd'hui)
             const todayStr = toLocalISODate(new Date());
             let todayIndex = dates.indexOf(todayStr);
             if (todayIndex === -1) {
-                if (dates.length > 0) {
-                    todayIndex = (todayStr < dates[0]) ? 0 : dates.length - 1;
-                } else {
-                    todayIndex = 0;
-                }
+                if (dates.length > 0) todayIndex = (todayStr < dates[0]) ? 0 : dates.length - 1;
+                else todayIndex = 0;
             }
 
             const currentCumulVal = protectedCumul[todayIndex] || 0;
-
             const riskBadge = document.getElementById('risk-badge');
             const riskText = document.getElementById('current-risk-display');
             const iconWrapper = document.getElementById('risk-icon-wrapper');
@@ -1117,7 +1057,6 @@
                 iconWrapper.classList.add('bg-rose-200', 'text-rose-800');
             }
 
-            // 3. Statut de la Protection Fongicide Actuelle
             const protectionText = document.getElementById('protection-status-display');
             const protectionBadge = document.getElementById('protection-badge');
             const protectionIcon = document.getElementById('protection-icon-wrapper');
@@ -1145,7 +1084,6 @@
                 protectionIcon.className = "p-2.5 rounded-lg shrink-0 bg-slate-200 text-slate-600";
             }
 
-            // 4. Tendance prévisionnelle 7 Jours
             const forecastSum = dailyRisk.slice(todayIndex + 1, todayIndex + 8).reduce((a, b) => a + b, 0);
             const trendText = document.getElementById('forecast-trend-display');
             if (forecastSum >= 8) {
@@ -1156,10 +1094,8 @@
                 trendText.innerHTML = '<span class="text-emerald-600 flex items-center gap-1"><i class="fa-solid fa-shield-check"></i> Protégé / Risque Calme</span>';
             }
 
-            // Cartes 7J
             renderForecastCards(dates, dailyRisk, maxTemps, minTemps, wetHours, todayIndex, activeTreatments);
 
-            // Labels
             const formattedLabels = dates.map(dStr => {
                 const d = new Date(dStr);
                 return d.toLocaleDateString('fr-FR', { day: '2-digit', month: 'short' });
@@ -1226,7 +1162,6 @@
             }
         }
 
-        // --- GRAPHIQUE 1: RISQUE QUOTIDIEN ---
         function renderDailyChart(labels, dailyData, todayIndex, treatmentEvents) {
             const ctx = document.getElementById('dailyRiskChart').getContext('2d');
             if (dailyChartInstance) dailyChartInstance.destroy();
@@ -1273,12 +1208,10 @@
             });
         }
 
-        // --- GRAPHIQUE 2: PRESSION CUMULÉE BRUTE VS PROTÉGÉE ---
         function renderCumulChart(labels, rawCumul, protectedCumul, todayIndex, treatmentEvents) {
             const ctx = document.getElementById('cumulRiskChart').getContext('2d');
             if (cumulChartInstance) cumulChartInstance.destroy();
 
-            // Création de la ligne de seuil d'intervention T1 (18 Pts)
             const thresholdLine = new Array(labels.length).fill(18);
 
             cumulChartInstance = new Chart(ctx, {
@@ -1296,7 +1229,7 @@
                             fill: false
                         },
                         {
-                            label: 'Pression Potentielle BRUTE (Sans Traitement)',
+                            label: 'Pression Potentielle BRUTE',
                             data: rawCumul,
                             borderColor: '#94a3b8',
                             borderWidth: 2,
@@ -1348,7 +1281,6 @@
             });
         }
 
-        // --- GRAPHIQUE 3: MÉTÉO ---
         function renderWeatherChart(labels, maxTemps, minTemps, wetHours, todayIndex) {
             const ctx = document.getElementById('weatherChart').getContext('2d');
             if (weatherChartInstance) weatherChartInstance.destroy();
@@ -1357,69 +1289,25 @@
                 data: {
                     labels: labels,
                     datasets: [
-                        {
-                            type: 'line',
-                            label: 'T° Maximale (°C)',
-                            data: maxTemps,
-                            borderColor: '#ef4444',
-                            borderWidth: 2,
-                            pointRadius: 0,
-                            yAxisID: 'y'
-                        },
-                        {
-                            type: 'line',
-                            label: 'T° Minimale (°C)',
-                            data: minTemps,
-                            borderColor: '#3b82f6',
-                            borderWidth: 1.8,
-                            pointRadius: 0,
-                            borderDash: [3, 3],
-                            yAxisID: 'y'
-                        },
-                        {
-                            type: 'bar',
-                            label: 'Humectation Foliaire (Heures/Jour)',
-                            data: wetHours,
-                            backgroundColor: 'rgba(14, 165, 233, 0.45)',
-                            borderColor: '#0284c7',
-                            borderWidth: 1,
-                            borderRadius: 3,
-                            yAxisID: 'y1'
-                        }
+                        { type: 'line', label: 'T° Max (°C)', data: maxTemps, borderColor: '#ef4444', borderWidth: 2, pointRadius: 0, yAxisID: 'y' },
+                        { type: 'line', label: 'T° Min (°C)', data: minTemps, borderColor: '#3b82f6', borderWidth: 1.8, pointRadius: 0, borderDash: [3, 3], yAxisID: 'y' },
+                        { type: 'bar', label: 'Humectation (h/Jour)', data: wetHours, backgroundColor: 'rgba(14, 165, 233, 0.45)', borderColor: '#0284c7', borderWidth: 1, borderRadius: 3, yAxisID: 'y1' }
                     ]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
                     interaction: { mode: 'index', intersect: false },
-                    plugins: {
-                        legend: { position: 'top', align: 'end', labels: { boxWidth: 8, font: { size: 10 } } }
-                    },
+                    plugins: { legend: { position: 'top', align: 'end', labels: { boxWidth: 8, font: { size: 10 } } } },
                     scales: {
                         x: { grid: { display: false }, ticks: { font: { size: 10 } } },
-                        y: {
-                            type: 'linear',
-                            display: true,
-                            position: 'left',
-                            title: { display: true, text: 'Température (°C)', font: { size: 11 } },
-                            ticks: { font: { size: 10 } }
-                        },
-                        y1: {
-                            type: 'linear',
-                            display: true,
-                            position: 'right',
-                            title: { display: true, text: 'Humectation (Heures/24h)', font: { size: 11 } },
-                            grid: { drawOnChartArea: false },
-                            min: 0,
-                            max: 24,
-                            ticks: { font: { size: 10 } }
-                        }
+                        y: { type: 'linear', display: true, position: 'left', title: { display: true, text: 'Température (°C)', font: { size: 11 } }, ticks: { font: { size: 10 } } },
+                        y1: { type: 'linear', display: true, position: 'right', title: { display: true, text: 'Humectation (Heures/24h)', font: { size: 11 } }, grid: { drawOnChartArea: false }, min: 0, max: 24, ticks: { font: { size: 10 } } }
                     }
                 }
             });
         }
 
-        // --- NAVIGATION ONGLETS ---
         function switchTab(tab) {
             const tabs = ['all', 'daily', 'cumul', 'weather'];
             tabs.forEach(t => {
@@ -1458,6 +1346,20 @@
                 weatherCard.classList.remove('hidden');
             }
         }
+
+        // --- STREAMING_CHUNK:App Entry Point ---
+        const hasLoadedStorage = loadFromLocalStorage();
+        if (!hasLoadedStorage) {
+            parcelles = JSON.parse(JSON.stringify(defaultParcellesList));
+            activeParcelleId = 'p1';
+            saveToLocalStorage();
+        }
+
+        renderParcelleSelector();
+        
+        // CRITICAL FIX: isInitialLoad set to true prevents form data wiping local storage
+        selectParcelle(activeParcelleId, true); 
+
     </script>
 </body>
 </html>
