@@ -26,6 +26,8 @@
 
         #city-suggestions::-webkit-scrollbar { width: 6px; }
         #city-suggestions::-webkit-scrollbar-thumb { background-color: #cbd5e1; border-radius: 4px; }
+        #treatments-list-container::-webkit-scrollbar { width: 4px; }
+        #treatments-list-container::-webkit-scrollbar-thumb { background-color: #cbd5e1; border-radius: 4px; }
         
         .tab-content { transition: opacity 0.2s ease-in-out; }
     </style>
@@ -45,7 +47,7 @@
             </div>
             <div class="flex items-center gap-2">
                 <span class="bg-green-950/60 text-green-300 text-xs px-3 py-1.5 rounded-full border border-green-700/50 flex items-center gap-1.5">
-                    <i class="fa-solid fa-shield-halved text-emerald-400"></i> Module Fongicides
+                    <i class="fa-solid fa-floppy-disk text-emerald-400"></i> Sauvegarde navigateur
                 </span>
                 <span class="hidden sm:inline-block bg-green-950/60 text-green-300 text-xs px-3 py-1.5 rounded-full border border-green-700/50">
                     <i class="fa-solid fa-cloud-sun text-amber-300 mr-1"></i> Open-Meteo API
@@ -76,9 +78,14 @@
                     <h2 class="text-base font-bold text-green-900 flex items-center gap-2">
                         <i class="fa-solid fa-sliders text-green-600"></i> Paramètres Parcelle
                     </h2>
-                    <button type="button" onclick="deleteCurrentParcelle()" id="delete-parcelle-btn" class="text-slate-400 hover:text-red-600 text-xs transition cursor-pointer" title="Supprimer cette parcelle">
-                        <i class="fa-solid fa-trash-can"></i>
-                    </button>
+                    <div class="flex items-center gap-2">
+                        <button type="button" onclick="resetAllData()" class="text-slate-400 hover:text-amber-600 text-xs transition cursor-pointer" title="Réinitialiser toutes les données sauvegardées">
+                            <i class="fa-solid fa-rotate-left"></i>
+                        </button>
+                        <button type="button" onclick="deleteCurrentParcelle()" id="delete-parcelle-btn" class="text-slate-400 hover:text-red-600 text-xs transition cursor-pointer" title="Supprimer cette parcelle">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                    </div>
                 </div>
                 
                 <form id="model-form" class="space-y-4">
@@ -120,7 +127,7 @@
                             <span>Variété / Tolérance ITB</span>
                             <i class="fa-solid fa-dna text-emerald-600"></i>
                         </label>
-                        <select id="variety-preset" onchange="handleVarietyChange()" class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg text-xs focus:bg-white focus:ring-2 focus:ring-green-500 outline-none transition mb-2">
+                        <select id="variety-preset" onchange="handleInputChange()" class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg text-xs focus:bg-white focus:ring-2 focus:ring-green-500 outline-none transition mb-2">
                             <option value="T" data-coeff="0.65">Tolérante / TPS (ex: Courbet, Daphné, Nouvelle gén.)</option>
                             <option value="MT" data-coeff="1.00" selected>Moyennement Tolérante (Témoin classique ITB)</option>
                             <option value="S" data-coeff="1.18">Sensible (S)</option>
@@ -128,7 +135,7 @@
                         </select>
 
                         <!-- Nom personnalisé de variété -->
-                        <input type="text" id="variety-name" placeholder="Nom de la variété (optionnel)" class="w-full px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs outline-none focus:bg-white">
+                        <input type="text" id="variety-name" placeholder="Nom de la variété (optionnel)" onchange="handleInputChange()" class="w-full px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs outline-none focus:bg-white">
                     </div>
 
                     <!-- Section Traitements Fongicides -->
@@ -162,15 +169,13 @@
             </div>
             
             <!-- Explication du Modèle -->
-            <div class="bg-slate-50 p-3 rounded-xl text-xs text-slate-600 border border-slate-200/80 space-y-1.5">
+            <div class="bg-slate-50 p-3 rounded-xl text-xs text-slate-600 border border-slate-200/80 space-y-1.5 mt-4">
                 <p class="font-bold text-slate-800 flex items-center gap-1.5">
-                    <i class="fa-solid fa-flask text-emerald-600"></i> Calibrage Fongicide & Variété :
+                    <i class="fa-solid fa-circle-check text-emerald-600"></i> Sauvegarde Automatique :
                 </p>
-                <ul class="space-y-1 list-disc pl-4 text-[11px] text-slate-600">
-                    <li><b>Génétique :</b> Variété tolérante (TPS) ralentit la pression de -35%.</li>
-                    <li><b>Fongicides :</b> Réduction immédiate de la pression active (effet curatif) + rémanence protectrice (14 à 21j).</li>
-                    <li><b>Seuil T1 :</b> Seuil d'intervention indicatif fixé à 18 points de pression.</li>
-                </ul>
+                <p class="text-[11px] text-slate-600 leading-relaxed">
+                    Toutes vos parcelles et historiques de traitements sont conservés localement dans votre navigateur.
+                </p>
             </div>
         </div>
 
@@ -287,7 +292,7 @@
                             <h4 class="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-2">
                                 <span class="w-2.5 h-2.5 rounded-full bg-rose-600"></span> Pression Épidémique : Potentielle (Sans Soin) vs Nette Protégée
                             </h4>
-                            <span class="text-[11px] text-slate-400">Ligne pointillée = Seuil T1 (18 Pts) | Points violets = Traitements</span>
+                            <span class="text-[11px] text-slate-400">Ligne pointillée = Seuil T1 (18 Pts) | Points verts = Traitements</span>
                         </div>
                         <div class="w-full relative h-[250px]">
                             <canvas id="cumulRiskChart"></canvas>
@@ -364,6 +369,10 @@
     </footer>
 
     <script>
+        // --- LOCAL STORAGE PERSISTENCE KEYS ---
+        const STORAGE_KEY_PARCELLES = 'cercomodel_parcelles_data_v2';
+        const STORAGE_KEY_ACTIVE = 'cercomodel_active_id_v2';
+
         // --- DATA MODEL & PARCEL MANAGEMENT ---
         const todayObj = new Date();
         let defaultSowing = new Date(todayObj.getFullYear(), 3, 1); // 1er Avril
@@ -374,24 +383,25 @@
         let defaultEndDate = new Date(todayObj);
         defaultEndDate.setDate(todayObj.getDate() + 7);
 
-        let parcelles = [
+        // Parcelles par défaut (utilisées seulement s'il n'y a rien en cache)
+        let defaultParcellesList = [
             { 
                 id: 'p1', 
                 name: 'Parcelle Nord - Arras', 
-                sowingDate: '', 
-                endDate: '',
+                sowingDate: toLocalISODate(defaultSowing), 
+                endDate: toLocalISODate(defaultEndDate),
                 city: 'Arras (France)', 
                 lat: '50.292', 
                 lon: '2.780',
                 varietyName: 'Courbet',
-                sensitivity: 'T', // T = Tolérante, MT = Moyennement Tolérante, S = Sensible, TS = Très Sensible
+                sensitivity: 'T',
                 treatments: []
             },
             { 
                 id: 'p2', 
                 name: 'Parcelle Sud - Reims', 
-                sowingDate: '', 
-                endDate: '',
+                sowingDate: toLocalISODate(defaultSowing), 
+                endDate: toLocalISODate(defaultEndDate),
                 city: 'Reims (France)', 
                 lat: '49.258', 
                 lon: '4.032',
@@ -401,13 +411,10 @@
             }
         ];
 
+        let parcelles = [];
         let activeParcelleId = 'p1';
 
-        parcelles.forEach(p => {
-            p.sowingDate = toLocalISODate(defaultSowing);
-            p.endDate = toLocalISODate(defaultEndDate);
-        });
-
+        // Éléments du DOM
         const sowingInput = document.getElementById('sowing-date');
         const endDateInput = document.getElementById('end-date');
         const cityInput = document.getElementById('city-input');
@@ -420,10 +427,54 @@
         const errorText = document.getElementById('error-text');
         const suggestionsList = document.getElementById('city-suggestions');
 
-        // Charts instances
+        // Chart Instances
         let dailyChartInstance = null;
         let cumulChartInstance = null;
         let weatherChartInstance = null;
+
+        // --- GESTION DU LOCAL STORAGE ---
+        function saveToLocalStorage() {
+            try {
+                localStorage.setItem(STORAGE_KEY_PARCELLES, JSON.stringify(parcelles));
+                localStorage.setItem(STORAGE_KEY_ACTIVE, activeParcelleId);
+            } catch (e) {
+                console.warn("Erreur de sauvegarde localStorage:", e);
+            }
+        }
+
+        function loadFromLocalStorage() {
+            try {
+                const storedData = localStorage.getItem(STORAGE_KEY_PARCELLES);
+                const storedActiveId = localStorage.getItem(STORAGE_KEY_ACTIVE);
+
+                if (storedData) {
+                    const parsed = JSON.parse(storedData);
+                    if (Array.isArray(parsed) && parsed.length > 0) {
+                        parcelles = parsed;
+                        if (storedActiveId && parcelles.some(p => p.id === storedActiveId)) {
+                            activeParcelleId = storedActiveId;
+                        } else {
+                            activeParcelleId = parcelles[0].id;
+                        }
+                        return true;
+                    }
+                }
+            } catch (e) {
+                console.warn("Erreur de lecture du localStorage:", e);
+            }
+            return false;
+        }
+
+        function resetAllData() {
+            if (confirm("Voulez-vous réinitialiser toutes vos parcelles enregistrées ?")) {
+                localStorage.removeItem(STORAGE_KEY_PARCELLES);
+                localStorage.removeItem(STORAGE_KEY_ACTIVE);
+                parcelles = JSON.parse(JSON.stringify(defaultParcellesList));
+                activeParcelleId = 'p1';
+                renderParcelleSelector();
+                selectParcelle('p1');
+            }
+        }
 
         function renderParcelleSelector() {
             const container = document.getElementById('parcelles-pills-container');
@@ -458,6 +509,7 @@
             varietyPresetInput.value = target.sensitivity || 'MT';
             varietyNameInput.value = target.varietyName || '';
 
+            saveToLocalStorage();
             renderParcelleSelector();
             renderTreatmentsList();
             document.getElementById('model-form').dispatchEvent(new Event('submit'));
@@ -474,8 +526,18 @@
                 current.lon = lonInput.value;
                 current.sensitivity = varietyPresetInput.value;
                 current.varietyName = varietyNameInput.value;
+                saveToLocalStorage();
             }
         }
+
+        function handleInputChange() {
+            saveCurrentInputsToActiveParcelle();
+        }
+
+        // Écouteurs pour sauvegarde automatique sur changement de texte ou de date
+        parcelleNameInput.addEventListener('change', handleInputChange);
+        sowingInput.addEventListener('change', handleInputChange);
+        endDateInput.addEventListener('change', handleInputChange);
 
         function createNewParcellePrompt() {
             saveCurrentInputsToActiveParcelle();
@@ -493,6 +555,7 @@
                 treatments: []
             };
             parcelles.push(newParcelle);
+            saveToLocalStorage();
             selectParcelle(newId);
         }
 
@@ -503,6 +566,7 @@
             }
             parcelles = parcelles.filter(p => p.id !== activeParcelleId);
             activeParcelleId = parcelles[0].id;
+            saveToLocalStorage();
             selectParcelle(activeParcelleId);
         }
 
@@ -574,7 +638,10 @@
                 efficiency: efficiency
             };
 
+            if (!current.treatments) current.treatments = [];
             current.treatments.push(newTreatment);
+            
+            saveToLocalStorage();
             closeAddTreatmentModal();
             renderTreatmentsList();
 
@@ -586,17 +653,21 @@
             const current = parcelles.find(p => p.id === activeParcelleId);
             if (!current) return;
             current.treatments = current.treatments.filter(t => t.id !== tId);
+            saveToLocalStorage();
             renderTreatmentsList();
             document.getElementById('model-form').dispatchEvent(new Event('submit'));
         }
 
-        function handleVarietyChange() {
-            saveCurrentInputsToActiveParcelle();
+        // Initialize App with LocalStorage support
+        const hasLoadedStorage = loadFromLocalStorage();
+        if (!hasLoadedStorage) {
+            parcelles = JSON.parse(JSON.stringify(defaultParcellesList));
+            activeParcelleId = 'p1';
+            saveToLocalStorage();
         }
 
-        // Init App
         renderParcelleSelector();
-        selectParcelle('p1');
+        selectParcelle(activeParcelleId);
 
         function toLocalISODate(dateObj) {
             const year = dateObj.getFullYear();
@@ -641,6 +712,7 @@
                                     latInput.value = place.latitude;
                                     lonInput.value = place.longitude;
                                     suggestionsList.classList.add('hidden');
+                                    saveCurrentInputsToActiveParcelle();
                                 });
                                 suggestionsList.appendChild(li);
                             });
@@ -666,6 +738,8 @@
         document.getElementById('model-form').addEventListener('submit', async function(e) {
             e.preventDefault();
             hideError();
+
+            saveCurrentInputsToActiveParcelle();
 
             const sowingDateStr = sowingInput.value;
             const endDateStr = endDateInput.value;
@@ -931,7 +1005,7 @@
                     }
                 }
 
-                // 2. Traitement fongicide : Détection des applications
+                // 2. Traitement fongicide : Détection multi-passage
                 const appliedToday = activeTreatments.filter(t => t.date === date);
                 if (appliedToday.length > 0) {
                     treatmentEvents.push({
@@ -940,14 +1014,14 @@
                         label: `Traitement (${appliedToday.map(t => t.duration + 'j').join(', ')})`
                     });
 
-                    // Effet curatif immédiat : assainissement du potentiel cumulé
+                    // Effet curatif immédiat : assainit la pression cumulée
                     appliedToday.forEach(t => {
                         const curEff = (t.efficiency || 80) / 100;
-                        protectedCumulativeRisk *= (1 - curEff * 0.7); // Assainit 50-70% de la maladie incubée
+                        protectedCumulativeRisk *= (1 - curEff * 0.7);
                     });
                 }
 
-                // Rémanence active à la date 'date'
+                // Rémanence active à la date 'date' parmi TOUS les traitements
                 let activeProtectionEfficiency = 0;
                 activeTreatments.forEach(t => {
                     const tDate = new Date(t.date);
