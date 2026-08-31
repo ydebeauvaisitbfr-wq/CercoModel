@@ -20,6 +20,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- html2canvas pour l'export image des graphiques -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -301,6 +303,9 @@
                             <h4 class="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-2">
                                 <span class="w-2.5 h-2.5 rounded-full bg-green-600"></span> Score Quotidien (Ajusté Variété & Fongicide)
                             </h4>
+                            <button onclick="exportChartImage('chart-card-daily', 'Risque_Quotidien')" class="text-slate-400 hover:text-emerald-600 bg-slate-50 hover:bg-emerald-50 px-2 py-1 rounded transition cursor-pointer shrink-0" title="Télécharger ce graphique">
+                                <i class="fa-solid fa-download"></i>
+                            </button>
                         </div>
                         <div class="w-full relative h-[250px]"><canvas id="dailyRiskChart"></canvas></div>
                     </div>
@@ -310,6 +315,9 @@
                             <h4 class="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-2">
                                 <span class="w-2.5 h-2.5 rounded-full bg-rose-600"></span> Évolution Épidémique : Potentielle vs Nette
                             </h4>
+                            <button onclick="exportChartImage('chart-card-cumul', 'Pression_Cumulee')" class="text-slate-400 hover:text-emerald-600 bg-slate-50 hover:bg-emerald-50 px-2 py-1 rounded transition cursor-pointer shrink-0" title="Télécharger ce graphique">
+                                <i class="fa-solid fa-download"></i>
+                            </button>
                         </div>
                         <div class="w-full relative h-[250px]"><canvas id="cumulRiskChart"></canvas></div>
                     </div>
@@ -319,6 +327,9 @@
                             <h4 class="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-2">
                                 <span class="w-2.5 h-2.5 rounded-full bg-sky-500"></span> Facteurs Météo Clés
                             </h4>
+                            <button onclick="exportChartImage('chart-card-weather', 'Facteurs_Meteo')" class="text-slate-400 hover:text-emerald-600 bg-slate-50 hover:bg-emerald-50 px-2 py-1 rounded transition cursor-pointer shrink-0" title="Télécharger ce graphique">
+                                <i class="fa-solid fa-download"></i>
+                            </button>
                         </div>
                         <div class="w-full relative h-[260px]"><canvas id="weatherChart"></canvas></div>
                     </div>
@@ -550,6 +561,28 @@
             closeResetModal();
             renderParcelleSelector();
             selectParcelle('p1', true);
+        }
+
+        function exportChartImage(cardId, fileName) {
+            const element = document.getElementById(cardId);
+            
+            // On masque momentanément le bouton de téléchargement pour qu'il n'apparaisse pas sur la photo
+            const btn = element.querySelector('button');
+            if(btn) btn.style.display = 'none';
+
+            // Capture de la zone avec fond blanc et échelle x2 pour une belle résolution (HD)
+            html2canvas(element, { 
+                scale: 2, 
+                backgroundColor: '#ffffff'
+            }).then(canvas => {
+                if(btn) btn.style.display = ''; // On réaffiche le bouton une fois capturé
+                
+                // Déclenchement du téléchargement
+                const link = document.createElement('a');
+                link.download = `CercoModel_${fileName}_${toLocalISODate(new Date())}.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
         }
 
         // --- STREAMING_CHUNK:UI Interactions ---
