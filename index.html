@@ -48,13 +48,12 @@
 </head>
 <body class="text-slate-800 min-h-screen flex flex-col justify-between">
 
-    <!-- En-tête -->
     <header class="bg-gradient-to-r from-green-900 via-green-800 to-emerald-900 text-white shadow-md py-4">
         <div class="max-w-7xl mx-auto px-4 flex flex-wrap items-center justify-between gap-3">
             <div class="flex items-center gap-3 md:gap-5">
                 <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23115e59'/%3E%3Cstop offset='100%25' stop-color='%23042f2e'/%3E%3C/linearGradient%3E%3ClinearGradient id='leaf' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%234ade80'/%3E%3Cstop offset='100%25' stop-color='%2316a34a'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='512' height='512' rx='128' fill='url(%23bg)'/%3E%3Cpath d='M256 60 C 200 60, 160 160, 230 250 L 256 280 L 282 250 C 352 160, 312 60, 256 60 Z' fill='url(%23leaf)'/%3E%3Cpath d='M220 120 C 140 100, 100 180, 190 250 L 256 280 Z' fill='url(%23leaf)'/%3E%3Cpath d='M292 120 C 372 100, 412 180, 322 250 L 256 280 Z' fill='url(%23leaf)'/%3E%3Cpath d='M190 250 C 190 250, 170 340, 256 420 C 342 340, 322 250, 322 250 Z' fill='%23f1f5f9'/%3E%3Cpath d='M220 250 C 220 300, 256 380, 256 420 C 256 380, 292 300, 292 250' fill='none' stroke='%23cbd5e1' stroke-width='8'/%3E%3Ccircle cx='256' cy='130' r='12' fill='%23701a75'/%3E%3Ccircle cx='210' cy='180' r='10' fill='%23701a75'/%3E%3Ccircle cx='300' cy='180' r='14' fill='%23701a75'/%3E%3Ccircle cx='180' cy='160' r='8' fill='%23701a75'/%3E%3Ccircle cx='330' cy='160' r='10' fill='%23701a75'/%3E%3Ccircle cx='240' cy='220' r='9' fill='%23701a75'/%3E%3Ccircle cx='270' cy='230' r='11' fill='%23701a75'/%3E%3Cpath d='M 120 280 L 256 200 L 392 280 L 300 360 L 256 200 M 120 280 L 200 350 L 300 360' fill='none' stroke='%230ea5e9' stroke-width='6'/%3E%3Cpath d='M 120 280 L 200 350' fill='none' stroke='%23d946ef' stroke-width='6'/%3E%3Ccircle cx='120' cy='280' r='14' fill='%23d946ef'/%3E%3Ccircle cx='256' cy='200' r='16' fill='%230ea5e9'/%3E%3Ccircle cx='392' cy='280' r='14' fill='%230ea5e9'/%3E%3Ccircle cx='200' cy='350' r='16' fill='%23d946ef'/%3E%3Ccircle cx='300' cy='360' r='14' fill='%230ea5e9'/%3E%3Ccircle cx='120' cy='280' r='6' fill='white'/%3E%3Ccircle cx='256' cy='200' r='6' fill='white'/%3E%3Ccircle cx='392' cy='280' r='6' fill='white'/%3E%3Ccircle cx='200' cy='350' r='6' fill='white'/%3E%3Ccircle cx='300' cy='360' r='6' fill='white'/%3E%3C/svg%3E" alt="CercoModel Logo" class="w-14 h-14 md:w-16 md:h-16 rounded-2xl shadow-xl shrink-0 transform hover:scale-105 transition duration-300">
                 <div>
-                    <h1 class="text-xl md:text-2xl font-bold tracking-tight">CercoModel Pro <span class="text-xs bg-emerald-500/30 text-emerald-200 px-2 py-0.5 rounded-md font-normal border border-emerald-400/20">v2.8</span></h1>
+                    <h1 class="text-xl md:text-2xl font-bold tracking-tight">CercoModel Pro <span class="text-xs bg-emerald-500/30 text-emerald-200 px-2 py-0.5 rounded-md font-normal border border-emerald-400/20">v2.9</span></h1>
                     <p class="text-green-200 text-xs md:text-sm">Risque Cercosporiose &bull; Tolérance Variétale &bull; Suivi Fongicides</p>
                 </div>
             </div>
@@ -150,8 +149,8 @@
                             <i class="fa-solid fa-dna text-emerald-600"></i>
                         </label>
                         <select id="variety-preset" class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg text-xs focus:bg-white focus:ring-2 focus:ring-green-500 outline-none transition mb-2">
-                            <option value="T" data-coeff="0.65">Tolérante / TPS (ex: Courbet, Daphné, Nv. gén.)</option>
-                            <option value="MT" data-coeff="1.00" selected>Moyennement Tolérante (Témoin)</option>
+                            <option value="T" data-coeff="0.65">Très Tolérante</option>
+                            <option value="MT" data-coeff="1.00" selected>Tolérante (Témoin)</option>
                             <option value="S" data-coeff="1.18">Sensible (S)</option>
                             <option value="TS" data-coeff="1.35">Très Sensible (TS)</option>
                         </select>
@@ -198,7 +197,7 @@
                 </form>
             </div>
             
-            <!-- Avertissement (Remplace l'encart précédent) -->
+            <!-- Avertissement -->
             <div class="bg-amber-50 p-3 rounded-xl text-xs text-amber-800 border border-amber-200/80 space-y-2 mt-4">
                 <p class="font-bold flex items-center gap-1.5 text-sm text-amber-600">
                     <i class="fa-solid fa-triangle-exclamation"></i> Avertissement
@@ -207,6 +206,17 @@
                     Cet outil n'a aucune référence scientifique et a pour unique but d'essayer de simuler la pression cercosporiose.<br><br>
                     <strong>Cela ne remplace en aucun cas l'observation des parcelles !</strong>
                 </p>
+            </div>
+
+            <!-- Explication du Modèle -->
+            <div class="bg-slate-50 p-3 rounded-xl text-xs text-slate-600 border border-slate-200/80 space-y-2 mt-4 shadow-sm">
+                <p class="font-bold flex items-center gap-1.5 text-sm text-slate-700">
+                    <i class="fa-solid fa-circle-info text-sky-500"></i> Comprendre le modèle
+                </p>
+                <div class="space-y-2 text-[10px] leading-relaxed text-justify">
+                    <p><strong class="text-slate-800">1. Le Score Quotidien :</strong> Il évalue le risque d'infection du jour (de 0 à 8). Il croise la <strong>durée d'humectation foliaire</strong> (heures avec HR &ge; 85% ou rosée) et la <strong>température</strong> pendant cette période. Une chaleur très sèche bloque le champignon (inhibition). Ce score brut est ensuite pondéré par le coefficient de tolérance de votre variété.</p>
+                    <p><strong class="text-slate-800">2. Le Seuil T1 (18 Pts) :</strong> Il s'agit du cumul des scores quotidiens depuis la fermeture des rangs (800°C-j). Ce seuil de 18 points correspond empiriquement au moment où le climat a été suffisamment favorable en continu pour que la maladie s'installe (probabilité d'apparition des premières taches sur les variétés classiques).</p>
+                </div>
             </div>
         </div>
 
@@ -229,7 +239,7 @@
                             <i class="fa-solid fa-wheat-awn text-base"></i>
                         </div>
                         <div>
-                            <p class="text-[11px] font-medium text-slate-500">Rang Fermé (1000°C-j B0)</p>
+                            <p class="text-[11px] font-medium text-slate-500">Rang Fermé (800°C-j)</p>
                             <p class="font-bold text-xs text-slate-800" id="canopy-date-display">--</p>
                         </div>
                     </div>
@@ -430,8 +440,8 @@
                 city: 'Arras (France)', 
                 lat: '50.292', 
                 lon: '2.780',
-                varietyName: 'Courbet',
-                sensitivity: 'T',
+                varietyName: '',
+                sensitivity: 'MT',
                 treatments: []
             }
         ];
@@ -565,19 +575,15 @@
 
         function exportChartImage(cardId, fileName) {
             const element = document.getElementById(cardId);
-            
-            // On masque momentanément le bouton de téléchargement pour qu'il n'apparaisse pas sur la photo
             const btn = element.querySelector('button');
             if(btn) btn.style.display = 'none';
 
-            // Capture de la zone avec fond blanc et échelle x2 pour une belle résolution (HD)
             html2canvas(element, { 
                 scale: 2, 
                 backgroundColor: '#ffffff'
             }).then(canvas => {
-                if(btn) btn.style.display = ''; // On réaffiche le bouton une fois capturé
+                if(btn) btn.style.display = ''; 
                 
-                // Déclenchement du téléchargement
                 const link = document.createElement('a');
                 link.download = `CercoModel_${fileName}_${toLocalISODate(new Date())}.png`;
                 link.href = canvas.toDataURL('image/png');
@@ -630,7 +636,6 @@
             renderParcelleSelector();
             renderTreatmentsList();
             
-            // Lancement automatique du calcul
             document.getElementById('model-form').dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
         }
 
@@ -653,7 +658,6 @@
             renderParcelleSelector();
         }
 
-        // Ecouteurs dynamiques
         parcelleNameInput.addEventListener('input', handleInputChange);
         sowingInput.addEventListener('change', handleInputChange);
         endDateInput.addEventListener('change', handleInputChange);
@@ -751,7 +755,6 @@
             document.getElementById('treatment-modal').classList.add('hidden');
         }
 
-        // C'est cette fonction qui était mal fermée dans l'itération précédente !
         function saveTreatment(e) {
             e.preventDefault();
             const current = parcelles.find(p => p.id === activeParcelleId);
@@ -780,7 +783,6 @@
             closeAddTreatmentModal();
             renderTreatmentsList();
 
-            // Relancer le calcul
             document.getElementById('model-form').dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
         }
 
@@ -794,7 +796,6 @@
         }
 
         // --- STREAMING_CHUNK:App Initialization ---
-        // Initialize App with LocalStorage support
         const hasLoadedStorage = loadFromLocalStorage();
         if (!hasLoadedStorage) {
             parcelles = JSON.parse(JSON.stringify(defaultParcellesList));
@@ -810,7 +811,6 @@
         }
 
         renderParcelleSelector();
-        // Lancement au démarrage (true = isInitialLoad)
         selectParcelle(activeParcelleId, true);
 
         function toLocalISODate(dateObj) {
@@ -882,7 +882,7 @@
         document.getElementById('model-form').addEventListener('submit', async function(e) {
             e.preventDefault();
             hideError();
-            manualSave(); // Sauvegarde forcée
+            manualSave();
 
             const sowingDateStr = sowingInput.value;
             const endDateStr = endDateInput.value;
@@ -1041,14 +1041,14 @@
             sortedDates.forEach((date, dateIdx) => {
                 const dayData = dailyResults[date];
 
-                // Phénologie : Cumul thermique (Base 0°C)
+                // Phénologie : Cumul thermique (Base 5°C)
                 const meanT = (dayData.minT + dayData.maxT) / 2;
-                if (meanT > 0) {
-                    accumulatedDegreeDays += meanT; // Addition brute (Base 0)
+                if (meanT > 5) {
+                    accumulatedDegreeDays += (meanT - 5); 
                 }
 
-                // Seuil à 1000°C-j
-                if (accumulatedDegreeDays >= 1000 && !canopyClosed) {
+                // Seuil à 800°C-j Base 5
+                if (accumulatedDegreeDays >= 800 && !canopyClosed) {
                     canopyClosed = true;
                     canopyDate = date;
                 }
@@ -1106,7 +1106,6 @@
                     }
                 }
 
-                // Détection d'un traitement
                 const appliedToday = activeTreatments.filter(t => t.date === date);
                 if (appliedToday.length > 0) {
                     treatmentEvents.push({
@@ -1154,28 +1153,26 @@
                 chartWetHours.push(wetHours);
             });
 
-            // FILTRE D'AFFICHAGE : Ne conserver les données pour les graphiques qu'à partir du 15 juin
-            if (chartDates.length > 0) {
-                const simYear = chartDates[0].substring(0, 4);
-                const june15Date = `${simYear}-06-15`;
-                let startIndex = chartDates.findIndex(d => d >= june15Date);
+            // --- SYNCHRONISATION DES ÉCHELLES DE DATES (Démarrage au 15 Juin) ---
+            const currentYear = new Date(sowingInput.value).getFullYear();
+            const midJuneStr = `${currentYear}-06-15`;
+            const cutIndex = chartDates.findIndex(d => d >= midJuneStr);
 
-                if (startIndex > 0) {
-                    chartDates.splice(0, startIndex);
-                    chartDailyRisk.splice(0, startIndex);
-                    chartRawCumul.splice(0, startIndex);
-                    chartProtectedCumul.splice(0, startIndex);
-                    chartMaxTemp.splice(0, startIndex);
-                    chartMinTemp.splice(0, startIndex);
-                    chartWetHours.splice(0, startIndex);
+            if (cutIndex > 0) {
+                chartDates.splice(0, cutIndex);
+                chartDailyRisk.splice(0, cutIndex);
+                chartRawCumul.splice(0, cutIndex);
+                chartProtectedCumul.splice(0, cutIndex);
+                chartMaxTemp.splice(0, cutIndex);
+                chartMinTemp.splice(0, cutIndex);
+                chartWetHours.splice(0, cutIndex);
 
-                    // Recalculer la position des traitements sur les graphiques
-                    for (let i = treatmentEvents.length - 1; i >= 0; i--) {
-                        if (treatmentEvents[i].dateIndex < startIndex) {
-                            treatmentEvents.splice(i, 1); // On ne dessine pas le point si fait avant le 15 juin
-                        } else {
-                            treatmentEvents[i].dateIndex -= startIndex;
-                        }
+                // Réajustement de la position des points de traitement sur le graphique
+                for (let i = treatmentEvents.length - 1; i >= 0; i--) {
+                    treatmentEvents[i].dateIndex -= cutIndex;
+                    // Si un traitement a eu lieu avant le 15 juin, on ne l'affiche pas sur le graphique
+                    if (treatmentEvents[i].dateIndex < 0) {
+                        treatmentEvents.splice(i, 1);
                     }
                 }
             }
@@ -1193,7 +1190,7 @@
                 const dateObj = new Date(canopyDate);
                 canopyDisplay.innerText = dateObj.toLocaleDateString('fr-FR', { day: '2-digit', month: 'short' });
             } else {
-                canopyDisplay.innerText = "Non atteinte (< 1000°C-j B0)";
+                canopyDisplay.innerText = "Non atteinte (< 800°C-j)";
             }
 
             const todayStr = toLocalISODate(new Date());
