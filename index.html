@@ -215,7 +215,7 @@
                 </p>
                 <div class="space-y-2 text-[10px] leading-relaxed text-justify">
                     <p><strong class="text-slate-800">1. Le Score Quotidien :</strong> Il évalue le risque d'infection du jour (de 0 à 8). Il croise la <strong>durée d'humectation foliaire</strong> (heures avec HR &ge; 85% ou rosée) et la <strong>température</strong> pendant cette période. Une chaleur très sèche bloque le champignon (inhibition). Ce score brut est ensuite pondéré par le coefficient de tolérance de votre variété.</p>
-                    <p><strong class="text-slate-800">2. Le Seuil T1 (18 Pts) :</strong> Il s'agit du cumul des scores quotidiens depuis la fermeture des rangs (800°C-j). Ce seuil de 18 points correspond empiriquement au moment où le climat a été suffisamment favorable en continu pour que la maladie s'installe (probabilité d'apparition des premières taches sur les variétés classiques).</p>
+                    <p><strong class="text-slate-800">2. Le Seuil (18 Pts) :</strong> Il s'agit du cumul des scores quotidiens depuis la fermeture des rangs (800°C-j). Ce seuil de 18 points correspond empiriquement au moment où le climat a été suffisamment favorable en continu pour que la maladie s'installe (probabilité d'apparition des premières taches sur les variétés classiques).</p>
                 </div>
             </div>
         </div>
@@ -1371,12 +1371,21 @@
                     },
                     scales: {
                         x: { offset: true, grid: { display: false }, ticks: { font: { size: 10 }, maxTicksLimit: 15 } },
-                        y: { title: { display: true, text: 'Score Net Journalier', font: { size: 11 } }, ticks: { font: { size: 10 } } }
+                        y: { title: { display: true, text: 'Score Net Journalier', font: { size: 11 } }, ticks: { font: { size: 10 } } },
+                        // Axe fantôme transparent pour aligner avec le 3ème graphique
+                        y1: {
+                            type: 'linear', display: true, position: 'right',
+                            title: { display: true, text: 'Humectation (Heures/24h)', color: 'transparent', font: { size: 11 } },
+                            grid: { display: false, drawBorder: false },
+                            min: 0, max: 24,
+                            ticks: { color: 'transparent', font: { size: 10 } }
+                        }
                     }
                 }
             });
         }
 
+        // --- GRAPHIQUE 2: PRESSION CUMULÉE BRUTE VS PROTÉGÉE ---
         function renderCumulChart(labels, rawCumul, protectedCumul, todayIndex, treatmentEvents) {
             const ctx = document.getElementById('cumulRiskChart').getContext('2d');
             if (cumulChartInstance) cumulChartInstance.destroy();
@@ -1444,12 +1453,21 @@
                     },
                     scales: {
                         x: { offset: true, grid: { display: false }, ticks: { font: { size: 10 }, maxTicksLimit: 15 } },
-                        y: { title: { display: true, text: 'Pression Cumulée', font: { size: 11 } }, min: 0, ticks: { font: { size: 10 } } }
+                        y: { title: { display: true, text: 'Pression Cumulée', font: { size: 11 } }, min: 0, ticks: { font: { size: 10 } } },
+                        // Axe fantôme transparent pour aligner avec le 3ème graphique
+                        y1: {
+                            type: 'linear', display: true, position: 'right',
+                            title: { display: true, text: 'Humectation (Heures/24h)', color: 'transparent', font: { size: 11 } },
+                            grid: { display: false, drawBorder: false },
+                            min: 0, max: 24,
+                            ticks: { color: 'transparent', font: { size: 10 } }
+                        }
                     }
                 }
             });
         }
 
+        // --- GRAPHIQUE 3: MÉTÉO ---
         function renderWeatherChart(labels, maxTemps, minTemps, wetHours, todayIndex) {
             const ctx = document.getElementById('weatherChart').getContext('2d');
             if (weatherChartInstance) weatherChartInstance.destroy();
