@@ -5,14 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modèle Risque Cercosporiose Betterave</title>
     
-    <!-- Ajout des balises pour l'icône de l'application (PWA / Raccourci) -->
+    <!-- PWA / Raccourci Mobile -->
     <meta name="apple-mobile-web-app-title" content="CercoModel">
     <meta name="application-name" content="CercoModel">
-    <meta name="theme-color" content="#166534"> <!-- emerald-800 -->
+    <meta name="theme-color" content="#166534">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     
-    <!-- Favicon standard généré en SVG (Betterave + Modélisation + Cerco) -->
+    <!-- Nouveau Logo SVG Haute Définition (Betterave + Modélisation) -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23115e59'/%3E%3Cstop offset='100%25' stop-color='%23042f2e'/%3E%3C/linearGradient%3E%3ClinearGradient id='leaf' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%234ade80'/%3E%3Cstop offset='100%25' stop-color='%2316a34a'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='512' height='512' rx='128' fill='url(%23bg)'/%3E%3Cpath d='M256 60 C 200 60, 160 160, 230 250 L 256 280 L 282 250 C 352 160, 312 60, 256 60 Z' fill='url(%23leaf)'/%3E%3Cpath d='M220 120 C 140 100, 100 180, 190 250 L 256 280 Z' fill='url(%23leaf)'/%3E%3Cpath d='M292 120 C 372 100, 412 180, 322 250 L 256 280 Z' fill='url(%23leaf)'/%3E%3Cpath d='M190 250 C 190 250, 170 340, 256 420 C 342 340, 322 250, 322 250 Z' fill='%23f1f5f9'/%3E%3Cpath d='M220 250 C 220 300, 256 380, 256 420 C 256 380, 292 300, 292 250' fill='none' stroke='%23cbd5e1' stroke-width='8'/%3E%3Ccircle cx='256' cy='130' r='12' fill='%23701a75'/%3E%3Ccircle cx='210' cy='180' r='10' fill='%23701a75'/%3E%3Ccircle cx='300' cy='180' r='14' fill='%23701a75'/%3E%3Ccircle cx='180' cy='160' r='8' fill='%23701a75'/%3E%3Ccircle cx='330' cy='160' r='10' fill='%23701a75'/%3E%3Ccircle cx='240' cy='220' r='9' fill='%23701a75'/%3E%3Ccircle cx='270' cy='230' r='11' fill='%23701a75'/%3E%3Cpath d='M 120 280 L 256 200 L 392 280 L 300 360 L 256 200 M 120 280 L 200 350 L 300 360' fill='none' stroke='%230ea5e9' stroke-width='6'/%3E%3Cpath d='M 120 280 L 200 350' fill='none' stroke='%23d946ef' stroke-width='6'/%3E%3Ccircle cx='120' cy='280' r='14' fill='%23d946ef'/%3E%3Ccircle cx='256' cy='200' r='16' fill='%230ea5e9'/%3E%3Ccircle cx='392' cy='280' r='14' fill='%230ea5e9'/%3E%3Ccircle cx='200' cy='350' r='16' fill='%23d946ef'/%3E%3Ccircle cx='300' cy='360' r='14' fill='%230ea5e9'/%3E%3Ccircle cx='120' cy='280' r='6' fill='white'/%3E%3Ccircle cx='256' cy='200' r='6' fill='white'/%3E%3Ccircle cx='392' cy='280' r='6' fill='white'/%3E%3Ccircle cx='200' cy='350' r='6' fill='white'/%3E%3Ccircle cx='300' cy='360' r='6' fill='white'/%3E%3C/svg%3E">
     <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23115e59'/%3E%3Cstop offset='100%25' stop-color='%23042f2e'/%3E%3C/linearGradient%3E%3ClinearGradient id='leaf' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%234ade80'/%3E%3Cstop offset='100%25' stop-color='%2316a34a'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='512' height='512' rx='128' fill='url(%23bg)'/%3E%3Cpath d='M256 60 C 200 60, 160 160, 230 250 L 256 280 L 282 250 C 352 160, 312 60, 256 60 Z' fill='url(%23leaf)'/%3E%3Cpath d='M220 120 C 140 100, 100 180, 190 250 L 256 280 Z' fill='url(%23leaf)'/%3E%3Cpath d='M292 120 C 372 100, 412 180, 322 250 L 256 280 Z' fill='url(%23leaf)'/%3E%3Cpath d='M190 250 C 190 250, 170 340, 256 420 C 342 340, 322 250, 322 250 Z' fill='%23f1f5f9'/%3E%3Cpath d='M220 250 C 220 300, 256 380, 256 420 C 256 380, 292 300, 292 250' fill='none' stroke='%23cbd5e1' stroke-width='8'/%3E%3Ccircle cx='256' cy='130' r='12' fill='%23701a75'/%3E%3Ccircle cx='210' cy='180' r='10' fill='%23701a75'/%3E%3Ccircle cx='300' cy='180' r='14' fill='%23701a75'/%3E%3Ccircle cx='180' cy='160' r='8' fill='%23701a75'/%3E%3Ccircle cx='330' cy='160' r='10' fill='%23701a75'/%3E%3Ccircle cx='240' cy='220' r='9' fill='%23701a75'/%3E%3Ccircle cx='270' cy='230' r='11' fill='%23701a75'/%3E%3Cpath d='M 120 280 L 256 200 L 392 280 L 300 360 L 256 200 M 120 280 L 200 350 L 300 360' fill='none' stroke='%230ea5e9' stroke-width='6'/%3E%3Cpath d='M 120 280 L 200 350' fill='none' stroke='%23d946ef' stroke-width='6'/%3E%3Ccircle cx='120' cy='280' r='14' fill='%23d946ef'/%3E%3Ccircle cx='256' cy='200' r='16' fill='%230ea5e9'/%3E%3Ccircle cx='392' cy='280' r='14' fill='%230ea5e9'/%3E%3Ccircle cx='200' cy='350' r='16' fill='%23d946ef'/%3E%3Ccircle cx='300' cy='360' r='14' fill='%230ea5e9'/%3E%3Ccircle cx='120' cy='280' r='6' fill='white'/%3E%3Ccircle cx='256' cy='200' r='6' fill='white'/%3E%3Ccircle cx='392' cy='280' r='6' fill='white'/%3E%3Ccircle cx='200' cy='350' r='6' fill='white'/%3E%3Ccircle cx='300' cy='360' r='6' fill='white'/%3E%3C/svg%3E">
 
@@ -46,12 +46,13 @@
 </head>
 <body class="text-slate-800 min-h-screen flex flex-col justify-between">
 
+    <!-- En-tête -->
     <header class="bg-gradient-to-r from-green-900 via-green-800 to-emerald-900 text-white shadow-md py-4">
         <div class="max-w-7xl mx-auto px-4 flex flex-wrap items-center justify-between gap-3">
             <div class="flex items-center gap-3 md:gap-5">
                 <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23115e59'/%3E%3Cstop offset='100%25' stop-color='%23042f2e'/%3E%3C/linearGradient%3E%3ClinearGradient id='leaf' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%234ade80'/%3E%3Cstop offset='100%25' stop-color='%2316a34a'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='512' height='512' rx='128' fill='url(%23bg)'/%3E%3Cpath d='M256 60 C 200 60, 160 160, 230 250 L 256 280 L 282 250 C 352 160, 312 60, 256 60 Z' fill='url(%23leaf)'/%3E%3Cpath d='M220 120 C 140 100, 100 180, 190 250 L 256 280 Z' fill='url(%23leaf)'/%3E%3Cpath d='M292 120 C 372 100, 412 180, 322 250 L 256 280 Z' fill='url(%23leaf)'/%3E%3Cpath d='M190 250 C 190 250, 170 340, 256 420 C 342 340, 322 250, 322 250 Z' fill='%23f1f5f9'/%3E%3Cpath d='M220 250 C 220 300, 256 380, 256 420 C 256 380, 292 300, 292 250' fill='none' stroke='%23cbd5e1' stroke-width='8'/%3E%3Ccircle cx='256' cy='130' r='12' fill='%23701a75'/%3E%3Ccircle cx='210' cy='180' r='10' fill='%23701a75'/%3E%3Ccircle cx='300' cy='180' r='14' fill='%23701a75'/%3E%3Ccircle cx='180' cy='160' r='8' fill='%23701a75'/%3E%3Ccircle cx='330' cy='160' r='10' fill='%23701a75'/%3E%3Ccircle cx='240' cy='220' r='9' fill='%23701a75'/%3E%3Ccircle cx='270' cy='230' r='11' fill='%23701a75'/%3E%3Cpath d='M 120 280 L 256 200 L 392 280 L 300 360 L 256 200 M 120 280 L 200 350 L 300 360' fill='none' stroke='%230ea5e9' stroke-width='6'/%3E%3Cpath d='M 120 280 L 200 350' fill='none' stroke='%23d946ef' stroke-width='6'/%3E%3Ccircle cx='120' cy='280' r='14' fill='%23d946ef'/%3E%3Ccircle cx='256' cy='200' r='16' fill='%230ea5e9'/%3E%3Ccircle cx='392' cy='280' r='14' fill='%230ea5e9'/%3E%3Ccircle cx='200' cy='350' r='16' fill='%23d946ef'/%3E%3Ccircle cx='300' cy='360' r='14' fill='%230ea5e9'/%3E%3Ccircle cx='120' cy='280' r='6' fill='white'/%3E%3Ccircle cx='256' cy='200' r='6' fill='white'/%3E%3Ccircle cx='392' cy='280' r='6' fill='white'/%3E%3Ccircle cx='200' cy='350' r='6' fill='white'/%3E%3Ccircle cx='300' cy='360' r='6' fill='white'/%3E%3C/svg%3E" alt="CercoModel Logo" class="w-14 h-14 md:w-16 md:h-16 rounded-2xl shadow-xl shrink-0 transform hover:scale-105 transition duration-300">
                 <div>
-                    <h1 class="text-xl md:text-2xl font-bold tracking-tight">CercoModel Pro <span class="text-xs bg-emerald-500/30 text-emerald-200 px-2 py-0.5 rounded-md font-normal border border-emerald-400/20">v2.7</span></h1>
+                    <h1 class="text-xl md:text-2xl font-bold tracking-tight">CercoModel Pro <span class="text-xs bg-emerald-500/30 text-emerald-200 px-2 py-0.5 rounded-md font-normal border border-emerald-400/20">v2.8</span></h1>
                     <p class="text-green-200 text-xs md:text-sm">Risque Cercosporiose &bull; Tolérance Variétale &bull; Suivi Fongicides</p>
                 </div>
             </div>
@@ -89,16 +90,15 @@
                         <i class="fa-solid fa-sliders text-green-600"></i> Paramètres Parcelle
                     </h2>
                     <div class="flex items-center gap-2">
-                        <!-- Nouveaux boutons Import / Export -->
-                        <button type="button" onclick="document.getElementById('import-file').click()" class="text-slate-400 hover:text-blue-600 text-xs transition cursor-pointer" title="Importer une configuration">
+                        <!-- Boutons Import / Export -->
+                        <button type="button" onclick="document.getElementById('import-file').click()" class="text-slate-400 hover:text-blue-600 text-xs transition cursor-pointer" title="Importer une configuration (.json)">
                             <i class="fa-solid fa-file-import"></i>
                         </button>
-                        <button type="button" onclick="exportData()" class="text-slate-400 hover:text-blue-600 text-xs transition cursor-pointer" title="Exporter la configuration">
+                        <button type="button" onclick="exportData()" class="text-slate-400 hover:text-blue-600 text-xs transition cursor-pointer" title="Exporter la configuration (.json)">
                             <i class="fa-solid fa-file-export"></i>
                         </button>
                         <input type="file" id="import-file" class="hidden" accept=".json" onchange="importData(event)">
                         
-                        <!-- Boutons existants -->
                         <button type="button" onclick="openResetModal()" class="text-slate-400 hover:text-amber-600 text-xs transition cursor-pointer" title="Réinitialiser toutes les données sauvegardées">
                             <i class="fa-solid fa-rotate-left"></i>
                         </button>
@@ -177,7 +177,7 @@
                         <span id="error-text">Une erreur est survenue.</span>
                     </div>
 
-                    <!-- Boutons d'action : Sauvegarde Explicite + Calcul -->
+                    <!-- Boutons d'action -->
                     <div class="pt-2">
                         <div class="flex gap-2">
                             <button type="button" onclick="manualSave()" class="w-1/3 bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300 font-semibold py-2.5 px-2 rounded-xl shadow-xs transition duration-150 flex flex-col items-center justify-center gap-1 cursor-pointer group">
@@ -196,23 +196,14 @@
                 </form>
             </div>
             
-            <!-- Explication du Modèle -->
-            <div class="bg-slate-50 p-3 rounded-xl text-xs text-slate-600 border border-slate-200/80 space-y-1.5 mt-4">
-                <p class="font-bold text-slate-800 flex items-center gap-1.5">
-                    <i class="fa-solid fa-shield-halved text-emerald-600"></i> Mode Hors-Ligne :
-                </p>
-                <p class="text-[11px] text-slate-600 leading-relaxed">
-                    Cliquez sur <strong>"Sauver"</strong> pour conserver votre paramétrage en local sur cet appareil.
-                </p>
-            </div>
-
-            <!-- Avertissement -->
-            <div class="bg-amber-50 p-3 rounded-xl text-xs text-amber-700 border border-amber-200/80 space-y-1.5 mt-3">
-                <p class="font-bold flex items-center gap-1.5">
+            <!-- Avertissement (Remplace l'encart précédent) -->
+            <div class="bg-amber-50 p-3 rounded-xl text-xs text-amber-800 border border-amber-200/80 space-y-2 mt-4">
+                <p class="font-bold flex items-center gap-1.5 text-sm text-amber-600">
                     <i class="fa-solid fa-triangle-exclamation"></i> Avertissement
                 </p>
-                <p class="text-[11px] leading-relaxed">
-                    Cet outil n'a aucune référence scientifique et a pour unique but d'essayer de simuler la pression. <strong>Cela ne remplace en aucun cas l'observation des parcelles.</strong>
+                <p class="text-[10px] leading-relaxed">
+                    Cet outil n'a aucune référence scientifique et a pour unique but d'essayer de simuler la pression cercosporiose.<br><br>
+                    <strong>Cela ne remplace en aucun cas l'observation des parcelles !</strong>
                 </p>
             </div>
         </div>
@@ -236,7 +227,7 @@
                             <i class="fa-solid fa-wheat-awn text-base"></i>
                         </div>
                         <div>
-                            <p class="text-[11px] font-medium text-slate-500">Rang Fermé (1000°C-j)</p>
+                            <p class="text-[11px] font-medium text-slate-500">Rang Fermé (1000°C-j B0)</p>
                             <p class="font-bold text-xs text-slate-800" id="canopy-date-display">--</p>
                         </div>
                     </div>
@@ -399,8 +390,8 @@
 
     <!-- Footer -->
     <footer class="text-center py-4 border-t border-slate-200/60 bg-white space-y-1">
-        <p class="text-xs text-slate-500">CercoModel Pro &bull; Évaluation épidémiologique & Tolérance Variétale</p>
-        <p class="text-[10px] text-slate-400 font-medium">&copy;YohanDebeauvais2026 - Simulation non officielle. Ne remplace pas l'observation terrain.</p>
+        <p class="text-xs text-slate-500 font-semibold">CercoModel Pro &bull; Évaluation épidémiologique</p>
+        <p class="text-[10px] text-slate-400">&copy; YohanDebeauvais2026 &bull; Simulation non officielle. Ne remplace pas l'observation terrain.</p>
     </footer>
 
     <script>
@@ -455,7 +446,7 @@
         let cumulChartInstance = null;
         let weatherChartInstance = null;
 
-        // --- STREAMING_CHUNK:Storage and Event Functions ---
+        // --- STREAMING_CHUNK:Storage Functions ---
         function saveToLocalStorage() {
             try {
                 localStorage.setItem(STORAGE_KEY_PARCELLES, JSON.stringify(parcelles));
@@ -488,8 +479,9 @@
             return false;
         }
 
+        // --- STREAMING_CHUNK:Import/Export Functions ---
         function exportData() {
-            saveCurrentInputsToActiveParcelle(); // On s'assure d'avoir la dernière version
+            saveCurrentInputsToActiveParcelle();
             const dataStr = JSON.stringify(parcelles, null, 2);
             const blob = new Blob([dataStr], { type: "application/json" });
             const url = URL.createObjectURL(blob);
@@ -512,7 +504,6 @@
             reader.onload = function(e) {
                 try {
                     const importedData = JSON.parse(e.target.result);
-                    // Vérification de sécurité basique du format JSON
                     if (Array.isArray(importedData) && importedData.length > 0 && importedData[0].id) {
                         parcelles = importedData;
                         activeParcelleId = parcelles[0].id;
@@ -520,7 +511,6 @@
                         renderParcelleSelector();
                         selectParcelle(activeParcelleId, true);
                         
-                        // Retour utilisateur visuel
                         const feedback = document.getElementById('save-feedback');
                         feedback.innerHTML = '<i class="fa-solid fa-file-circle-check"></i> Importation réussie';
                         feedback.classList.remove('hidden', 'opacity-0');
@@ -533,12 +523,12 @@
                         }, 3000);
                         
                     } else {
-                        showError("Le fichier importé n'est pas au bon format (CercoModel).");
+                        showError("Le fichier importé n'est pas au bon format.");
                     }
                 } catch (err) {
                     showError("Erreur lors de la lecture du fichier. Le fichier semble corrompu.");
                 }
-                event.target.value = ''; // Réinitialiser l'input pour permettre le re-téléchargement du même fichier
+                event.target.value = '';
             };
             reader.readAsText(file);
         }
@@ -559,9 +549,10 @@
             
             closeResetModal();
             renderParcelleSelector();
-            selectParcelle('p1', true); // true = force load without overriding
+            selectParcelle('p1', true);
         }
 
+        // --- STREAMING_CHUNK:UI Interactions ---
         function renderParcelleSelector() {
             const container = document.getElementById('parcelles-pills-container');
             container.innerHTML = '';
@@ -580,7 +571,6 @@
             });
         }
 
-        // LE CŒUR DU CORRECTIF EST ICI : L'argument isInitialLoad empêche l'effacement.
         function selectParcelle(id, isInitialLoad = false) {
             if (!isInitialLoad) {
                 saveCurrentInputsToActiveParcelle();
@@ -591,7 +581,6 @@
 
             activeParcelleId = id;
             
-            // Remplissage du formulaire avec les données chargées
             parcelleNameInput.value = target.name;
             sowingInput.value = target.sowingDate;
             endDateInput.value = target.endDate || toLocalISODate(defaultEndDate);
@@ -608,7 +597,7 @@
             renderParcelleSelector();
             renderTreatmentsList();
             
-            // Lance un calcul automatique au démarrage / changement d'onglet
+            // Lancement automatique du calcul
             document.getElementById('model-form').dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
         }
 
@@ -626,13 +615,24 @@
             }
         }
 
-        // --- Fonction de Sauvegarde Manuelle explicite ---
+        function handleInputChange() {
+            saveCurrentInputsToActiveParcelle();
+            renderParcelleSelector();
+        }
+
+        // Ecouteurs dynamiques
+        parcelleNameInput.addEventListener('input', handleInputChange);
+        sowingInput.addEventListener('change', handleInputChange);
+        endDateInput.addEventListener('change', handleInputChange);
+        cityInput.addEventListener('change', handleInputChange);
+        varietyPresetInput.addEventListener('change', handleInputChange);
+        varietyNameInput.addEventListener('input', handleInputChange);
+
         function manualSave() {
             saveCurrentInputsToActiveParcelle();
             saveToLocalStorage();
-            renderParcelleSelector(); // Rafraîchit les noms dans les onglets
+            renderParcelleSelector();
 
-            // Feedback UI
             const feedback = document.getElementById('save-feedback');
             feedback.classList.remove('hidden', 'opacity-0');
             setTimeout(() => {
@@ -672,7 +672,7 @@
             selectParcelle(activeParcelleId, false);
         }
 
-        // --- STREAMING_CHUNK:Treatments Management ---
+        // --- STREAMING_CHUNK:Treatments Logic ---
         function renderTreatmentsList() {
             const container = document.getElementById('treatments-list-container');
             container.innerHTML = '';
@@ -718,6 +718,7 @@
             document.getElementById('treatment-modal').classList.add('hidden');
         }
 
+        // C'est cette fonction qui était mal fermée dans l'itération précédente !
         function saveTreatment(e) {
             e.preventDefault();
             const current = parcelles.find(p => p.id === activeParcelleId);
@@ -732,7 +733,13 @@
                 return;
             }
 
-            const newTreatment = { id: 't_' + Date.now(), date: date, duration: duration, efficiency: efficiency };
+            const newTreatment = {
+                id: 't_' + Date.now(),
+                date: date,
+                duration: duration,
+                efficiency: efficiency
+            };
+
             if (!current.treatments) current.treatments = [];
             current.treatments.push(newTreatment);
             
@@ -740,6 +747,7 @@
             closeAddTreatmentModal();
             renderTreatmentsList();
 
+            // Relancer le calcul
             document.getElementById('model-form').dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
         }
 
@@ -751,6 +759,26 @@
             renderTreatmentsList();
             document.getElementById('model-form').dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
         }
+
+        // --- STREAMING_CHUNK:App Initialization ---
+        // Initialize App with LocalStorage support
+        const hasLoadedStorage = loadFromLocalStorage();
+        if (!hasLoadedStorage) {
+            parcelles = JSON.parse(JSON.stringify(defaultParcellesList));
+            activeParcelleId = 'p1';
+            saveToLocalStorage();
+        } else {
+            // MISE À JOUR AUTOMATIQUE DE LA DATE DE FIN À J+7 POUR TOUTES LES PARCELLES
+            const newEndStr = toLocalISODate(defaultEndDate);
+            parcelles.forEach(p => {
+                p.endDate = newEndStr;
+            });
+            saveToLocalStorage();
+        }
+
+        renderParcelleSelector();
+        // Lancement au démarrage (true = isInitialLoad)
+        selectParcelle(activeParcelleId, true);
 
         function toLocalISODate(dateObj) {
             const year = dateObj.getFullYear();
@@ -768,7 +796,7 @@
             errorDiv.classList.add('hidden');
         }
 
-        // --- STREAMING_CHUNK:City Autocomplete ---
+        // --- STREAMING_CHUNK:City Autocomplete API ---
         let debounceTimer;
         cityInput.addEventListener('input', function() {
             clearTimeout(debounceTimer);
@@ -795,6 +823,7 @@
                                     latInput.value = place.latitude;
                                     lonInput.value = place.longitude;
                                     suggestionsList.classList.add('hidden');
+                                    handleInputChange();
                                 });
                                 suggestionsList.appendChild(li);
                             });
@@ -816,13 +845,11 @@
             }
         });
 
-        // --- STREAMING_CHUNK:Main Data Fetch & Submit ---
+        // --- STREAMING_CHUNK:Weather API Execution ---
         document.getElementById('model-form').addEventListener('submit', async function(e) {
             e.preventDefault();
             hideError();
-
-            // L'utilisateur a cliqué sur "Modéliser", on sauvegarde explicitement son formulaire
-            manualSave();
+            manualSave(); // Sauvegarde forcée
 
             const sowingDateStr = sowingInput.value;
             const endDateStr = endDateInput.value;
@@ -865,7 +892,6 @@
                 let hourlyData = { time: [], temperature_2m: [], relative_humidity_2m: [], dew_point_2m: [] };
                 let forecastStart = startDate;
 
-                // Archive Data
                 if (startDate < eightyFiveDaysAgo) {
                     const archiveEnd = new Date(eightyFiveDaysAgo);
                     archiveEnd.setDate(eightyFiveDaysAgo.getDate() - 1);
@@ -888,7 +914,6 @@
                     forecastStart = eightyFiveDaysAgo;
                 }
 
-                // Forecast Data
                 if (forecastStart <= effectiveEndDate) {
                     const forecastStartStr = toLocalISODate(forecastStart);
                     const forecastEndStr = toLocalISODate(effectiveEndDate);
@@ -920,7 +945,7 @@
             }
         });
 
-        // --- STREAMING_CHUNK:Epidemiological Agronomic Model ---
+        // --- STREAMING_CHUNK:Agronomic & Epidemiological Model ---
         function runAgronomicModel(hourlyData) {
             const currentParcelle = parcelles.find(p => p.id === activeParcelleId);
             
@@ -983,12 +1008,14 @@
             sortedDates.forEach((date, dateIdx) => {
                 const dayData = dailyResults[date];
 
+                // Phénologie : Cumul thermique (Base 0°C)
                 const meanT = (dayData.minT + dayData.maxT) / 2;
-                if (meanT > 5) {
-                    accumulatedDegreeDays += (meanT - 5);
+                if (meanT > 0) {
+                    accumulatedDegreeDays += meanT; // Addition brute (Base 0)
                 }
 
-                if (accumulatedDegreeDays >= 800 && !canopyClosed) {
+                // Seuil à 1000°C-j
+                if (accumulatedDegreeDays >= 1000 && !canopyClosed) {
                     canopyClosed = true;
                     canopyDate = date;
                 }
@@ -1094,10 +1121,36 @@
                 chartWetHours.push(wetHours);
             });
 
+            // FILTRE D'AFFICHAGE : Ne conserver les données pour les graphiques qu'à partir du 15 juin
+            if (chartDates.length > 0) {
+                const simYear = chartDates[0].substring(0, 4);
+                const june15Date = `${simYear}-06-15`;
+                let startIndex = chartDates.findIndex(d => d >= june15Date);
+
+                if (startIndex > 0) {
+                    chartDates.splice(0, startIndex);
+                    chartDailyRisk.splice(0, startIndex);
+                    chartRawCumul.splice(0, startIndex);
+                    chartProtectedCumul.splice(0, startIndex);
+                    chartMaxTemp.splice(0, startIndex);
+                    chartMinTemp.splice(0, startIndex);
+                    chartWetHours.splice(0, startIndex);
+
+                    // Recalculer la position des traitements sur les graphiques
+                    for (let i = treatmentEvents.length - 1; i >= 0; i--) {
+                        if (treatmentEvents[i].dateIndex < startIndex) {
+                            treatmentEvents.splice(i, 1); // On ne dessine pas le point si fait avant le 15 juin
+                        } else {
+                            treatmentEvents[i].dateIndex -= startIndex;
+                        }
+                    }
+                }
+            }
+
             updateUI(canopyDate, chartDailyRisk, chartRawCumul, chartProtectedCumul, chartMaxTemp, chartMinTemp, chartWetHours, chartDates, treatmentEvents, activeTreatments);
         }
 
-        // --- STREAMING_CHUNK:UI Updates & Charts ---
+        // --- STREAMING_CHUNK:UI Draw Functions ---
         function updateUI(canopyDate, dailyRisk, rawCumul, protectedCumul, maxTemps, minTemps, wetHours, dates, treatmentEvents, activeTreatments) {
             document.getElementById('results-content').classList.remove('hidden');
             document.getElementById('results-content').classList.add('flex');
@@ -1107,7 +1160,7 @@
                 const dateObj = new Date(canopyDate);
                 canopyDisplay.innerText = dateObj.toLocaleDateString('fr-FR', { day: '2-digit', month: 'short' });
             } else {
-                canopyDisplay.innerText = "Non atteinte (< 800°C-j)";
+                canopyDisplay.innerText = "Non atteinte (< 1000°C-j B0)";
             }
 
             const todayStr = toLocalISODate(new Date());
@@ -1432,20 +1485,6 @@
                 weatherCard.classList.remove('hidden');
             }
         }
-
-        // --- STREAMING_CHUNK:App Entry Point ---
-        const hasLoadedStorage = loadFromLocalStorage();
-        if (!hasLoadedStorage) {
-            parcelles = JSON.parse(JSON.stringify(defaultParcellesList));
-            activeParcelleId = 'p1';
-            saveToLocalStorage();
-        }
-
-        renderParcelleSelector();
-        
-        // CRITICAL FIX: isInitialLoad set to true prevents form data wiping local storage
-        selectParcelle(activeParcelleId, true); 
-
     </script>
 </body>
 </html>
