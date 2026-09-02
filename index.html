@@ -218,6 +218,16 @@
                     <p><strong class="text-slate-700">2. Seuil d'Intervention :</strong> C'est le cumul du risque. Le seuil est de <strong>18 points</strong> en été. En septembre, la maladie n'ayant plus le temps d'éliminer le feuillage avant la récolte, le seuil est relevé à <strong>25 points</strong>.</p>
                 </div>
             </div>
+
+            <!-- Avertissement OAD & Observation -->
+            <div class="bg-amber-50 p-3 rounded-xl border border-amber-200 text-xs text-amber-800 shadow-sm mt-4">
+                <p class="font-bold flex items-center gap-1.5 mb-1 text-amber-700">
+                    <i class="fa-solid fa-binoculars"></i> Observation Terrain
+                </p>
+                <p class="text-[10px] leading-relaxed text-justify">
+                    Ce modèle est un Outil d'Aide à la Décision (OAD) évaluant la pression théorique. <strong>Il ne remplace en aucun cas le tour de plaine</strong>. La décision de traiter doit toujours être confirmée par l'observation visuelle des premières taches dans la parcelle.
+                </p>
+            </div>
         </div>
 
         <div class="lg:col-span-3 bg-white rounded-xl shadow-sm border border-slate-200 p-5 flex flex-col justify-between min-h-[500px] relative">
@@ -483,21 +493,45 @@
                 let storedData = localStorage.getItem(STORAGE_KEY_PARCELLES);
                 let storedActiveId = localStorage.getItem(STORAGE_KEY_ACTIVE);
 
-                // SCRIPT DE SAUVETAGE : Si la V3 est vide, on cherche dans les anciennes versions
-                if (!storedData) {
+                // Analyse : la V3 contient-elle uniquement une fausse parcelle vide générée par erreur ?
+                let v3IsFake = false;
+                if (storedData) {
+                    const parsed = JSON.parse(storedData);
+                    if (parsed.length === 1 && (!parsed[0].name || parsed[0].id === 'p1')) {
+                        v3IsFake = true; 
+                    }
+                }
+
+                // SAUVETAGE FORCÉ : Si V3 est vide OU contient la fausse parcelle, on fouille le passé
+                if (!storedData || v3IsFake) {
+                    let oldDataFound = false;
                     const oldKeys = ['cercomodel_parcelles_data', 'cercomodel_parcelles_data_v2', 'cercomodel_data', 'parcelles'];
+                    
                     for (let key of oldKeys) {
-                        storedData = localStorage.getItem(key);
-                        if (storedData) break;
+                        const oldDataStr = localStorage.getItem(key);
+                        if (oldDataStr) {
+                            const oldParsed = JSON.parse(oldDataStr);
+                            // On vérifie que cette ancienne sauvegarde contient VRAIMENT vos données (plusieurs parcelles, ou une parcelle renommée)
+                            if (oldParsed.length > 1 || (oldParsed.length === 1 && oldParsed[0].name)) {
+                                storedData = oldDataStr;
+                                oldDataFound = true;
+                                break;
+                            }
+                        }
                     }
                     
-                    const oldIdKeys = ['cercomodel_active_id', 'cercomodel_active_id_v2'];
-                    for (let key of oldIdKeys) {
-                        if (!storedActiveId) storedActiveId = localStorage.getItem(key);
-                    }
+                    // Si on a retrouvé vos données, on va aussi chercher la dernière parcelle que vous aviez affichée
+                    if (oldDataFound) {
+                        const oldIdKeys = ['cercomodel_active_id', 'cercomodel_active_id_v2'];
+                        for (let key of oldIdKeys) {
+                            const oldIdStr = localStorage.getItem(key);
+                            if (oldIdStr) {
+                                storedActiveId = oldIdStr;
+                                break;
+                            }
+                        }
 
-                    // Si on a retrouvé les vieilles données, on les bascule immédiatement sur la V3
-                    if (storedData) {
+                        // On bascule tout de force dans la V3 pour réparer l'erreur !
                         localStorage.setItem(STORAGE_KEY_PARCELLES, storedData);
                         if (storedActiveId) localStorage.setItem(STORAGE_KEY_ACTIVE, storedActiveId);
                     }
@@ -1068,15 +1102,24 @@
             const daysToHarvest = Math.floor((new Date(harvestInput.value) - new Date()) / (1000 * 60 * 60 * 24));
             const currentThreshold = (new Date().getMonth() + 1 >= 9) ? 25 : 18;
 
+            // Gestion du bandeau d'alerte spécifique de fin de cycle
+            const harvestAlertBanner = document.getElementById('dashboard-harvest-alert');
+            if (harvestAlertBanner) {
+                if (daysToHarvest <= 45 && daysToHarvest >= 0) {
+                    harvestAlertBanner.classList.remove('hidden');
+                    harvestAlertBanner.classList.add('flex');
+                } else {
+                    harvestAlertBanner.classList.add('hidden');
+                    harvestAlertBanner.classList.remove('flex');
+                }
+            }
+
             riskBadge.className = "p-3 rounded-xl flex items-center gap-3 border shadow-sm bg-white";
             iconWrapper.className = "p-2.5 rounded-lg shrink-0";
 
             if (!canopyDate) {
                 riskText.innerText = "Nul (Rang non fermé)";
                 riskBadge.classList.add('border-slate-200'); iconWrapper.classList.add('bg-slate-100', 'text-slate-500'); iconWrapper.innerHTML = '<i class="fa-solid fa-triangle-exclamation text-base"></i>';
-            } else if (daysToHarvest <= 45) {
-                riskText.innerText = "Fin de cycle (Récolte)";
-                riskBadge.classList.add('border-sky-200'); iconWrapper.classList.add('bg-sky-50', 'text-sky-500'); iconWrapper.innerHTML = '<i class="fa-solid fa-flag-checkered text-base"></i>';
             } else if (currentCumulVal <= 5) {
                 riskText.innerText = "Très Faible (Maîtrisé)";
                 riskBadge.classList.add('border-emerald-200'); iconWrapper.classList.add('bg-emerald-50', 'text-emerald-500'); iconWrapper.innerHTML = '<i class="fa-solid fa-shield-check text-base"></i>';
