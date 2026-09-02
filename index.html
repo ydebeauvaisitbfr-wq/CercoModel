@@ -8,11 +8,11 @@
     <!-- PWA / Raccourci Mobile -->
     <meta name="apple-mobile-web-app-title" content="CercoModel">
     <meta name="application-name" content="CercoModel">
-    <meta name="theme-color" content="#166534">
+    <meta name="theme-color" content="#047857">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     
-    <!-- Nouveau Logo SVG Haute Définition (Betterave + Modélisation) -->
+    <!-- Nouveau Logo SVG Haute Définition -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23115e59'/%3E%3Cstop offset='100%25' stop-color='%23042f2e'/%3E%3C/linearGradient%3E%3ClinearGradient id='leaf' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%234ade80'/%3E%3Cstop offset='100%25' stop-color='%2316a34a'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='512' height='512' rx='128' fill='url(%23bg)'/%3E%3Cpath d='M256 60 C 200 60, 160 160, 230 250 L 256 280 L 282 250 C 352 160, 312 60, 256 60 Z' fill='url(%23leaf)'/%3E%3Cpath d='M220 120 C 140 100, 100 180, 190 250 L 256 280 Z' fill='url(%23leaf)'/%3E%3Cpath d='M292 120 C 372 100, 412 180, 322 250 L 256 280 Z' fill='url(%23leaf)'/%3E%3Cpath d='M190 250 C 190 250, 170 340, 256 420 C 342 340, 322 250, 322 250 Z' fill='%23f1f5f9'/%3E%3Cpath d='M220 250 C 220 300, 256 380, 256 420 C 256 380, 292 300, 292 250' fill='none' stroke='%23cbd5e1' stroke-width='8'/%3E%3Ccircle cx='256' cy='130' r='12' fill='%23701a75'/%3E%3Ccircle cx='210' cy='180' r='10' fill='%23701a75'/%3E%3Ccircle cx='300' cy='180' r='14' fill='%23701a75'/%3E%3Ccircle cx='180' cy='160' r='8' fill='%23701a75'/%3E%3Ccircle cx='330' cy='160' r='10' fill='%23701a75'/%3E%3Ccircle cx='240' cy='220' r='9' fill='%23701a75'/%3E%3Ccircle cx='270' cy='230' r='11' fill='%23701a75'/%3E%3Cpath d='M 120 280 L 256 200 L 392 280 L 300 360 L 256 200 M 120 280 L 200 350 L 300 360' fill='none' stroke='%230ea5e9' stroke-width='6'/%3E%3Cpath d='M 120 280 L 200 350' fill='none' stroke='%23d946ef' stroke-width='6'/%3E%3Ccircle cx='120' cy='280' r='14' fill='%23d946ef'/%3E%3Ccircle cx='256' cy='200' r='16' fill='%230ea5e9'/%3E%3Ccircle cx='392' cy='280' r='14' fill='%230ea5e9'/%3E%3Ccircle cx='200' cy='350' r='16' fill='%23d946ef'/%3E%3Ccircle cx='300' cy='360' r='14' fill='%230ea5e9'/%3E%3Ccircle cx='120' cy='280' r='6' fill='white'/%3E%3Ccircle cx='256' cy='200' r='6' fill='white'/%3E%3Ccircle cx='392' cy='280' r='6' fill='white'/%3E%3Ccircle cx='200' cy='350' r='6' fill='white'/%3E%3Ccircle cx='300' cy='360' r='6' fill='white'/%3E%3C/svg%3E">
     
     <!-- Tailwind CSS CDN -->
@@ -26,14 +26,14 @@
     
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #334155; }
         
         .spinner { 
-            border: 4px solid rgba(22, 163, 74, 0.15); 
+            border: 4px solid rgba(16, 185, 129, 0.15); 
             width: 42px; 
             height: 42px; 
             border-radius: 50%; 
-            border-left-color: #16a34a; 
+            border-left-color: #10b981; 
             animation: spin 0.9s linear infinite; 
         }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
@@ -44,38 +44,45 @@
         #treatments-list-container::-webkit-scrollbar-thumb { background-color: #cbd5e1; border-radius: 4px; }
         
         .tab-content { transition: opacity 0.2s ease-in-out; }
+        
+        /* Focus doux pour les champs */
+        .input-soft:focus {
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+            border-color: #10b981;
+        }
     </style>
 </head>
-<body class="text-slate-800 min-h-screen flex flex-col justify-between">
+<body class="min-h-screen flex flex-col justify-between">
 
-    <header class="bg-gradient-to-r from-green-900 via-green-800 to-emerald-900 text-white shadow-md py-4">
+    <!-- En-tête adouci -->
+    <header class="bg-emerald-700 text-white shadow-sm py-4">
         <div class="max-w-7xl mx-auto px-4 flex flex-wrap items-center justify-between gap-3">
             <div class="flex items-center gap-3 md:gap-5">
-                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23115e59'/%3E%3Cstop offset='100%25' stop-color='%23042f2e'/%3E%3C/linearGradient%3E%3ClinearGradient id='leaf' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%234ade80'/%3E%3Cstop offset='100%25' stop-color='%2316a34a'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='512' height='512' rx='128' fill='url(%23bg)'/%3E%3Cpath d='M256 60 C 200 60, 160 160, 230 250 L 256 280 L 282 250 C 352 160, 312 60, 256 60 Z' fill='url(%23leaf)'/%3E%3Cpath d='M220 120 C 140 100, 100 180, 190 250 L 256 280 Z' fill='url(%23leaf)'/%3E%3Cpath d='M292 120 C 372 100, 412 180, 322 250 L 256 280 Z' fill='url(%23leaf)'/%3E%3Cpath d='M190 250 C 190 250, 170 340, 256 420 C 342 340, 322 250, 322 250 Z' fill='%23f1f5f9'/%3E%3Cpath d='M220 250 C 220 300, 256 380, 256 420 C 256 380, 292 300, 292 250' fill='none' stroke='%23cbd5e1' stroke-width='8'/%3E%3Ccircle cx='256' cy='130' r='12' fill='%23701a75'/%3E%3Ccircle cx='210' cy='180' r='10' fill='%23701a75'/%3E%3Ccircle cx='300' cy='180' r='14' fill='%23701a75'/%3E%3Ccircle cx='180' cy='160' r='8' fill='%23701a75'/%3E%3Ccircle cx='330' cy='160' r='10' fill='%23701a75'/%3E%3Ccircle cx='240' cy='220' r='9' fill='%23701a75'/%3E%3Ccircle cx='270' cy='230' r='11' fill='%23701a75'/%3E%3Cpath d='M 120 280 L 256 200 L 392 280 L 300 360 L 256 200 M 120 280 L 200 350 L 300 360' fill='none' stroke='%230ea5e9' stroke-width='6'/%3E%3Cpath d='M 120 280 L 200 350' fill='none' stroke='%23d946ef' stroke-width='6'/%3E%3Ccircle cx='120' cy='280' r='14' fill='%23d946ef'/%3E%3Ccircle cx='256' cy='200' r='16' fill='%230ea5e9'/%3E%3Ccircle cx='392' cy='280' r='14' fill='%230ea5e9'/%3E%3Ccircle cx='200' cy='350' r='16' fill='%23d946ef'/%3E%3Ccircle cx='300' cy='360' r='14' fill='%230ea5e9'/%3E%3Ccircle cx='120' cy='280' r='6' fill='white'/%3E%3Ccircle cx='256' cy='200' r='6' fill='white'/%3E%3Ccircle cx='392' cy='280' r='6' fill='white'/%3E%3Ccircle cx='200' cy='350' r='6' fill='white'/%3E%3Ccircle cx='300' cy='360' r='6' fill='white'/%3E%3C/svg%3E" alt="CercoModel Logo" class="w-14 h-14 md:w-16 md:h-16 rounded-2xl shadow-xl shrink-0 transform hover:scale-105 transition duration-300">
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23115e59'/%3E%3Cstop offset='100%25' stop-color='%23042f2e'/%3E%3C/linearGradient%3E%3ClinearGradient id='leaf' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%234ade80'/%3E%3Cstop offset='100%25' stop-color='%2316a34a'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='512' height='512' rx='128' fill='url(%23bg)'/%3E%3Cpath d='M256 60 C 200 60, 160 160, 230 250 L 256 280 L 282 250 C 352 160, 312 60, 256 60 Z' fill='url(%23leaf)'/%3E%3Cpath d='M220 120 C 140 100, 100 180, 190 250 L 256 280 Z' fill='url(%23leaf)'/%3E%3Cpath d='M292 120 C 372 100, 412 180, 322 250 L 256 280 Z' fill='url(%23leaf)'/%3E%3Cpath d='M190 250 C 190 250, 170 340, 256 420 C 342 340, 322 250, 322 250 Z' fill='%23f1f5f9'/%3E%3Cpath d='M220 250 C 220 300, 256 380, 256 420 C 256 380, 292 300, 292 250' fill='none' stroke='%23cbd5e1' stroke-width='8'/%3E%3Ccircle cx='256' cy='130' r='12' fill='%23701a75'/%3E%3Ccircle cx='210' cy='180' r='10' fill='%23701a75'/%3E%3Ccircle cx='300' cy='180' r='14' fill='%23701a75'/%3E%3Ccircle cx='180' cy='160' r='8' fill='%23701a75'/%3E%3Ccircle cx='330' cy='160' r='10' fill='%23701a75'/%3E%3Ccircle cx='240' cy='220' r='9' fill='%23701a75'/%3E%3Ccircle cx='270' cy='230' r='11' fill='%23701a75'/%3E%3Cpath d='M 120 280 L 256 200 L 392 280 L 300 360 L 256 200 M 120 280 L 200 350 L 300 360' fill='none' stroke='%230ea5e9' stroke-width='6'/%3E%3Cpath d='M 120 280 L 200 350' fill='none' stroke='%23d946ef' stroke-width='6'/%3E%3Ccircle cx='120' cy='280' r='14' fill='%23d946ef'/%3E%3Ccircle cx='256' cy='200' r='16' fill='%230ea5e9'/%3E%3Ccircle cx='392' cy='280' r='14' fill='%230ea5e9'/%3E%3Ccircle cx='200' cy='350' r='16' fill='%23d946ef'/%3E%3Ccircle cx='300' cy='360' r='14' fill='%230ea5e9'/%3E%3Ccircle cx='120' cy='280' r='6' fill='white'/%3E%3Ccircle cx='256' cy='200' r='6' fill='white'/%3E%3Ccircle cx='392' cy='280' r='6' fill='white'/%3E%3Ccircle cx='200' cy='350' r='6' fill='white'/%3E%3Ccircle cx='300' cy='360' r='6' fill='white'/%3E%3C/svg%3E" alt="CercoModel Logo" class="w-12 h-12 rounded-xl shadow-sm shrink-0">
                 <div>
-                    <h1 class="text-xl md:text-2xl font-bold tracking-tight">CercoModel Pro <span class="text-xs bg-emerald-500/30 text-emerald-200 px-2 py-0.5 rounded-md font-normal border border-emerald-400/20">v3.0</span></h1>
-                    <p class="text-green-200 text-xs md:text-sm">Risque Cercosporiose &bull; Tolérance Variétale &bull; Suivi Fongicides</p>
+                    <h1 class="text-xl font-bold tracking-tight">CercoModel Pro <span class="text-xs bg-emerald-500/20 text-emerald-50 px-2 py-0.5 rounded font-normal border border-emerald-400/20">v3.0</span></h1>
+                    <p class="text-emerald-100 text-xs md:text-sm font-light">Risque Cercosporiose &bull; Tolérance Variétale &bull; Suivi Fongicides</p>
                 </div>
             </div>
             <div class="flex items-center gap-2">
-                <span class="bg-green-950/60 text-green-300 text-xs px-3 py-1.5 rounded-full border border-green-700/50 flex items-center gap-1.5">
-                    <i class="fa-solid fa-floppy-disk text-emerald-400"></i> Sauvegarde Active
+                <span class="bg-emerald-800/40 text-emerald-100 text-xs px-3 py-1.5 rounded-lg border border-emerald-600/30 flex items-center gap-1.5">
+                    <i class="fa-solid fa-floppy-disk text-emerald-300"></i> Auto-save
                 </span>
-                <span class="hidden sm:inline-block bg-green-950/60 text-green-300 text-xs px-3 py-1.5 rounded-full border border-green-700/50">
-                    <i class="fa-solid fa-cloud-sun text-amber-300 mr-1"></i> Open-Meteo API
+                <span class="hidden sm:inline-block bg-emerald-800/40 text-emerald-100 text-xs px-3 py-1.5 rounded-lg border border-emerald-600/30">
+                    <i class="fa-solid fa-cloud-sun text-amber-200 mr-1"></i> Open-Meteo
                 </span>
             </div>
         </div>
     </header>
 
-    <section class="bg-slate-100 border-b border-slate-200 py-2.5 px-4">
+    <section class="bg-white border-b border-slate-200 py-2.5 px-4">
         <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
             <div class="flex items-center gap-2 overflow-x-auto py-1 scrollbar-none" id="parcelles-pills-container">
                 <!-- Badges de sélection rapide des parcelles (générés en JS) -->
             </div>
             <div class="flex items-center gap-2 shrink-0">
-                <button onclick="createNewParcellePrompt()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs px-3 py-1.5 rounded-lg font-medium flex items-center gap-1.5 shadow-2xs transition cursor-pointer">
-                    <i class="fa-solid fa-plus"></i> Nouvelle Parcelle
+                <button onclick="createNewParcellePrompt()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs px-3 py-1.5 rounded-lg font-medium flex items-center gap-1.5 transition cursor-pointer">
+                    <i class="fa-solid fa-plus text-emerald-600"></i> Nouvelle Parcelle
                 </button>
             </div>
         </div>
@@ -84,11 +91,11 @@
     <main class="max-w-7xl mx-auto px-4 my-6 flex-grow grid grid-cols-1 lg:grid-cols-4 gap-6 w-full">
         
         <!-- Formulaire de Paramétrage (Sidebar) -->
-        <div class="lg:col-span-1 bg-white rounded-2xl shadow-sm border border-slate-200/80 p-5 flex flex-col justify-between h-fit space-y-6">
+        <div class="lg:col-span-1 bg-white rounded-xl shadow-sm border border-slate-200 p-5 flex flex-col justify-between h-fit space-y-6">
             <div class="space-y-4">
                 <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-                    <h2 class="text-base font-bold text-green-900 flex items-center gap-2">
-                        <i class="fa-solid fa-sliders text-green-600"></i> Paramètres
+                    <h2 class="text-sm font-bold text-slate-700 flex items-center gap-2">
+                        <i class="fa-solid fa-sliders text-emerald-600"></i> Paramètres
                     </h2>
                     <div class="flex items-center gap-2">
                         <!-- Boutons Import / Export -->
@@ -103,7 +110,7 @@
                         <button type="button" onclick="openResetModal()" class="text-slate-400 hover:text-amber-600 text-xs transition cursor-pointer" title="Réinitialiser toutes les données sauvegardées">
                             <i class="fa-solid fa-rotate-left"></i>
                         </button>
-                        <button type="button" onclick="deleteCurrentParcelle()" id="delete-parcelle-btn" class="text-slate-400 hover:text-red-600 text-xs transition cursor-pointer" title="Supprimer cette parcelle">
+                        <button type="button" onclick="deleteCurrentParcelle()" id="delete-parcelle-btn" class="text-slate-400 hover:text-red-500 text-xs transition cursor-pointer" title="Supprimer cette parcelle">
                             <i class="fa-solid fa-trash-can"></i>
                         </button>
                     </div>
@@ -112,31 +119,31 @@
                 <form id="model-form" class="space-y-4">
                     <!-- Nom de la parcelle -->
                     <div>
-                        <label for="parcelle-name" class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">Nom de la parcelle</label>
-                        <input type="text" id="parcelle-name" value="" placeholder="Ex: Parcelle Nord" required class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg text-sm focus:bg-white focus:ring-2 focus:ring-green-500 outline-none transition">
+                        <label for="parcelle-name" class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Nom de la parcelle</label>
+                        <input type="text" id="parcelle-name" value="" placeholder="Ex: Parcelle Nord" required class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm input-soft outline-none transition text-slate-700">
                     </div>
 
                     <!-- Dates (Semis, Récolte & Fin d'estimation) -->
                     <div class="grid grid-cols-3 gap-2">
                         <div>
-                            <label for="sowing-date" class="block text-[10px] font-semibold text-slate-700 uppercase tracking-wider mb-1">Semis</label>
-                            <input type="date" id="sowing-date" required class="w-full px-2 py-2 bg-slate-50 border border-slate-300 rounded-lg text-xs focus:bg-white focus:ring-2 focus:ring-green-500 outline-none transition">
+                            <label for="sowing-date" class="block text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-1">Semis</label>
+                            <input type="date" id="sowing-date" required class="w-full px-1.5 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs input-soft outline-none transition text-slate-700">
                         </div>
                         <div>
-                            <label for="harvest-date" class="block text-[10px] font-semibold text-amber-700 uppercase tracking-wider mb-1">Récolte</label>
-                            <input type="date" id="harvest-date" required class="w-full px-2 py-2 bg-amber-50 border border-amber-300 rounded-lg text-xs focus:bg-white focus:ring-2 focus:ring-amber-500 outline-none transition" title="Date prévue d'arrachage">
+                            <label for="harvest-date" class="block text-[10px] font-semibold text-amber-600 uppercase tracking-wider mb-1">Récolte</label>
+                            <input type="date" id="harvest-date" required class="w-full px-1.5 py-2 bg-amber-50/50 border border-amber-200 rounded-lg text-xs input-soft outline-none transition text-slate-700" title="Date prévue d'arrachage">
                         </div>
                         <div>
-                            <label for="end-date" class="block text-[10px] font-semibold text-slate-700 uppercase tracking-wider mb-1">Fin d'estimation</label>
-                            <input type="date" id="end-date" required class="w-full px-2 py-2 bg-slate-50 border border-slate-300 rounded-lg text-xs focus:bg-white focus:ring-2 focus:ring-green-500 outline-none transition" title="Date de fin de modélisation (max 16 jours de prévisions)">
+                            <label for="end-date" class="block text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-1">Fin (Est.)</label>
+                            <input type="date" id="end-date" required class="w-full px-1.5 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs input-soft outline-none transition text-slate-700" title="Date de fin de modélisation (max 16 jours de prévisions)">
                         </div>
                     </div>
 
                     <!-- Localisation / Recherche de la ville -->
                     <div class="relative">
-                        <label for="city-input" class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">Localisation (Commune)</label>
+                        <label for="city-input" class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Localisation (Commune)</label>
                         <div class="relative">
-                            <input type="text" id="city-input" placeholder="Ex: Arras, Reims, Beauvais..." required autocomplete="off" class="w-full px-3 py-2 pl-9 bg-slate-50 border border-slate-300 rounded-lg text-sm focus:bg-white focus:ring-2 focus:ring-green-500 outline-none transition">
+                            <input type="text" id="city-input" placeholder="Ex: Arras, Reims, Beauvais..." required autocomplete="off" class="w-full px-3 py-2 pl-9 bg-slate-50 border border-slate-200 rounded-lg text-sm input-soft outline-none transition text-slate-700">
                             <i class="fa-solid fa-location-dot absolute left-3 top-2.5 text-slate-400 text-sm"></i>
                         </div>
                         
@@ -148,26 +155,26 @@
 
                     <!-- Variété & Sensibilité -->
                     <div class="border-t border-slate-100 pt-3">
-                        <label for="variety-preset" class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1 flex items-center justify-between">
+                        <label for="variety-preset" class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1 flex items-center justify-between">
                             <span>Tolérance Variétale</span>
                             <i class="fa-solid fa-dna text-emerald-600"></i>
                         </label>
-                        <select id="variety-preset" class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg text-xs focus:bg-white focus:ring-2 focus:ring-green-500 outline-none transition mb-2">
+                        <select id="variety-preset" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs input-soft outline-none transition text-slate-700 mb-2">
                             <option value="T" data-coeff="0.65">Très Tolérante</option>
                             <option value="MT" data-coeff="1.00" selected>Tolérante (Témoin)</option>
-                            <option value="S" data-coeff="1.18">Sensible (S)</option>
-                            <option value="TS" data-coeff="1.35">Très Sensible (TS)</option>
+                            <option value="S" data-coeff="1.18">Sensible</option>
+                            <option value="TS" data-coeff="1.35">Très Sensible</option>
                         </select>
-                        <input type="text" id="variety-name" placeholder="Nom de la variété (optionnel)" class="w-full px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs outline-none focus:bg-white">
+                        <input type="text" id="variety-name" placeholder="Nom de la variété (optionnel)" class="w-full px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs input-soft outline-none text-slate-700">
                     </div>
 
                     <!-- Section Traitements Fongicides -->
                     <div class="border-t border-slate-100 pt-3">
                         <div class="flex items-center justify-between mb-2">
-                            <label class="text-xs font-semibold text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
+                            <label class="text-xs font-semibold text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
                                 <i class="fa-solid fa-spray-can-sparkles text-emerald-600"></i> Traitements
                             </label>
-                            <button type="button" onclick="openAddTreatmentModal()" class="text-[11px] bg-emerald-100 hover:bg-emerald-200 text-emerald-800 px-2 py-1 rounded font-semibold transition cursor-pointer">
+                            <button type="button" onclick="openAddTreatmentModal()" class="text-[11px] bg-emerald-50 hover:bg-emerald-100 text-emerald-700 px-2 py-1 rounded font-medium border border-emerald-100 transition cursor-pointer">
                                 <i class="fa-solid fa-plus mr-0.5"></i> Ajouter
                             </button>
                         </div>
@@ -177,7 +184,7 @@
                     </div>
 
                     <!-- Zone d'erreur -->
-                    <div id="error-message" class="hidden p-3 rounded-lg bg-red-50 border border-red-200 text-red-700 text-xs flex items-start gap-2">
+                    <div id="error-message" class="hidden p-3 rounded-lg bg-red-50 border border-red-100 text-red-600 text-xs flex items-start gap-2">
                         <i class="fa-solid fa-circle-exclamation text-red-500 mt-0.5 shrink-0"></i>
                         <span id="error-text">Une erreur est survenue.</span>
                     </div>
@@ -185,16 +192,16 @@
                     <!-- Boutons d'action -->
                     <div class="pt-2">
                         <div class="flex gap-2">
-                            <button type="button" onclick="manualSave()" class="w-1/3 bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300 font-semibold py-2.5 px-2 rounded-xl shadow-xs transition duration-150 flex flex-col items-center justify-center gap-1 cursor-pointer group">
-                                <i class="fa-solid fa-floppy-disk text-slate-400 group-hover:text-emerald-600 transition-colors"></i>
+                            <button type="button" onclick="manualSave()" class="w-1/3 bg-white hover:bg-slate-50 text-slate-600 border border-slate-200 font-medium py-2 px-2 rounded-lg shadow-sm transition flex flex-col items-center justify-center gap-1 cursor-pointer group">
+                                <i class="fa-solid fa-floppy-disk text-slate-400 group-hover:text-emerald-500 transition-colors"></i>
                                 <span class="text-[9px] uppercase tracking-wider">Sauver</span>
                             </button>
-                            <button type="submit" id="submit-btn" class="w-2/3 bg-green-600 hover:bg-green-700 active:bg-green-800 text-white font-semibold py-2.5 px-3 rounded-xl shadow-xs transition duration-150 flex flex-col items-center justify-center gap-1 cursor-pointer">
+                            <button type="submit" id="submit-btn" class="w-2/3 bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white font-medium py-2 px-3 rounded-lg shadow-sm transition flex flex-col items-center justify-center gap-1 cursor-pointer">
                                 <i class="fa-solid fa-chart-line"></i>
-                                <span class="text-[10px] uppercase tracking-wider">Modéliser</span>
+                                <span class="text-[10px] uppercase tracking-wider text-emerald-50">Modéliser</span>
                             </button>
                         </div>
-                        <div id="save-feedback" class="hidden opacity-0 text-emerald-600 text-[11px] font-semibold text-center mt-2 transition-opacity duration-300">
+                        <div id="save-feedback" class="hidden opacity-0 text-emerald-600 text-[11px] font-medium text-center mt-2 transition-opacity duration-300">
                             <i class="fa-solid fa-check-circle"></i> Configuration sauvegardée
                         </div>
                     </div>
@@ -202,24 +209,24 @@
             </div>
             
             <!-- Explication du Modèle -->
-            <div class="bg-slate-50 p-3 rounded-xl text-xs text-slate-600 border border-slate-200/80 space-y-2 mt-4 shadow-sm">
+            <div class="bg-slate-50 p-3 rounded-xl text-xs text-slate-600 border border-slate-200 space-y-2 mt-4 shadow-sm">
                 <p class="font-bold flex items-center gap-1.5 text-sm text-slate-700">
                     <i class="fa-solid fa-circle-info text-sky-500"></i> Comprendre le modèle
                 </p>
                 <div class="space-y-2 text-[10px] leading-relaxed text-justify">
-                    <p><strong class="text-slate-800">1. Le Score Quotidien :</strong> Il évalue le risque d'infection du jour (de 0 à 8). Il croise la <strong>durée d'humectation foliaire</strong> (heures avec HR &ge; 85% ou rosée) et la <strong>température moyenne</strong> pendant cette période. Une chaleur très sèche bloque le champignon. Le résultat est pondéré par la tolérance de la variété.</p>
-                    <p><strong class="text-slate-800">2. Le Seuil d'Intervention :</strong> Il s'agit du cumul des scores quotidiens. Ce seuil est fixé à <strong>18 points</strong> en été. À partir de septembre, la récolte approchant, la maladie n'a plus le temps de détruire le feuillage et d'impacter le rendement. Le seuil est donc automatiquement relevé à <strong>25 points</strong>.</p>
+                    <p><strong class="text-slate-700">1. Score Quotidien :</strong> Il évalue l'infection du jour (de 0 à 8). Il croise la <strong>durée d'humectation foliaire</strong> (HR &ge; 85% ou rosée) et la <strong>température</strong>. Une forte chaleur sèche bloque la maladie. Le résultat final est pondéré selon la variété.</p>
+                    <p><strong class="text-slate-700">2. Seuil d'Intervention :</strong> C'est le cumul du risque. Le seuil est de <strong>18 points</strong> en été. En septembre, la maladie n'ayant plus le temps d'éliminer le feuillage avant la récolte, le seuil est relevé à <strong>25 points</strong>.</p>
                 </div>
             </div>
         </div>
 
-        <div class="lg:col-span-3 bg-white rounded-2xl shadow-sm border border-slate-200/80 p-5 flex flex-col justify-between min-h-[500px] relative">
+        <div class="lg:col-span-3 bg-white rounded-xl shadow-sm border border-slate-200 p-5 flex flex-col justify-between min-h-[500px] relative">
             
             <!-- Écran de chargement -->
-            <div id="loader" class="absolute inset-0 bg-white/95 z-20 hidden flex-col items-center justify-center rounded-2xl backdrop-blur-xs transition-all duration-300">
+            <div id="loader" class="absolute inset-0 bg-white/95 z-20 hidden flex-col items-center justify-center rounded-xl backdrop-blur-sm transition-all duration-300">
                 <div class="spinner mb-3"></div>
-                <p class="text-green-800 font-semibold text-sm" id="loading-text">Analyse météorologique & épidémiologique...</p>
-                <p class="text-slate-400 text-xs mt-1">Interrogation des stations météo & calcul de rémanence fongicide</p>
+                <p class="text-emerald-700 font-medium text-sm" id="loading-text">Analyse météorologique & épidémiologique...</p>
+                <p class="text-slate-400 text-xs mt-1">Interrogation des stations météo & calcul de rémanence</p>
             </div>
 
             <!-- Contenu dynamique -->
@@ -227,54 +234,54 @@
                 
                 <!-- Badges de Synthèse -->
                 <div class="grid grid-cols-1 sm:grid-cols-4 gap-3">
-                    <div class="bg-slate-50 border border-slate-200/80 p-3 rounded-xl flex items-center gap-3">
-                        <div class="bg-green-100 text-green-800 p-2.5 rounded-lg shrink-0">
+                    <div class="bg-slate-50 border border-slate-100 p-3 rounded-xl flex items-center gap-3">
+                        <div class="bg-white text-slate-600 p-2.5 rounded-lg border border-slate-200 shrink-0">
                             <i class="fa-solid fa-wheat-awn text-base"></i>
                         </div>
                         <div>
-                            <p class="text-[11px] font-medium text-slate-500">Rang Fermé (800°C-j)</p>
-                            <p class="font-bold text-xs text-slate-800" id="canopy-date-display">--</p>
+                            <p class="text-[10px] font-medium text-slate-400 uppercase tracking-wider">Fermeture (800°C-j)</p>
+                            <p class="font-bold text-xs text-slate-700" id="canopy-date-display">--</p>
                         </div>
                     </div>
                     
-                    <div id="risk-badge" class="bg-slate-50 border border-slate-200/80 p-3 rounded-xl flex items-center gap-3 transition-colors duration-200">
-                        <div id="risk-icon-wrapper" class="bg-slate-200 text-slate-700 p-2.5 rounded-lg shrink-0">
+                    <div id="risk-badge" class="bg-slate-50 border border-slate-100 p-3 rounded-xl flex items-center gap-3 transition-colors duration-200">
+                        <div id="risk-icon-wrapper" class="bg-white text-slate-600 p-2.5 rounded-lg border border-slate-200 shrink-0">
                             <i class="fa-solid fa-triangle-exclamation text-base"></i>
                         </div>
                         <div>
-                            <p class="text-[11px] font-medium text-slate-500">Pression Nette (Protégée)</p>
-                            <p class="font-bold text-xs text-slate-800" id="current-risk-display">Calcul en cours...</p>
+                            <p class="text-[10px] font-medium text-slate-400 uppercase tracking-wider">Pression Nette</p>
+                            <p class="font-bold text-xs text-slate-700" id="current-risk-display">Calcul en cours...</p>
                         </div>
                     </div>
 
-                    <div id="protection-badge" class="bg-slate-50 border border-slate-200/80 p-3 rounded-xl flex items-center gap-3">
-                        <div id="protection-icon-wrapper" class="bg-emerald-100 text-emerald-800 p-2.5 rounded-lg shrink-0">
+                    <div id="protection-badge" class="bg-slate-50 border border-slate-100 p-3 rounded-xl flex items-center gap-3">
+                        <div id="protection-icon-wrapper" class="bg-white text-emerald-600 p-2.5 rounded-lg border border-emerald-100 shrink-0">
                             <i class="fa-solid fa-shield-virus text-base"></i>
                         </div>
                         <div>
-                            <p class="text-[11px] font-medium text-slate-500">Protection Fongicide</p>
-                            <p class="font-bold text-xs text-slate-800" id="protection-status-display">Aucune</p>
+                            <p class="text-[10px] font-medium text-slate-400 uppercase tracking-wider">Protection</p>
+                            <p class="font-bold text-xs text-slate-700" id="protection-status-display">Aucune</p>
                         </div>
                     </div>
 
-                    <div id="trend-badge" class="bg-slate-50 border border-slate-200/80 p-3 rounded-xl flex items-center gap-3">
-                        <div id="trend-icon-wrapper" class="bg-blue-100 text-blue-700 p-2.5 rounded-lg shrink-0">
+                    <div id="trend-badge" class="bg-slate-50 border border-slate-100 p-3 rounded-xl flex items-center gap-3">
+                        <div id="trend-icon-wrapper" class="bg-white text-blue-500 p-2.5 rounded-lg border border-blue-100 shrink-0">
                             <i class="fa-solid fa-chart-line text-base"></i>
                         </div>
                         <div>
-                            <p class="text-[11px] font-medium text-slate-500">Tendance à 7 Jours</p>
-                            <p class="font-bold text-xs text-slate-800" id="forecast-trend-display">--</p>
+                            <p class="text-[10px] font-medium text-slate-400 uppercase tracking-wider">Tendance (7j)</p>
+                            <p class="font-bold text-xs text-slate-700" id="forecast-trend-display">--</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- FOCUS 7 JOURS AVEC PROTECTION FONGICIDE -->
-                <div class="bg-gradient-to-br from-slate-50 to-emerald-50/40 border border-emerald-100 rounded-xl p-4">
+                <div class="bg-slate-50 border border-slate-200 rounded-xl p-4">
                     <div class="flex items-center justify-between mb-3">
                         <h3 class="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-2">
-                            <i class="fa-solid fa-calendar-week text-emerald-600"></i> Focus Prévisions Météo & Risque Post-Traitement
+                            <i class="fa-solid fa-calendar-week text-emerald-500"></i> Prévisions Météo & Risque
                         </h3>
-                        <span class="text-[11px] text-slate-500 bg-white px-2 py-0.5 rounded border border-slate-200">7 Jours</span>
+                        <span class="text-[10px] text-slate-400 bg-white px-2 py-0.5 rounded border border-slate-200">7 Jours</span>
                     </div>
                     <div id="forecast-cards-container" class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2">
                         <!-- Généré dynamiquement en JS -->
@@ -284,26 +291,26 @@
                 <!-- ONGLET DE NAVIGATION -->
                 <div class="border-b border-slate-200">
                     <nav class="flex space-x-2 sm:space-x-4 overflow-x-auto pb-1" aria-label="Tabs">
-                        <button onclick="switchTab('all')" id="tab-btn-all" class="tab-btn py-2 px-3 text-xs font-semibold rounded-t-lg border-b-2 border-green-600 text-green-700 bg-green-50/50 whitespace-nowrap cursor-pointer">
+                        <button onclick="switchTab('all')" id="tab-btn-all" class="tab-btn py-2 px-3 text-xs font-medium rounded-t-lg border-b-2 border-emerald-500 text-emerald-700 bg-emerald-50/50 whitespace-nowrap cursor-pointer">
                             <i class="fa-solid fa-border-all mr-1.5"></i> Synthèse
                         </button>
-                        <button onclick="switchTab('daily')" id="tab-btn-daily" class="tab-btn py-2 px-3 text-xs font-semibold rounded-t-lg border-b-2 border-transparent text-slate-500 hover:text-slate-700 whitespace-nowrap cursor-pointer">
+                        <button onclick="switchTab('daily')" id="tab-btn-daily" class="tab-btn py-2 px-3 text-xs font-medium rounded-t-lg border-b-2 border-transparent text-slate-500 hover:text-slate-700 whitespace-nowrap cursor-pointer">
                             <i class="fa-solid fa-chart-bar mr-1.5"></i> Risque Quotidien
                         </button>
-                        <button onclick="switchTab('cumul')" id="tab-btn-cumul" class="tab-btn py-2 px-3 text-xs font-semibold rounded-t-lg border-b-2 border-transparent text-slate-500 hover:text-slate-700 whitespace-nowrap cursor-pointer">
+                        <button onclick="switchTab('cumul')" id="tab-btn-cumul" class="tab-btn py-2 px-3 text-xs font-medium rounded-t-lg border-b-2 border-transparent text-slate-500 hover:text-slate-700 whitespace-nowrap cursor-pointer">
                             <i class="fa-solid fa-chart-line mr-1.5"></i> Pression Cumulée
                         </button>
-                        <button onclick="switchTab('weather')" id="tab-btn-weather" class="tab-btn py-2 px-3 text-xs font-semibold rounded-t-lg border-b-2 border-transparent text-slate-500 hover:text-slate-700 whitespace-nowrap cursor-pointer">
+                        <button onclick="switchTab('weather')" id="tab-btn-weather" class="tab-btn py-2 px-3 text-xs font-medium rounded-t-lg border-b-2 border-transparent text-slate-500 hover:text-slate-700 whitespace-nowrap cursor-pointer">
                             <i class="fa-solid fa-cloud-sun-rain mr-1.5"></i> Données Météo
                         </button>
                     </nav>
                 </div>
 
                 <div class="space-y-6">
-                    <div id="chart-card-daily" class="bg-white p-4 rounded-xl border border-slate-200/90 shadow-2xs">
+                    <div id="chart-card-daily" class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                         <div class="flex items-center justify-between mb-2">
-                            <h4 class="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-2">
-                                <span class="w-2.5 h-2.5 rounded-full bg-green-600"></span> Score Quotidien (Ajusté Variété & Fongicide)
+                            <h4 class="text-xs font-bold text-slate-600 uppercase tracking-wider flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Score Quotidien Net
                             </h4>
                             <button onclick="exportChartImage('chart-card-daily', 'Risque_Quotidien')" class="text-slate-400 hover:text-emerald-600 bg-slate-50 hover:bg-emerald-50 px-2 py-1 rounded transition cursor-pointer shrink-0" title="Télécharger ce graphique">
                                 <i class="fa-solid fa-download"></i>
@@ -312,10 +319,10 @@
                         <div class="w-full relative h-[250px]"><canvas id="dailyRiskChart"></canvas></div>
                     </div>
 
-                    <div id="chart-card-cumul" class="bg-white p-4 rounded-xl border border-slate-200/90 shadow-2xs">
+                    <div id="chart-card-cumul" class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                         <div class="flex items-center justify-between mb-2">
-                            <h4 class="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-2">
-                                <span class="w-2.5 h-2.5 rounded-full bg-rose-600"></span> Évolution Épidémique : Potentielle vs Nette
+                            <h4 class="text-xs font-bold text-slate-600 uppercase tracking-wider flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-rose-500"></span> Évolution Cumulée : Potentielle vs Nette
                             </h4>
                             <button onclick="exportChartImage('chart-card-cumul', 'Pression_Cumulee')" class="text-slate-400 hover:text-emerald-600 bg-slate-50 hover:bg-emerald-50 px-2 py-1 rounded transition cursor-pointer shrink-0" title="Télécharger ce graphique">
                                 <i class="fa-solid fa-download"></i>
@@ -324,10 +331,10 @@
                         <div class="w-full relative h-[250px]"><canvas id="cumulRiskChart"></canvas></div>
                     </div>
 
-                    <div id="chart-card-weather" class="bg-white p-4 rounded-xl border border-slate-200/90 shadow-2xs">
+                    <div id="chart-card-weather" class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                         <div class="flex items-center justify-between mb-2">
-                            <h4 class="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-2">
-                                <span class="w-2.5 h-2.5 rounded-full bg-sky-500"></span> Facteurs Météo Clés
+                            <h4 class="text-xs font-bold text-slate-600 uppercase tracking-wider flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-sky-500"></span> Facteurs Météo Clés
                             </h4>
                             <button onclick="exportChartImage('chart-card-weather', 'Facteurs_Meteo')" class="text-slate-400 hover:text-emerald-600 bg-slate-50 hover:bg-emerald-50 px-2 py-1 rounded transition cursor-pointer shrink-0" title="Télécharger ce graphique">
                                 <i class="fa-solid fa-download"></i>
@@ -340,21 +347,21 @@
             
             <!-- État initial -->
             <div id="empty-state" class="flex-grow flex flex-col items-center justify-center py-12 text-center text-slate-400">
-                <div class="bg-green-50 p-4 rounded-full mb-3 text-green-400">
+                <div class="bg-slate-50 p-4 rounded-full mb-3 text-slate-300 border border-slate-100">
                     <i class="fa-solid fa-seedling text-4xl"></i>
                 </div>
-                <h3 class="text-slate-700 font-semibold text-sm mb-1">Prêt pour la modélisation</h3>
-                <p class="text-slate-400 text-xs max-w-sm">Renseignez votre parcelle, variété et traitements puis cliquez sur Modéliser pour générer les graphiques d'impact.</p>
+                <h3 class="text-slate-600 font-medium text-sm mb-1">Prêt pour la modélisation</h3>
+                <p class="text-slate-400 text-xs max-w-sm">Renseignez votre parcelle, variété et traitements puis cliquez sur Modéliser pour générer les graphiques.</p>
             </div>
         </div>
     </main>
 
     <!-- MODAL : AJOUT D'UN TRAITEMENT FONGICIDE -->
-    <div id="treatment-modal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl max-w-md w-full p-5 shadow-2xl border border-slate-100 space-y-4">
+    <div id="treatment-modal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-xl max-w-md w-full p-5 shadow-xl border border-slate-200 space-y-4">
             <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-                <h3 class="text-sm font-bold text-slate-800 flex items-center gap-2">
-                    <i class="fa-solid fa-spray-can-sparkles text-emerald-600"></i> Ajouter un Traitement
+                <h3 class="text-sm font-bold text-slate-700 flex items-center gap-2">
+                    <i class="fa-solid fa-spray-can-sparkles text-emerald-500"></i> Ajouter un Traitement
                 </h3>
                 <button type="button" onclick="closeAddTreatmentModal()" class="text-slate-400 hover:text-slate-600 text-sm">
                     <i class="fa-solid fa-xmark"></i>
@@ -363,73 +370,69 @@
 
             <form id="treatment-form" onsubmit="saveTreatment(event)" class="space-y-3">
                 <div>
-                    <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Date du traitement</label>
-                    <input type="date" id="treatment-date" required class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg text-xs outline-none focus:ring-2 focus:ring-emerald-500">
+                    <label class="block text-xs font-semibold text-slate-500 uppercase mb-1">Date du traitement</label>
+                    <input type="date" id="treatment-date" required class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs input-soft outline-none text-slate-700">
                 </div>
 
                 <div class="grid grid-cols-2 gap-3">
                     <div>
-                        <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Rémanence (Jours)</label>
-                        <input type="number" id="treatment-remanence" min="5" max="35" value="18" required class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg text-xs outline-none focus:ring-2 focus:ring-emerald-500">
+                        <label class="block text-xs font-semibold text-slate-500 uppercase mb-1">Rémanence (Jours)</label>
+                        <input type="number" id="treatment-remanence" min="5" max="35" value="18" required class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs input-soft outline-none text-slate-700">
                     </div>
                     <div>
-                        <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Efficacité Barrière (%)</label>
-                        <input type="number" id="treatment-efficiency" min="30" max="99" value="80" required class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg text-xs outline-none focus:ring-2 focus:ring-emerald-500">
+                        <label class="block text-xs font-semibold text-slate-500 uppercase mb-1">Efficacité Barrière (%)</label>
+                        <input type="number" id="treatment-efficiency" min="30" max="99" value="80" required class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs input-soft outline-none text-slate-700">
                     </div>
                 </div>
 
                 <!-- ALERTE RÉCOLTE -->
-                <div id="harvest-warning" class="hidden bg-amber-50 p-3 rounded-lg border border-amber-200 text-amber-800 text-xs flex items-start gap-2">
+                <div id="harvest-warning" class="hidden bg-amber-50 p-3 rounded-lg border border-amber-200 text-amber-700 text-xs flex items-start gap-2">
                     <i class="fa-solid fa-triangle-exclamation text-amber-500 mt-0.5 shrink-0"></i>
                     <span>Ce traitement intervient à <strong>moins de 45 jours</strong> de la récolte. Vérifiez l'utilité économique et le Délai Avant Récolte (DAR) du produit.</span>
                 </div>
 
                 <div class="flex justify-end gap-2 pt-3 border-t border-slate-100">
-                    <button type="button" onclick="closeAddTreatmentModal()" class="px-3 py-2 rounded-lg text-xs font-medium text-slate-600 bg-slate-100 hover:bg-slate-200">Annuler</button>
-                    <button type="submit" class="px-4 py-2 rounded-lg text-xs font-semibold text-white bg-emerald-600 hover:bg-emerald-700">Enregistrer</button>
+                    <button type="button" onclick="closeAddTreatmentModal()" class="px-3 py-2 rounded-lg text-xs font-medium text-slate-600 bg-slate-50 hover:bg-slate-100 border border-slate-200">Annuler</button>
+                    <button type="submit" class="px-4 py-2 rounded-lg text-xs font-medium text-white bg-emerald-600 hover:bg-emerald-700">Enregistrer</button>
                 </div>
             </form>
         </div>
     </div>
 
     <!-- MODAL : CONFIRMATION RESET -->
-    <div id="reset-modal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl max-w-sm w-full p-5 shadow-2xl border border-slate-100 text-center space-y-4">
-            <div class="w-12 h-12 rounded-full bg-red-100 text-red-600 flex items-center justify-center mx-auto text-xl">
+    <div id="reset-modal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-xl max-w-sm w-full p-5 shadow-xl border border-slate-200 text-center space-y-4">
+            <div class="w-12 h-12 rounded-full bg-red-50 text-red-500 flex items-center justify-center mx-auto text-xl border border-red-100">
                 <i class="fa-solid fa-triangle-exclamation"></i>
             </div>
-            <h3 class="text-sm font-bold text-slate-800">Réinitialiser les données ?</h3>
+            <h3 class="text-sm font-bold text-slate-700">Réinitialiser les données ?</h3>
             <p class="text-xs text-slate-500">Toutes vos parcelles et historiques de traitements seront définitivement supprimés de cet appareil. Cette action est irréversible.</p>
             <div class="flex justify-center gap-2 pt-2">
-                <button type="button" onclick="closeResetModal()" class="px-4 py-2 rounded-lg text-xs font-medium text-slate-600 bg-slate-100 hover:bg-slate-200">Annuler</button>
-                <button type="button" onclick="executeReset()" class="px-4 py-2 rounded-lg text-xs font-semibold text-white bg-red-600 hover:bg-red-700">Oui, supprimer</button>
+                <button type="button" onclick="closeResetModal()" class="px-4 py-2 rounded-lg text-xs font-medium text-slate-600 bg-slate-50 hover:bg-slate-100 border border-slate-200">Annuler</button>
+                <button type="button" onclick="executeReset()" class="px-4 py-2 rounded-lg text-xs font-medium text-white bg-red-500 hover:bg-red-600">Oui, supprimer</button>
             </div>
         </div>
     </div>
 
     <!-- Footer -->
-    <footer class="text-center py-4 border-t border-slate-200/60 bg-white space-y-1">
-        <p class="text-xs text-slate-500 font-semibold">CercoModel Pro &bull; Évaluation épidémiologique</p>
-        <p class="text-[10px] text-slate-400">&copy; YohanDebeauvais2026 &bull; Simulation non officielle. Ne remplace pas l'observation terrain.</p>
+    <footer class="text-center py-4 border-t border-slate-200 bg-white space-y-1">
+        <p class="text-xs text-slate-500 font-medium">CercoModel Pro &bull; Évaluation épidémiologique</p>
+        <p class="text-[10px] text-slate-400">&copy; YohanDebeauvais2026 &bull; Simulation non officielle.</p>
     </footer>
 
     <script>
-        // --- LOCAL STORAGE PERSISTENCE KEYS ---
         const STORAGE_KEY_PARCELLES = 'cercomodel_parcelles_data_v3';
         const STORAGE_KEY_ACTIVE = 'cercomodel_active_id_v3';
 
-        // --- DATA MODEL & PARCEL MANAGEMENT ---
         const todayObj = new Date();
-        let defaultSowing = new Date(todayObj.getFullYear(), 3, 1); // 1er Avril
+        let defaultSowing = new Date(todayObj.getFullYear(), 3, 1); 
         if (defaultSowing > todayObj) {
             defaultSowing = new Date(todayObj.getFullYear() - 1, 3, 1);
         }
-
-        let defaultHarvest = new Date(todayObj.getFullYear(), 9, 15); // 15 Octobre
+        let defaultHarvest = new Date(todayObj.getFullYear(), 9, 15);
         let defaultEndDate = new Date(todayObj);
         defaultEndDate.setDate(todayObj.getDate() + 7);
 
-        // Parcelles par défaut
         let defaultParcellesList = [
             { 
                 id: 'p1', 
@@ -449,7 +452,6 @@
         let parcelles = [];
         let activeParcelleId = 'p1';
 
-        // Éléments du DOM
         const sowingInput = document.getElementById('sowing-date');
         const harvestInput = document.getElementById('harvest-date');
         const endDateInput = document.getElementById('end-date');
@@ -463,12 +465,10 @@
         const errorText = document.getElementById('error-text');
         const suggestionsList = document.getElementById('city-suggestions');
 
-        // Chart Instances
         let dailyChartInstance = null;
         let cumulChartInstance = null;
         let weatherChartInstance = null;
 
-        // --- STREAMING_CHUNK:Storage Functions ---
         function saveToLocalStorage() {
             try {
                 localStorage.setItem(STORAGE_KEY_PARCELLES, JSON.stringify(parcelles));
@@ -501,15 +501,12 @@
             return false;
         }
 
-        // --- STREAMING_CHUNK:Import/Export & Utilities ---
         function exportData() {
             saveCurrentInputsToActiveParcelle();
             const dataStr = JSON.stringify(parcelles, null, 2);
             const blob = new Blob([dataStr], { type: "application/json" });
             const url = URL.createObjectURL(blob);
-            
             const exportFileDefaultName = `CercoModel_Parcelles_${toLocalISODate(new Date())}.json`;
-            
             const linkElement = document.createElement('a');
             linkElement.setAttribute('href', url);
             linkElement.setAttribute('download', exportFileDefaultName);
@@ -520,7 +517,6 @@
         function importData(event) {
             const file = event.target.files[0];
             if (!file) return;
-
             hideError();
             const reader = new FileReader();
             reader.onload = function(e) {
@@ -532,18 +528,6 @@
                         saveToLocalStorage();
                         renderParcelleSelector();
                         selectParcelle(activeParcelleId, true);
-                        
-                        const feedback = document.getElementById('save-feedback');
-                        feedback.innerHTML = '<i class="fa-solid fa-file-circle-check"></i> Importation réussie';
-                        feedback.classList.remove('hidden', 'opacity-0');
-                        setTimeout(() => {
-                            feedback.classList.add('opacity-0');
-                            setTimeout(() => {
-                                feedback.classList.add('hidden');
-                                feedback.innerHTML = '<i class="fa-solid fa-check-circle"></i> Configuration sauvegardée';
-                            }, 300);
-                        }, 3000);
-                        
                     } else {
                         showError("Le fichier importé n'est pas au bon format.");
                     }
@@ -555,20 +539,14 @@
             reader.readAsText(file);
         }
 
-        function openResetModal() {
-            document.getElementById('reset-modal').classList.remove('hidden');
-        }
-
-        function closeResetModal() {
-            document.getElementById('reset-modal').classList.add('hidden');
-        }
+        function openResetModal() { document.getElementById('reset-modal').classList.remove('hidden'); }
+        function closeResetModal() { document.getElementById('reset-modal').classList.add('hidden'); }
 
         function executeReset() {
             localStorage.removeItem(STORAGE_KEY_PARCELLES);
             localStorage.removeItem(STORAGE_KEY_ACTIVE);
             parcelles = JSON.parse(JSON.stringify(defaultParcellesList));
             activeParcelleId = 'p1';
-            
             closeResetModal();
             renderParcelleSelector();
             selectParcelle('p1', true);
@@ -579,17 +557,12 @@
             const btn = element.querySelector('button');
             if(btn) btn.style.display = 'none';
 
-            // Format du nom : NomParcelle_Titre_Date.png
             const rawParcelleName = document.getElementById('parcelle-name').value || 'Parcelle';
             const cleanParcelleName = rawParcelleName.replace(/[^a-zA-Z0-9-]/g, '_');
             const dateStr = toLocalISODate(new Date());
 
-            html2canvas(element, { 
-                scale: 2, 
-                backgroundColor: '#ffffff'
-            }).then(canvas => {
+            html2canvas(element, { scale: 2, backgroundColor: '#ffffff' }).then(canvas => {
                 if(btn) btn.style.display = ''; 
-                
                 const link = document.createElement('a');
                 link.download = `${cleanParcelleName}_${fileName}_${dateStr}.png`;
                 link.href = canvas.toDataURL('image/png');
@@ -597,7 +570,6 @@
             });
         }
 
-        // --- STREAMING_CHUNK:UI Interactions & State ---
         function renderParcelleSelector() {
             const container = document.getElementById('parcelles-pills-container');
             container.innerHTML = '';
@@ -606,21 +578,19 @@
                 const isActive = p.id === activeParcelleId;
                 const displayName = p.name || 'Parcelle sans nom';
                 const badge = document.createElement('button');
-                badge.className = `px-4 py-2 rounded-xl text-xs font-medium flex items-center gap-2 transition-all duration-200 cursor-pointer shrink-0 ${
+                badge.className = `px-3 py-1.5 rounded-lg text-xs font-medium flex items-center gap-1.5 transition cursor-pointer shrink-0 ${
                     isActive 
-                    ? 'bg-emerald-600 text-white shadow-sm border border-emerald-700' 
-                    : 'bg-white text-slate-500 border border-slate-200 hover:bg-slate-50 hover:text-slate-700'
+                    ? 'bg-emerald-100 text-emerald-800 shadow-sm border border-emerald-200' 
+                    : 'bg-slate-50 text-slate-500 border border-slate-200 hover:bg-slate-100'
                 }`;
-                badge.innerHTML = `<i class="fa-solid fa-location-dot ${isActive ? 'text-emerald-200' : 'text-slate-300'}"></i> ${displayName}`;
+                badge.innerHTML = `<i class="fa-solid fa-location-dot ${isActive ? 'text-emerald-500' : 'text-slate-400'}"></i> ${displayName}`;
                 badge.onclick = () => selectParcelle(p.id, false);
                 container.appendChild(badge);
             });
         }
 
         function selectParcelle(id, isInitialLoad = false) {
-            if (!isInitialLoad) {
-                saveCurrentInputsToActiveParcelle();
-            }
+            if (!isInitialLoad) saveCurrentInputsToActiveParcelle();
             
             const target = parcelles.find(p => p.id === id);
             if (!target) return;
@@ -637,9 +607,7 @@
             varietyPresetInput.value = target.sensitivity || 'MT';
             varietyNameInput.value = target.varietyName || '';
 
-            if (!isInitialLoad) {
-                saveToLocalStorage();
-            }
+            if (!isInitialLoad) saveToLocalStorage();
             
             renderParcelleSelector();
             renderTreatmentsList();
@@ -679,7 +647,6 @@
             saveCurrentInputsToActiveParcelle();
             saveToLocalStorage();
             renderParcelleSelector();
-
             const feedback = document.getElementById('save-feedback');
             feedback.classList.remove('hidden', 'opacity-0');
             setTimeout(() => {
@@ -720,14 +687,12 @@
             selectParcelle(activeParcelleId, false);
         }
 
-        // --- STREAMING_CHUNK:Treatments Logic ---
         function renderTreatmentsList() {
             const container = document.getElementById('treatments-list-container');
             container.innerHTML = '';
-
             const current = parcelles.find(p => p.id === activeParcelleId);
             if (!current || !current.treatments || current.treatments.length === 0) {
-                container.innerHTML = `<p class="text-[11px] text-slate-400 font-medium italic py-2 text-center bg-white rounded-xl border border-dashed border-slate-200">Aucun traitement renseigné.</p>`;
+                container.innerHTML = `<p class="text-[11px] text-slate-400 font-medium italic py-2 text-center bg-slate-50 rounded-lg border border-dashed border-slate-200">Aucun traitement renseigné.</p>`;
                 return;
             }
 
@@ -738,17 +703,17 @@
                 const dateFmt = isNaN(dateObj) ? t.date : dateObj.toLocaleDateString('fr-FR', { day: '2-digit', month: 'short' });
 
                 const card = document.createElement('div');
-                card.className = "bg-white border border-slate-100 shadow-sm p-3 rounded-xl flex items-center justify-between text-xs transition-shadow hover:shadow-md relative overflow-hidden group";
+                card.className = "bg-slate-50 border border-slate-100 p-2.5 rounded-lg flex items-center justify-between text-xs relative overflow-hidden group";
                 card.innerHTML = `
-                    <div class="absolute left-0 top-0 bottom-0 w-1.5 bg-emerald-500"></div>
-                    <div class="flex items-center gap-3 pl-2 overflow-hidden">
-                        <span class="bg-emerald-100 text-emerald-700 font-bold text-[10px] px-2 py-1 rounded-md border border-emerald-200">T${idx+1}</span>
+                    <div class="absolute left-0 top-0 bottom-0 w-1 bg-emerald-400"></div>
+                    <div class="flex items-center gap-2.5 pl-2 overflow-hidden">
+                        <span class="bg-white text-emerald-600 font-bold text-[10px] px-1.5 py-0.5 rounded border border-slate-200">T${idx+1}</span>
                         <div class="truncate">
-                            <p class="font-bold text-slate-700 text-[11px] truncate">Application le ${dateFmt}</p>
-                            <p class="text-[10px] text-slate-500 font-medium">Rémanence ${t.duration}j &bull; Efficacité ${t.efficiency}%</p>
+                            <p class="font-bold text-slate-700 text-[11px] truncate">Appliqué le ${dateFmt}</p>
+                            <p class="text-[10px] text-slate-500 font-medium">Rémanence ${t.duration}j &bull; Eff. ${t.efficiency}%</p>
                         </div>
                     </div>
-                    <button type="button" onclick="removeTreatment('${t.id}')" class="text-slate-300 hover:text-red-500 p-2 transition-colors cursor-pointer shrink-0 bg-slate-50 hover:bg-red-50 rounded-lg opacity-100 sm:opacity-0 sm:group-hover:opacity-100">
+                    <button type="button" onclick="removeTreatment('${t.id}')" class="text-slate-300 hover:text-red-500 p-1.5 transition-colors cursor-pointer shrink-0 bg-white hover:bg-red-50 rounded border border-slate-200">
                         <i class="fa-solid fa-trash-can"></i>
                     </button>
                 `;
@@ -765,11 +730,8 @@
             const diffDays = Math.floor((hDate - tDate) / (1000 * 60 * 60 * 24));
             const warning = document.getElementById('harvest-warning');
             
-            if (diffDays <= 45 && diffDays >= 0) {
-                warning.classList.remove('hidden');
-            } else {
-                warning.classList.add('hidden');
-            }
+            if (diffDays <= 45 && diffDays >= 0) warning.classList.remove('hidden');
+            else warning.classList.add('hidden');
         }
 
         document.getElementById('treatment-date').addEventListener('change', checkHarvestDistance);
@@ -782,38 +744,25 @@
             modal.classList.remove('hidden');
         }
 
-        function closeAddTreatmentModal() {
-            document.getElementById('treatment-modal').classList.add('hidden');
-        }
+        function closeAddTreatmentModal() { document.getElementById('treatment-modal').classList.add('hidden'); }
 
         function saveTreatment(e) {
             e.preventDefault();
             const current = parcelles.find(p => p.id === activeParcelleId);
             if (!current) return;
-
             const date = document.getElementById('treatment-date').value;
             const duration = parseInt(document.getElementById('treatment-remanence').value) || 18;
             const efficiency = parseInt(document.getElementById('treatment-efficiency').value) || 80;
 
-            if (!date) {
-                showError("Veuillez choisir une date de traitement.");
-                return;
-            }
+            if (!date) return showError("Veuillez choisir une date.");
 
-            const newTreatment = {
-                id: 't_' + Date.now(),
-                date: date,
-                duration: duration,
-                efficiency: efficiency
-            };
-
+            const newTreatment = { id: 't_' + Date.now(), date: date, duration: duration, efficiency: efficiency };
             if (!current.treatments) current.treatments = [];
             current.treatments.push(newTreatment);
             
             saveToLocalStorage();
             closeAddTreatmentModal();
             renderTreatmentsList();
-
             document.getElementById('model-form').dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
         }
 
@@ -826,7 +775,6 @@
             document.getElementById('model-form').dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
         }
 
-        // --- STREAMING_CHUNK:App Initialization ---
         const hasLoadedStorage = loadFromLocalStorage();
         if (!hasLoadedStorage) {
             parcelles = JSON.parse(JSON.stringify(defaultParcellesList));
@@ -844,26 +792,15 @@
             return `${year}-${month}-${day}`;
         }
 
-        function showError(msg) {
-            errorText.innerText = msg;
-            errorDiv.classList.remove('hidden');
-        }
+        function showError(msg) { errorText.innerText = msg; errorDiv.classList.remove('hidden'); }
+        function hideError() { errorDiv.classList.add('hidden'); }
 
-        function hideError() {
-            errorDiv.classList.add('hidden');
-        }
-
-        // --- STREAMING_CHUNK:City Autocomplete API ---
         let debounceTimer;
         cityInput.addEventListener('input', function() {
             clearTimeout(debounceTimer);
             hideError();
             const query = this.value.trim();
-            
-            if (query.length < 2) {
-                suggestionsList.classList.add('hidden');
-                return;
-            }
+            if (query.length < 2) { suggestionsList.classList.add('hidden'); return; }
 
             debounceTimer = setTimeout(() => {
                 fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(query)}&count=5&language=fr&format=json`)
@@ -873,7 +810,7 @@
                         if (data.results && data.results.length > 0) {
                             data.results.forEach(place => {
                                 const li = document.createElement('li');
-                                li.className = 'px-3 py-2 hover:bg-green-50 cursor-pointer text-xs border-b border-slate-100 last:border-0 flex justify-between items-center';
+                                li.className = 'px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs border-b border-slate-100 last:border-0 flex justify-between items-center text-slate-600';
                                 li.innerHTML = `<span><strong>${place.name}</strong> <span class="text-slate-400">(${place.admin1 || place.country})</span></span> <i class="fa-solid fa-chevron-right text-[10px] text-slate-300"></i>`;
                                 li.addEventListener('click', () => {
                                     cityInput.value = `${place.name} (${place.country})`;
@@ -889,20 +826,14 @@
                             suggestionsList.classList.add('hidden');
                         }
                     })
-                    .catch(err => {
-                        console.error("Erreur Géocodage:", err);
-                        suggestionsList.classList.add('hidden');
-                    });
+                    .catch(err => { console.error("Erreur Géocodage:", err); suggestionsList.classList.add('hidden'); });
             }, 300);
         });
 
         document.addEventListener('click', (e) => {
-            if (e.target !== cityInput && e.target !== suggestionsList) {
-                suggestionsList.classList.add('hidden');
-            }
+            if (e.target !== cityInput && e.target !== suggestionsList) suggestionsList.classList.add('hidden');
         });
 
-        // --- STREAMING_CHUNK:Weather API Execution ---
         document.getElementById('model-form').addEventListener('submit', async function(e) {
             e.preventDefault();
             hideError();
@@ -913,20 +844,14 @@
             const lat = latInput.value;
             const lon = lonInput.value;
 
-            if (!sowingDateStr || !endDateStr || !lat || !lon) {
-                showError("Veuillez remplir tous les champs obligatoires et sélectionner une commune.");
-                return;
-            }
+            if (!sowingDateStr || !endDateStr || !lat || !lon) return showError("Veuillez remplir tous les champs obligatoires.");
 
             const startDate = new Date(sowingDateStr);
             const selectedEndDate = new Date(endDateStr);
             const today = new Date();
             today.setHours(0,0,0,0);
 
-            if (selectedEndDate <= startDate) {
-                showError("La date de fin d'estimation doit être postérieure à la date de semis.");
-                return;
-            }
+            if (selectedEndDate <= startDate) return showError("La date de fin doit être postérieure à la date de semis.");
 
             const maxFutureDate = new Date(today);
             maxFutureDate.setDate(today.getDate() + 16);
@@ -945,7 +870,6 @@
             try {
                 const eightyFiveDaysAgo = new Date(today);
                 eightyFiveDaysAgo.setDate(today.getDate() - 85);
-
                 let hourlyData = { time: [], temperature_2m: [], relative_humidity_2m: [], dew_point_2m: [] };
                 let forecastStart = startDate;
 
@@ -953,15 +877,11 @@
                     const archiveEnd = new Date(eightyFiveDaysAgo);
                     archiveEnd.setDate(eightyFiveDaysAgo.getDate() - 1);
                     const actualArchiveEnd = (effectiveEndDate < archiveEnd) ? effectiveEndDate : archiveEnd;
-
-                    const archStartStr = toLocalISODate(startDate);
-                    const archEndStr = toLocalISODate(actualArchiveEnd);
-                    const archiveUrl = `https://archive-api.open-meteo.com/v1/archive?latitude=${lat}&longitude=${lon}&start_date=${archStartStr}&end_date=${archEndStr}&hourly=temperature_2m,relative_humidity_2m,dew_point_2m&timezone=auto`;
-
-                    const archRes = await fetch(archiveUrl);
+                    const archUrl = `https://archive-api.open-meteo.com/v1/archive?latitude=${lat}&longitude=${lon}&start_date=${toLocalISODate(startDate)}&end_date=${toLocalISODate(actualArchiveEnd)}&hourly=temperature_2m,relative_humidity_2m,dew_point_2m&timezone=auto`;
+                    
+                    const archRes = await fetch(archUrl);
                     if (!archRes.ok) throw new Error("Erreur d'accès aux archives météorologiques.");
                     const archData = await archRes.json();
-
                     if (archData.hourly && archData.hourly.time) {
                         hourlyData.time.push(...archData.hourly.time);
                         hourlyData.temperature_2m.push(...archData.hourly.temperature_2m);
@@ -972,14 +892,10 @@
                 }
 
                 if (forecastStart <= effectiveEndDate) {
-                    const forecastStartStr = toLocalISODate(forecastStart);
-                    const forecastEndStr = toLocalISODate(effectiveEndDate);
-                    const forecastUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&start_date=${forecastStartStr}&end_date=${forecastEndStr}&hourly=temperature_2m,relative_humidity_2m,dew_point_2m&timezone=auto`;
-
-                    const foreRes = await fetch(forecastUrl);
+                    const foreUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&start_date=${toLocalISODate(forecastStart)}&end_date=${toLocalISODate(effectiveEndDate)}&hourly=temperature_2m,relative_humidity_2m,dew_point_2m&timezone=auto`;
+                    const foreRes = await fetch(foreUrl);
                     if (!foreRes.ok) throw new Error("Erreur de connexion aux prévisions météo.");
                     const foreData = await foreRes.json();
-
                     if (foreData.hourly && foreData.hourly.time) {
                         hourlyData.time.push(...foreData.hourly.time);
                         hourlyData.temperature_2m.push(...foreData.hourly.temperature_2m);
@@ -989,9 +905,7 @@
                 }
 
                 if (hourlyData.time.length === 0) throw new Error("Aucune donnée météo pour cette période.");
-
                 runAgronomicModel(hourlyData);
-
             } catch (err) {
                 console.error(err);
                 showError(err.message || "Impossible d'effectuer la modélisation.");
@@ -1002,10 +916,8 @@
             }
         });
 
-        // --- STREAMING_CHUNK:Agronomic & Epidemiological Model ---
         function runAgronomicModel(hourlyData) {
             const currentParcelle = parcelles.find(p => p.id === activeParcelleId);
-            
             const sensClass = currentParcelle ? currentParcelle.sensitivity : 'MT';
             let varCoeff = 1.0;
             if (sensClass === 'T') varCoeff = 0.65;
@@ -1023,132 +935,66 @@
             const dailyResults = {};
 
             for (let i = 0; i < times.length; i++) {
-                const dateTimeStr = times[i];
-                const dateStr = dateTimeStr.split('T')[0];
+                const dateStr = times[i].split('T')[0];
                 const temp = temps[i];
                 const rh = humidities[i];
                 const dew = dewPoints[i];
 
-                if (temp === null || temp === undefined || rh === null || dew === null) continue;
-
-                if (!dailyResults[dateStr]) {
-                    dailyResults[dateStr] = { temps: [], rh: [], dew: [], isLeafWet: [], minT: 999, maxT: -999 };
-                }
+                if (temp == null || rh == null || dew == null) continue;
+                if (!dailyResults[dateStr]) dailyResults[dateStr] = { temps: [], rh: [], dew: [], isLeafWet: [], minT: 999, maxT: -999 };
 
                 dailyResults[dateStr].temps.push(temp);
                 dailyResults[dateStr].rh.push(rh);
                 dailyResults[dateStr].dew.push(dew);
-
-                const isWet = (rh >= 85) || ((temp - dew) <= 2.0);
-                dailyResults[dateStr].isLeafWet.push(isWet);
-
+                dailyResults[dateStr].isLeafWet.push((rh >= 85) || ((temp - dew) <= 2.0));
                 if (temp < dailyResults[dateStr].minT) dailyResults[dateStr].minT = temp;
                 if (temp > dailyResults[dateStr].maxT) dailyResults[dateStr].maxT = temp;
             }
 
             const sortedDates = Object.keys(dailyResults).sort();
-
-            const chartDates = [];
-            const chartDailyRisk = [];
-            const chartRawCumul = [];
-            const chartProtectedCumul = [];
-            const chartMaxTemp = [];
-            const chartMinTemp = [];
-            const chartWetHours = [];
-            const treatmentEvents = [];
-
-            let rawCumulativeRisk = 0;
-            let protectedCumulativeRisk = 0;
-
+            const chartDates = [], chartDailyRisk = [], chartRawCumul = [], chartProtectedCumul = [], chartMaxTemp = [], chartMinTemp = [], chartWetHours = [], treatmentEvents = [];
+            let rawCumulativeRisk = 0, protectedCumulativeRisk = 0;
             const activeTreatments = (currentParcelle && currentParcelle.treatments) ? currentParcelle.treatments : [];
 
             sortedDates.forEach((date, dateIdx) => {
                 const dayData = dailyResults[date];
-
-                // Phénologie : Cumul thermique (Base 5°C)
                 const meanT = (dayData.minT + dayData.maxT) / 2;
-                if (meanT > 5) {
-                    accumulatedDegreeDays += (meanT - 5); 
-                }
+                if (meanT > 5) accumulatedDegreeDays += (meanT - 5); 
+                if (accumulatedDegreeDays >= 800 && !canopyClosed) { canopyClosed = true; canopyDate = date; }
 
-                // Seuil à 800°C-j Base 5
-                if (accumulatedDegreeDays >= 800 && !canopyClosed) {
-                    canopyClosed = true;
-                    canopyDate = date;
-                }
-
-                let dailyRiskScore = 0;
-                let inhibitionScore = 0;
-                let netRisk = 0;
-
-                let wetHours = 0;
-                let wetTempsSum = 0;
-
+                let dailyRiskScore = 0, inhibitionScore = 0, netRisk = 0, wetHours = 0, wetTempsSum = 0;
                 for (let h = 0; h < dayData.isLeafWet.length; h++) {
-                    if (dayData.isLeafWet[h]) {
-                        wetHours++;
-                        wetTempsSum += dayData.temps[h];
-                    }
+                    if (dayData.isLeafWet[h]) { wetHours++; wetTempsSum += dayData.temps[h]; }
                 }
 
                 if (canopyClosed) {
                     const avgWetTemp = wetHours > 0 ? (wetTempsSum / wetHours) : 0;
-
                     if (wetHours >= 5) {
-                        if (avgWetTemp < 15) {
-                            if (wetHours >= 12) dailyRiskScore = 2; else if (wetHours >= 8) dailyRiskScore = 1;
-                        } else if (avgWetTemp >= 15 && avgWetTemp < 18) {
-                            if (wetHours >= 12) dailyRiskScore = 3; else if (wetHours >= 8) dailyRiskScore = 2; else dailyRiskScore = 1;
-                        } else if (avgWetTemp >= 18 && avgWetTemp < 22) {
-                            if (wetHours >= 12) dailyRiskScore = 5; else if (wetHours >= 8) dailyRiskScore = 4; else dailyRiskScore = 2;
-                        } else if (avgWetTemp >= 22 && avgWetTemp <= 28) {
-                            if (wetHours >= 12) dailyRiskScore = 8; else if (wetHours >= 8) dailyRiskScore = 6; else dailyRiskScore = 3;
-                        } else if (avgWetTemp > 28) {
-                            if (wetHours >= 12) dailyRiskScore = 5; else if (wetHours >= 8) dailyRiskScore = 4; else dailyRiskScore = 2;
-                        }
+                        if (avgWetTemp < 15) { if (wetHours >= 12) dailyRiskScore = 2; else if (wetHours >= 8) dailyRiskScore = 1; }
+                        else if (avgWetTemp < 18) { if (wetHours >= 12) dailyRiskScore = 3; else if (wetHours >= 8) dailyRiskScore = 2; else dailyRiskScore = 1; }
+                        else if (avgWetTemp < 22) { if (wetHours >= 12) dailyRiskScore = 5; else if (wetHours >= 8) dailyRiskScore = 4; else dailyRiskScore = 2; }
+                        else if (avgWetTemp <= 28) { if (wetHours >= 12) dailyRiskScore = 8; else if (wetHours >= 8) dailyRiskScore = 6; else dailyRiskScore = 3; }
+                        else { if (wetHours >= 12) dailyRiskScore = 5; else if (wetHours >= 8) dailyRiskScore = 4; else dailyRiskScore = 2; }
                     }
-
-                    if (dayData.maxT >= 38) {
-                        dailyRiskScore = 0;
-                        inhibitionScore = 2;
-                    } else {
+                    if (dayData.maxT >= 38) { dailyRiskScore = 0; inhibitionScore = 2; }
+                    else {
                         let hotAndDryHours = 0;
-                        for (let h = 0; h < dayData.temps.length; h++) {
-                            if (dayData.temps[h] >= 26 && dayData.rh[h] <= 55) hotAndDryHours++;
-                        }
-                        if (hotAndDryHours >= 8) inhibitionScore = 2;
-                        else if (hotAndDryHours >= 5) inhibitionScore = 1;
+                        for (let h = 0; h < dayData.temps.length; h++) if (dayData.temps[h] >= 26 && dayData.rh[h] <= 55) hotAndDryHours++;
+                        if (hotAndDryHours >= 8) inhibitionScore = 2; else if (hotAndDryHours >= 5) inhibitionScore = 1;
                     }
-
-                    if (dailyRiskScore > 0) {
-                        const maxDeduction = Math.min(inhibitionScore, 1);
-                        netRisk = (dailyRiskScore - maxDeduction) * varCoeff;
-                    } else {
-                        if (inhibitionScore >= 2) netRisk = -0.4;
-                        else if (inhibitionScore >= 1) netRisk = -0.2;
-                        else netRisk = 0;
-                    }
+                    if (dailyRiskScore > 0) netRisk = (dailyRiskScore - Math.min(inhibitionScore, 1)) * varCoeff;
+                    else netRisk = inhibitionScore >= 2 ? -0.4 : (inhibitionScore >= 1 ? -0.2 : 0);
                 }
 
                 const appliedToday = activeTreatments.filter(t => t.date === date);
                 if (appliedToday.length > 0) {
-                    treatmentEvents.push({
-                        dateIndex: dateIdx,
-                        date: date,
-                        label: `Traitement (${appliedToday.map(t => t.duration + 'j').join(', ')})`
-                    });
-                    appliedToday.forEach(t => {
-                        const curEff = (t.efficiency || 80) / 100;
-                        protectedCumulativeRisk *= (1 - curEff * 0.7);
-                    });
+                    treatmentEvents.push({ dateIndex: dateIdx, date: date, label: `Traitement (${appliedToday.map(t => t.duration + 'j').join(', ')})` });
+                    appliedToday.forEach(t => { protectedCumulativeRisk *= (1 - (t.efficiency || 80) / 100 * 0.7); });
                 }
 
                 let activeProtectionEfficiency = 0;
                 activeTreatments.forEach(t => {
-                    const tDate = new Date(t.date);
-                    const currDate = new Date(date);
-                    const diffDays = Math.floor((currDate - tDate) / (1000 * 60 * 60 * 24));
-
+                    const diffDays = Math.floor((new Date(date) - new Date(t.date)) / (1000 * 60 * 60 * 24));
                     if (diffDays >= 0 && diffDays <= t.duration) {
                         let decay = 1.0;
                         if (diffDays > (t.duration - 4)) decay = (t.duration - diffDays) / 4;
@@ -1157,16 +1003,9 @@
                     }
                 });
 
-                let protectedDailyNet = netRisk;
-                if (netRisk > 0 && activeProtectionEfficiency > 0) {
-                    protectedDailyNet = netRisk * (1 - activeProtectionEfficiency);
-                }
-
-                rawCumulativeRisk += netRisk;
-                if (rawCumulativeRisk < 0) rawCumulativeRisk = 0;
-
-                protectedCumulativeRisk += protectedDailyNet;
-                if (protectedCumulativeRisk < 0) protectedCumulativeRisk = 0;
+                let protectedDailyNet = netRisk > 0 && activeProtectionEfficiency > 0 ? netRisk * (1 - activeProtectionEfficiency) : netRisk;
+                rawCumulativeRisk = Math.max(0, rawCumulativeRisk + netRisk);
+                protectedCumulativeRisk = Math.max(0, protectedCumulativeRisk + protectedDailyNet);
 
                 chartDates.push(date);
                 chartDailyRisk.push(Math.round(protectedDailyNet * 10) / 10);
@@ -1177,139 +1016,87 @@
                 chartWetHours.push(wetHours);
             });
 
-            // --- SYNCHRONISATION DES ÉCHELLES DE DATES (Démarrage au 15 Juin) ---
             const currentYear = new Date(sowingInput.value).getFullYear();
-            const midJuneStr = `${currentYear}-06-15`;
-            const cutIndex = chartDates.findIndex(d => d >= midJuneStr);
-
+            const cutIndex = chartDates.findIndex(d => d >= `${currentYear}-06-15`);
             if (cutIndex > 0) {
-                chartDates.splice(0, cutIndex);
-                chartDailyRisk.splice(0, cutIndex);
-                chartRawCumul.splice(0, cutIndex);
-                chartProtectedCumul.splice(0, cutIndex);
-                chartMaxTemp.splice(0, cutIndex);
-                chartMinTemp.splice(0, cutIndex);
-                chartWetHours.splice(0, cutIndex);
-
-                // Réajustement de la position des points de traitement sur le graphique
+                chartDates.splice(0, cutIndex); chartDailyRisk.splice(0, cutIndex); chartRawCumul.splice(0, cutIndex); chartProtectedCumul.splice(0, cutIndex); chartMaxTemp.splice(0, cutIndex); chartMinTemp.splice(0, cutIndex); chartWetHours.splice(0, cutIndex);
                 for (let i = treatmentEvents.length - 1; i >= 0; i--) {
                     treatmentEvents[i].dateIndex -= cutIndex;
-                    if (treatmentEvents[i].dateIndex < 0) {
-                        treatmentEvents.splice(i, 1);
-                    }
+                    if (treatmentEvents[i].dateIndex < 0) treatmentEvents.splice(i, 1);
                 }
             }
 
             updateUI(canopyDate, chartDailyRisk, chartRawCumul, chartProtectedCumul, chartMaxTemp, chartMinTemp, chartWetHours, chartDates, treatmentEvents, activeTreatments);
         }
 
-        // --- STREAMING_CHUNK:UI Draw Functions ---
         function updateUI(canopyDate, dailyRisk, rawCumul, protectedCumul, maxTemps, minTemps, wetHours, dates, treatmentEvents, activeTreatments) {
             document.getElementById('results-content').classList.remove('hidden');
             document.getElementById('results-content').classList.add('flex');
 
             const canopyDisplay = document.getElementById('canopy-date-display');
-            if (canopyDate) {
-                const dateObj = new Date(canopyDate);
-                canopyDisplay.innerText = dateObj.toLocaleDateString('fr-FR', { day: '2-digit', month: 'short' });
-            } else {
-                canopyDisplay.innerText = "Non atteinte (< 800°C-j)";
-            }
+            canopyDisplay.innerText = canopyDate ? new Date(canopyDate).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short' }) : "Non atteinte (< 800°C-j)";
 
             const todayStr = toLocalISODate(new Date());
             let todayIndex = dates.indexOf(todayStr);
-            if (todayIndex === -1) {
-                if (dates.length > 0) todayIndex = (todayStr < dates[0]) ? 0 : dates.length - 1;
-                else todayIndex = 0;
-            }
+            if (todayIndex === -1) todayIndex = (dates.length > 0 && todayStr < dates[0]) ? 0 : dates.length - 1;
 
             const currentCumulVal = protectedCumul[todayIndex] || 0;
             const riskBadge = document.getElementById('risk-badge');
             const riskText = document.getElementById('current-risk-display');
             const iconWrapper = document.getElementById('risk-icon-wrapper');
 
-            const harvestObj = new Date(harvestInput.value);
-            const daysToHarvest = Math.floor((harvestObj - new Date()) / (1000 * 60 * 60 * 24));
-            const isNearHarvest = daysToHarvest <= 45;
-            
-            // Calcul du seuil d'intervention pour aujourd'hui (18 en été, 25 en septembre)
-            const currentMonth = new Date().getMonth() + 1;
-            const currentThreshold = (currentMonth >= 9) ? 25 : 18;
+            const daysToHarvest = Math.floor((new Date(harvestInput.value) - new Date()) / (1000 * 60 * 60 * 24));
+            const currentThreshold = (new Date().getMonth() + 1 >= 9) ? 25 : 18;
 
-            riskBadge.className = "p-4 rounded-2xl flex items-center gap-3 border transition-all hover:-translate-y-0.5 shadow-sm";
-            iconWrapper.className = "p-3 rounded-xl shrink-0 shadow-inner";
+            riskBadge.className = "p-3 rounded-xl flex items-center gap-3 border shadow-sm bg-white";
+            iconWrapper.className = "p-2.5 rounded-lg shrink-0";
 
             if (!canopyDate) {
                 riskText.innerText = "Nul (Rang non fermé)";
-                riskBadge.classList.add('bg-white', 'border-slate-200');
-                iconWrapper.classList.add('bg-slate-100', 'text-slate-500');
-                iconWrapper.innerHTML = '<i class="fa-solid fa-triangle-exclamation text-xl"></i>';
-            } else if (isNearHarvest) {
-                riskText.innerText = "Fin de cycle (Récolte proche)";
-                riskBadge.classList.add('bg-gradient-to-br', 'from-sky-50', 'to-white', 'border-sky-200');
-                iconWrapper.classList.add('bg-sky-100', 'text-sky-600');
-                iconWrapper.innerHTML = '<i class="fa-solid fa-flag-checkered text-xl"></i>';
+                riskBadge.classList.add('border-slate-200'); iconWrapper.classList.add('bg-slate-100', 'text-slate-500'); iconWrapper.innerHTML = '<i class="fa-solid fa-triangle-exclamation text-base"></i>';
+            } else if (daysToHarvest <= 45) {
+                riskText.innerText = "Fin de cycle (Récolte)";
+                riskBadge.classList.add('border-sky-200'); iconWrapper.classList.add('bg-sky-50', 'text-sky-500'); iconWrapper.innerHTML = '<i class="fa-solid fa-flag-checkered text-base"></i>';
             } else if (currentCumulVal <= 5) {
                 riskText.innerText = "Très Faible (Maîtrisé)";
-                riskBadge.classList.add('bg-gradient-to-br', 'from-emerald-50', 'to-white', 'border-emerald-200');
-                iconWrapper.classList.add('bg-emerald-100', 'text-emerald-600');
-                iconWrapper.innerHTML = '<i class="fa-solid fa-shield-check text-xl"></i>';
+                riskBadge.classList.add('border-emerald-200'); iconWrapper.classList.add('bg-emerald-50', 'text-emerald-500'); iconWrapper.innerHTML = '<i class="fa-solid fa-shield-check text-base"></i>';
             } else if (currentCumulVal <= currentThreshold) {
                 riskText.innerText = "Modéré (Sous Contrôle)";
-                riskBadge.classList.add('bg-gradient-to-br', 'from-amber-50', 'to-white', 'border-amber-200');
-                iconWrapper.classList.add('bg-amber-100', 'text-amber-600');
-                iconWrapper.innerHTML = '<i class="fa-solid fa-triangle-exclamation text-xl"></i>';
+                riskBadge.classList.add('border-amber-200'); iconWrapper.classList.add('bg-amber-50', 'text-amber-500'); iconWrapper.innerHTML = '<i class="fa-solid fa-triangle-exclamation text-base"></i>';
             } else {
-                riskText.innerText = "Élevé (Renouvellement requis)";
-                riskBadge.classList.add('bg-gradient-to-br', 'from-rose-50', 'to-white', 'border-rose-200');
-                iconWrapper.classList.add('bg-rose-100', 'text-rose-600');
-                iconWrapper.innerHTML = '<i class="fa-solid fa-triangle-exclamation text-xl"></i>';
+                riskText.innerText = "Élevé (Alerte)";
+                riskBadge.classList.add('border-rose-200'); iconWrapper.classList.add('bg-rose-50', 'text-rose-500'); iconWrapper.innerHTML = '<i class="fa-solid fa-triangle-exclamation text-base"></i>';
             }
 
             const protectionText = document.getElementById('protection-status-display');
             const protectionBadge = document.getElementById('protection-badge');
             const protectionIcon = document.getElementById('protection-icon-wrapper');
 
-            let activeFungicide = null;
             let remainingDays = 0;
-
             activeTreatments.forEach(t => {
-                const tDate = new Date(t.date);
-                const currDate = new Date();
-                const diffDays = Math.floor((currDate - tDate) / (1000 * 60 * 60 * 24));
-                if (diffDays >= 0 && diffDays <= t.duration) {
-                    activeFungicide = t;
-                    remainingDays = t.duration - diffDays;
-                }
+                const diffDays = Math.floor((new Date() - new Date(t.date)) / (1000 * 60 * 60 * 24));
+                if (diffDays >= 0 && diffDays <= t.duration) remainingDays = t.duration - diffDays;
             });
 
-            if (activeFungicide) {
+            if (remainingDays > 0) {
                 protectionText.innerText = `Active (Encore ${remainingDays}j)`;
-                protectionBadge.className = "p-4 rounded-2xl flex items-center gap-3 border bg-gradient-to-br from-emerald-50 to-white border-emerald-200 shadow-sm transition-all hover:-translate-y-0.5";
-                protectionIcon.className = "p-3 rounded-xl shrink-0 bg-emerald-100 text-emerald-600 shadow-inner";
+                protectionBadge.className = "p-3 rounded-xl flex items-center gap-3 border bg-white border-emerald-200 shadow-sm";
+                protectionIcon.className = "p-2.5 rounded-lg shrink-0 bg-emerald-50 text-emerald-500";
             } else {
-                protectionText.innerText = "Aucune (Couverture caduque)";
-                protectionBadge.className = "p-4 rounded-2xl flex items-center gap-3 border bg-white border-slate-200 shadow-sm transition-all hover:-translate-y-0.5";
-                protectionIcon.className = "p-3 rounded-xl shrink-0 bg-slate-100 text-slate-500 shadow-inner";
+                protectionText.innerText = "Aucune (Caduque)";
+                protectionBadge.className = "p-3 rounded-xl flex items-center gap-3 border bg-white border-slate-200 shadow-sm";
+                protectionIcon.className = "p-2.5 rounded-lg shrink-0 bg-slate-100 text-slate-500";
             }
 
             const forecastSum = dailyRisk.slice(todayIndex + 1, todayIndex + 8).reduce((a, b) => a + b, 0);
             const trendText = document.getElementById('forecast-trend-display');
-            if (forecastSum >= 8) {
-                trendText.innerHTML = '<span class="text-rose-600 flex items-center gap-1"><i class="fa-solid fa-arrow-trend-up"></i> Risque en Hausse</span>';
-            } else if (forecastSum > 2) {
-                trendText.innerHTML = '<span class="text-amber-600 flex items-center gap-1"><i class="fa-solid fa-arrow-right font-bold"></i> Pression Modérée</span>';
-            } else {
-                trendText.innerHTML = '<span class="text-emerald-600 flex items-center gap-1"><i class="fa-solid fa-shield-check"></i> Protégé / Risque Calme</span>';
-            }
+            if (forecastSum >= 8) trendText.innerHTML = '<span class="text-rose-500 flex items-center gap-1"><i class="fa-solid fa-arrow-trend-up"></i> Risque en Hausse</span>';
+            else if (forecastSum > 2) trendText.innerHTML = '<span class="text-amber-500 flex items-center gap-1"><i class="fa-solid fa-arrow-right font-bold"></i> Pression Modérée</span>';
+            else trendText.innerHTML = '<span class="text-emerald-500 flex items-center gap-1"><i class="fa-solid fa-shield-check"></i> Protégé / Calme</span>';
 
             renderForecastCards(dates, dailyRisk, maxTemps, minTemps, wetHours, todayIndex, activeTreatments);
 
-            const formattedLabels = dates.map(dStr => {
-                const d = new Date(dStr);
-                return d.toLocaleDateString('fr-FR', { day: '2-digit', month: 'short' });
-            });
-
+            const formattedLabels = dates.map(dStr => new Date(dStr).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short' }));
             renderDailyChart(formattedLabels, dailyRisk, todayIndex, treatmentEvents);
             renderCumulChart(formattedLabels, rawCumul, protectedCumul, todayIndex, treatmentEvents, dates);
             renderWeatherChart(formattedLabels, maxTemps, minTemps, wetHours, todayIndex);
@@ -1318,108 +1105,60 @@
         function renderForecastCards(dates, dailyRisk, maxTemps, minTemps, wetHours, todayIndex, activeTreatments) {
             const container = document.getElementById('forecast-cards-container');
             container.innerHTML = '';
-
             for (let i = 1; i <= 7; i++) {
                 const idx = todayIndex + i;
                 if (idx >= dates.length) break;
-
-                const dateStr = dates[idx];
-                const dateObj = new Date(dateStr);
-                const dayName = dateObj.toLocaleDateString('fr-FR', { weekday: 'short' });
-                const dayNum = dateObj.getDate();
-
-                const riskVal = dailyRisk[idx];
-                const tMax = maxTemps[idx];
-                const tMin = minTemps[idx];
-                const wetH = wetHours[idx];
-
+                const dateObj = new Date(dates[idx]);
                 let isCovered = false;
                 activeTreatments.forEach(t => {
-                    const tDate = new Date(t.date);
-                    const diffDays = Math.floor((dateObj - tDate) / (1000 * 60 * 60 * 24));
+                    const diffDays = Math.floor((dateObj - new Date(t.date)) / (1000 * 60 * 60 * 24));
                     if (diffDays >= 0 && diffDays <= t.duration) isCovered = true;
                 });
+                let riskBadgeClass = "bg-slate-100 text-slate-600 border-slate-200", riskLabel = "Risque Faible";
+                if (dailyRisk[idx] >= 5) { riskBadgeClass = "bg-rose-50 text-rose-600 border-rose-200"; riskLabel = "Infection Forte"; }
+                else if (dailyRisk[idx] >= 2) { riskBadgeClass = "bg-amber-50 text-amber-600 border-amber-200"; riskLabel = "Infection Modérée"; }
 
-                let riskBadgeClass = "bg-emerald-100 text-emerald-800 border-emerald-200";
-                let riskLabel = "Risque Faible";
-                if (riskVal >= 5) {
-                    riskBadgeClass = "bg-rose-100 text-rose-800 border-rose-200";
-                    riskLabel = "Infection Forte";
-                } else if (riskVal >= 2) {
-                    riskBadgeClass = "bg-amber-100 text-amber-800 border-amber-200";
-                    riskLabel = "Infection Modérée";
-                }
-
-                const cardHtml = `
-                    <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between space-y-2.5 text-center relative overflow-hidden group">
-                        ${isCovered ? '<span class="absolute top-0 right-0 bg-gradient-to-bl from-emerald-500 to-emerald-600 text-white text-[10px] px-1.5 py-0.5 rounded-bl-lg shadow-sm" title="Protégé par fongicide"><i class="fa-solid fa-shield"></i></span>' : ''}
+                container.innerHTML += `
+                    <div class="bg-white p-3 rounded-lg border border-slate-200 shadow-sm flex flex-col justify-between space-y-2.5 text-center relative overflow-hidden">
+                        ${isCovered ? '<span class="absolute top-0 right-0 bg-emerald-500 text-white text-[9px] px-1.5 py-0.5 rounded-bl-lg"><i class="fa-solid fa-shield"></i></span>' : ''}
                         <div>
-                            <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">${dayName} ${dayNum}</p>
-                            <div class="my-1.5 text-slate-800 text-xs font-bold bg-slate-50 rounded-lg py-1 border border-slate-100">
-                                <i class="fa-solid fa-temperature-three-quarters text-amber-500 mr-1"></i>${tMin}° / <span class="text-rose-500">${tMax}°</span>
+                            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">${dateObj.toLocaleDateString('fr-FR', { weekday: 'short' })} ${dateObj.getDate()}</p>
+                            <div class="my-1.5 text-slate-700 text-xs font-bold bg-slate-50 rounded py-1 border border-slate-100">
+                                <i class="fa-solid fa-temperature-three-quarters text-amber-500 mr-1"></i>${minTemps[idx]}° / <span class="text-rose-400">${maxTemps[idx]}°</span>
                             </div>
                         </div>
-                        <div class="text-[10px] font-medium text-slate-600 flex items-center justify-center gap-1.5 bg-sky-50 py-1.5 rounded-lg border border-sky-100">
-                            <i class="fa-solid fa-droplet text-sky-500"></i> ${wetH}h rosée
+                        <div class="text-[9px] font-medium text-slate-500 flex items-center justify-center gap-1 bg-sky-50 py-1 rounded border border-sky-100">
+                            <i class="fa-solid fa-droplet text-sky-400"></i> ${wetHours[idx]}h rosée
                         </div>
-                        <span class="text-[10px] font-bold px-2 py-1 rounded-lg border shadow-inner ${riskBadgeClass}">
-                            ${riskVal > 0 ? '+' + riskVal : riskVal} &bull; ${isCovered ? 'Protégé' : riskLabel}
+                        <span class="text-[9px] font-bold px-1.5 py-1 rounded border ${riskBadgeClass}">
+                            ${dailyRisk[idx] > 0 ? '+' + dailyRisk[idx] : dailyRisk[idx]} &bull; ${isCovered ? 'Protégé' : riskLabel}
                         </span>
                     </div>
                 `;
-                container.innerHTML += cardHtml;
             }
         }
 
-        // --- STREAMING_CHUNK:Chart Configurations ---
         function renderDailyChart(labels, dailyData, todayIndex, treatmentEvents) {
             const ctx = document.getElementById('dailyRiskChart').getContext('2d');
             if (dailyChartInstance) dailyChartInstance.destroy();
-
             dailyChartInstance = new Chart(ctx, {
                 type: 'bar',
                 data: {
                     labels: labels,
                     datasets: [{
-                        label: 'Score Quotidien Net Protégé',
+                        label: 'Score Quotidien Net',
                         data: dailyData,
-                        backgroundColor: (context) => {
-                            const idx = context.dataIndex;
-                            const val = context.raw;
-                            if (val < 0) return '#f59e0b';
-                            if (idx > todayIndex) return 'rgba(59, 130, 246, 0.75)'; // Bleu pour prévisions
-                            return '#16a34a';
-                        },
-                        borderRadius: 4
+                        backgroundColor: (context) => context.raw < 0 ? '#fbbf24' : (context.dataIndex > todayIndex ? 'rgba(56, 189, 248, 0.75)' : '#34d399'),
+                        borderRadius: 3
                     }]
                 },
                 options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: { display: false },
-                        tooltip: {
-                            callbacks: {
-                                title: (items) => {
-                                    const idx = items[0].dataIndex;
-                                    let title = items[0].label;
-                                    if (idx === todayIndex) title += " (Aujourd'hui)";
-                                    else if (idx > todayIndex) title += " (Prévision)";
-                                    return title;
-                                }
-                            }
-                        }
-                    },
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
                     scales: {
                         x: { offset: true, grid: { display: false }, ticks: { font: { size: 10 }, maxTicksLimit: 15 } },
-                        y: { title: { display: true, text: 'Score Net Journalier', font: { size: 11 } }, ticks: { font: { size: 10 } } },
-                        y1: {
-                            type: 'linear', display: true, position: 'right',
-                            title: { display: true, text: 'Humectation (Heures/24h)', color: 'transparent', font: { size: 11 } },
-                            grid: { display: false, drawBorder: false },
-                            min: 0, max: 24,
-                            ticks: { color: 'transparent', font: { size: 10 } }
-                        }
+                        y: { title: { display: true, text: 'Score Net', font: { size: 11 } }, ticks: { font: { size: 10 } } },
+                        y1: { type: 'linear', display: true, position: 'right', title: { display: true, text: 'Humectation', color: 'transparent', font: { size: 11 } }, grid: { display: false, drawBorder: false }, min: 0, max: 24, ticks: { color: 'transparent', font: { size: 10 } } }
                     }
                 }
             });
@@ -1429,98 +1168,45 @@
             const ctx = document.getElementById('cumulRiskChart').getContext('2d');
             if (cumulChartInstance) cumulChartInstance.destroy();
 
-            const thresholdLine = datesArray.map(dStr => {
-                const month = new Date(dStr).getMonth() + 1;
-                return (month >= 9) ? 25 : 18;
-            });
+            const thresholdLine = datesArray.map(dStr => new Date(dStr).getMonth() + 1 >= 9 ? 25 : 18);
 
-            // Extension visuelle pour la zone des 45j et 30j avant récolte
             const harvestWarningPlugin = {
                 id: 'harvestWarningZone',
                 beforeDraw: (chart) => {
                     const ctxPlugin = chart.ctx;
                     const xAxis = chart.scales.x;
                     const yAxis = chart.scales.y;
-
                     const hDate = new Date(document.getElementById('harvest-date').value);
                     
-                    // Calcul 45 jours
-                    const limitDate45 = new Date(hDate);
-                    limitDate45.setDate(limitDate45.getDate() - 45);
-                    const limitStr45 = toLocalISODate(limitDate45);
-                    const startIdx45 = datesArray.findIndex(d => d >= limitStr45);
+                    const limitDate45 = new Date(hDate); limitDate45.setDate(limitDate45.getDate() - 45);
+                    const startIdx45 = datesArray.findIndex(d => d >= toLocalISODate(limitDate45));
 
-                    // Calcul 30 jours
-                    const limitDate30 = new Date(hDate);
-                    limitDate30.setDate(limitDate30.getDate() - 30);
-                    const limitStr30 = toLocalISODate(limitDate30);
-                    const startIdx30 = datesArray.findIndex(d => d >= limitStr30);
+                    const limitDate30 = new Date(hDate); limitDate30.setDate(limitDate30.getDate() - 30);
+                    const startIdx30 = datesArray.findIndex(d => d >= toLocalISODate(limitDate30));
 
                     ctxPlugin.save();
-
                     const endX = xAxis.right;
 
-                    // Dessin de la zone et ligne 45 jours
                     if (startIdx45 !== -1) {
                         const startX45 = xAxis.getPixelForValue(startIdx45);
-
-                        // Zone d'alerte ambrée (de 45j jusqu'à la fin)
                         ctxPlugin.fillStyle = 'rgba(245, 158, 11, 0.08)'; 
                         ctxPlugin.fillRect(startX45, yAxis.top, endX - startX45, yAxis.bottom - yAxis.top);
-
-                        // Ligne verticale 45j
-                        ctxPlugin.beginPath();
-                        ctxPlugin.moveTo(startX45, yAxis.top);
-                        ctxPlugin.lineTo(startX45, yAxis.bottom);
-                        ctxPlugin.lineWidth = 2;
-                        ctxPlugin.strokeStyle = '#f59e0b';
-                        ctxPlugin.setLineDash([4, 4]);
-                        ctxPlugin.stroke();
-
-                        // Texte 45j
-                        ctxPlugin.fillStyle = '#b45309';
-                        ctxPlugin.font = 'bold 10px "Inter", sans-serif';
-                        ctxPlugin.fillText('45j Avant Récolte', startX45 + 5, yAxis.top + 15);
+                        ctxPlugin.beginPath(); ctxPlugin.moveTo(startX45, yAxis.top); ctxPlugin.lineTo(startX45, yAxis.bottom);
+                        ctxPlugin.lineWidth = 1.5; ctxPlugin.strokeStyle = '#fbbf24'; ctxPlugin.setLineDash([4, 4]); ctxPlugin.stroke();
+                        ctxPlugin.fillStyle = '#b45309'; ctxPlugin.font = 'bold 10px "Inter", sans-serif'; ctxPlugin.fillText('45j Avant Récolte', startX45 + 5, yAxis.top + 15);
                     }
 
-                    // Dessin de la ligne et ZONE HACHURÉE 30 jours
                     if (startIdx30 !== -1) {
                         const startX30 = xAxis.getPixelForValue(startIdx30);
-
-                        // 1. Création du motif hachuré (diagonales)
-                        const patternCanvas = document.createElement('canvas');
-                        patternCanvas.width = 12;
-                        patternCanvas.height = 12;
-                        const pctx = patternCanvas.getContext('2d');
-                        pctx.strokeStyle = 'rgba(239, 68, 68, 0.25)'; // Rouge avec opacité
-                        pctx.lineWidth = 1.5;
-                        pctx.beginPath();
-                        pctx.moveTo(0, 12);
-                        pctx.lineTo(12, 0);
-                        pctx.stroke();
-                        const hatchPattern = ctxPlugin.createPattern(patternCanvas, 'repeat');
-
-                        // 2. Application d'un fond rouge clair puis des hachures
-                        ctxPlugin.fillStyle = 'rgba(239, 68, 68, 0.06)';
-                        ctxPlugin.fillRect(startX30, yAxis.top, endX - startX30, yAxis.bottom - yAxis.top);
-                        ctxPlugin.fillStyle = hatchPattern;
-                        ctxPlugin.fillRect(startX30, yAxis.top, endX - startX30, yAxis.bottom - yAxis.top);
-
-                        // 3. Ligne verticale 30j (Rouge)
-                        ctxPlugin.beginPath();
-                        ctxPlugin.moveTo(startX30, yAxis.top);
-                        ctxPlugin.lineTo(startX30, yAxis.bottom);
-                        ctxPlugin.lineWidth = 2;
-                        ctxPlugin.strokeStyle = '#ef4444'; 
-                        ctxPlugin.setLineDash([4, 4]);
-                        ctxPlugin.stroke();
-
-                        // 4. Texte 30j
-                        ctxPlugin.fillStyle = '#b91c1c';
-                        ctxPlugin.font = 'bold 10px "Inter", sans-serif';
-                        ctxPlugin.fillText('30j Avant Récolte', startX30 + 5, yAxis.top + 28);
+                        const pCanvas = document.createElement('canvas'); pCanvas.width = 12; pCanvas.height = 12;
+                        const pctx = pCanvas.getContext('2d'); pctx.strokeStyle = 'rgba(239, 68, 68, 0.2)'; pctx.lineWidth = 1;
+                        pctx.beginPath(); pctx.moveTo(0, 12); pctx.lineTo(12, 0); pctx.stroke();
+                        ctxPlugin.fillStyle = 'rgba(239, 68, 68, 0.04)'; ctxPlugin.fillRect(startX30, yAxis.top, endX - startX30, yAxis.bottom - yAxis.top);
+                        ctxPlugin.fillStyle = ctxPlugin.createPattern(pCanvas, 'repeat'); ctxPlugin.fillRect(startX30, yAxis.top, endX - startX30, yAxis.bottom - yAxis.top);
+                        ctxPlugin.beginPath(); ctxPlugin.moveTo(startX30, yAxis.top); ctxPlugin.lineTo(startX30, yAxis.bottom);
+                        ctxPlugin.lineWidth = 1.5; ctxPlugin.strokeStyle = '#f87171'; ctxPlugin.setLineDash([4, 4]); ctxPlugin.stroke();
+                        ctxPlugin.fillStyle = '#b91c1c'; ctxPlugin.font = 'bold 10px "Inter", sans-serif'; ctxPlugin.fillText('30j Avant Récolte', startX30 + 5, yAxis.top + 28);
                     }
-                    
                     ctxPlugin.restore();
                 }
             };
@@ -1530,70 +1216,18 @@
                 data: {
                     labels: labels,
                     datasets: [
-                        {
-                            label: 'Seuil Intervention',
-                            data: thresholdLine,
-                            borderColor: '#f59e0b',
-                            borderWidth: 1.5,
-                            borderDash: [6, 6],
-                            pointRadius: 0,
-                            fill: false
-                        },
-                        {
-                            label: 'Pression Potentielle BRUTE',
-                            data: rawCumul,
-                            borderColor: '#94a3b8',
-                            borderWidth: 2,
-                            borderDash: [4, 4],
-                            pointRadius: 0,
-                            fill: false,
-                            tension: 0.3
-                        },
-                        {
-                            label: 'Pression NETTE (Avec Variété & Fongicide)',
-                            data: protectedCumul,
-                            borderColor: '#e11d48',
-                            backgroundColor: 'rgba(225, 29, 72, 0.12)',
-                            borderWidth: 2.8,
-                            fill: true,
-                            tension: 0.3,
-                            pointRadius: (ctx) => {
-                                const idx = ctx.dataIndex;
-                                return treatmentEvents.some(e => e.dateIndex === idx) ? 6 : 0;
-                            },
-                            pointBackgroundColor: '#10b981',
-                            pointBorderColor: '#ffffff',
-                            pointBorderWidth: 2
-                        }
+                        { label: 'Seuil (18 Pts)', data: thresholdLine, borderColor: '#fbbf24', borderWidth: 1.5, borderDash: [6, 6], pointRadius: 0, fill: false },
+                        { label: 'Pression Brute', data: rawCumul, borderColor: '#cbd5e1', borderWidth: 1.5, borderDash: [4, 4], pointRadius: 0, fill: false, tension: 0.3 },
+                        { label: 'Pression NETTE', data: protectedCumul, borderColor: '#f43f5e', backgroundColor: 'rgba(244, 63, 94, 0.1)', borderWidth: 2, fill: true, tension: 0.3, pointRadius: (ctx) => treatmentEvents.some(e => e.dateIndex === ctx.dataIndex) ? 5 : 0, pointBackgroundColor: '#10b981', pointBorderColor: '#ffffff', pointBorderWidth: 1.5 }
                     ]
                 },
                 options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: { position: 'top', labels: { boxWidth: 10, font: { size: 10 } } },
-                        tooltip: {
-                            callbacks: {
-                                title: (items) => {
-                                    const idx = items[0].dataIndex;
-                                    let title = items[0].label;
-                                    const event = treatmentEvents.find(e => e.dateIndex === idx);
-                                    if (event) title += ` 💉 [APPLICATION TRAITEMENT]`;
-                                    return title;
-                                }
-                            }
-                        }
-                    },
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { position: 'top', labels: { boxWidth: 10, font: { size: 10 } } } },
                     scales: {
                         x: { offset: true, grid: { display: false }, ticks: { font: { size: 10 }, maxTicksLimit: 15 } },
-                        y: { title: { display: true, text: 'Pression Cumulée', font: { size: 11 } }, min: 0, ticks: { font: { size: 10 } } },
-                        y1: {
-                            type: 'linear', display: true, position: 'right',
-                            title: { display: true, text: 'Humectation', color: 'transparent', font: { size: 11 } },
-                            grid: { display: false, drawBorder: false },
-                            min: 0, max: 24,
-                            ticks: { color: 'transparent', font: { size: 10 } }
-                        }
+                        y: { title: { display: true, text: 'Pression', font: { size: 11 } }, min: 0, ticks: { font: { size: 10 } } },
+                        y1: { type: 'linear', display: true, position: 'right', title: { display: true, text: 'Humectation', color: 'transparent', font: { size: 11 } }, grid: { display: false, drawBorder: false }, min: 0, max: 24, ticks: { color: 'transparent', font: { size: 10 } } }
                     }
                 },
                 plugins: [harvestWarningPlugin]
@@ -1603,77 +1237,35 @@
         function renderWeatherChart(labels, maxTemps, minTemps, wetHours, todayIndex) {
             const ctx = document.getElementById('weatherChart').getContext('2d');
             if (weatherChartInstance) weatherChartInstance.destroy();
-
             weatherChartInstance = new Chart(ctx, {
                 data: {
                     labels: labels,
                     datasets: [
-                        { type: 'line', label: 'T° Max (°C)', data: maxTemps, borderColor: '#ef4444', borderWidth: 2, pointRadius: 0, yAxisID: 'y' },
-                        { type: 'line', label: 'T° Min (°C)', data: minTemps, borderColor: '#3b82f6', borderWidth: 1.8, pointRadius: 0, borderDash: [3, 3], yAxisID: 'y' },
-                        { 
-                            type: 'bar', 
-                            label: 'Humectation (h/Jour)', 
-                            data: wetHours, 
-                            backgroundColor: (context) => context.dataIndex > todayIndex ? 'rgba(14, 165, 233, 0.15)' : 'rgba(14, 165, 233, 0.45)', 
-                            borderColor: (context) => context.dataIndex > todayIndex ? '#7dd3fc' : '#0284c7', 
-                            borderWidth: 1, 
-                            borderRadius: 3, 
-                            yAxisID: 'y1' 
-                        }
+                        { type: 'line', label: 'T° Max (°C)', data: maxTemps, borderColor: '#f87171', borderWidth: 1.5, pointRadius: 0, yAxisID: 'y' },
+                        { type: 'line', label: 'T° Min (°C)', data: minTemps, borderColor: '#60a5fa', borderWidth: 1.5, pointRadius: 0, borderDash: [3, 3], yAxisID: 'y' },
+                        { type: 'bar', label: 'Humectation (h/j)', data: wetHours, backgroundColor: (ctx) => ctx.dataIndex > todayIndex ? 'rgba(56, 189, 248, 0.15)' : 'rgba(56, 189, 248, 0.4)', borderColor: (ctx) => ctx.dataIndex > todayIndex ? '#7dd3fc' : '#38bdf8', borderWidth: 1, borderRadius: 2, yAxisID: 'y1' }
                     ]
                 },
                 options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    interaction: { mode: 'index', intersect: false },
+                    responsive: true, maintainAspectRatio: false, interaction: { mode: 'index', intersect: false },
                     plugins: { legend: { position: 'top', align: 'end', labels: { boxWidth: 8, font: { size: 10 } } } },
                     scales: {
                         x: { offset: true, grid: { display: false }, ticks: { font: { size: 10 }, maxTicksLimit: 15 } },
                         y: { type: 'linear', display: true, position: 'left', title: { display: true, text: 'Température (°C)', font: { size: 11 } }, ticks: { font: { size: 10 } } },
-                        y1: { type: 'linear', display: true, position: 'right', title: { display: true, text: 'Humectation (Heures/24h)', font: { size: 11 } }, grid: { drawOnChartArea: false }, min: 0, max: 24, ticks: { font: { size: 10 } } }
+                        y1: { type: 'linear', display: true, position: 'right', title: { display: true, text: 'Humectation (h/24h)', font: { size: 11 } }, grid: { drawOnChartArea: false }, min: 0, max: 24, ticks: { font: { size: 10 } } }
                     }
                 }
             });
         }
 
-        // --- STREAMING_CHUNK:Tab Navigation ---
         function switchTab(tab) {
-            const tabs = ['all', 'daily', 'cumul', 'weather'];
-            tabs.forEach(t => {
+            ['all', 'daily', 'cumul', 'weather'].forEach(t => {
                 const btn = document.getElementById(`tab-btn-${t}`);
-                if (btn) {
-                    btn.classList.remove('border-green-600', 'text-green-700', 'bg-green-50/50');
-                    btn.classList.add('border-transparent', 'text-slate-500');
-                }
+                if (btn) btn.className = `tab-btn py-2 px-3 text-xs font-medium rounded-t-lg border-b-2 whitespace-nowrap cursor-pointer ${t === tab ? 'border-emerald-500 text-emerald-700 bg-emerald-50/50' : 'border-transparent text-slate-500 hover:text-slate-700'}`;
             });
-
-            const activeBtn = document.getElementById(`tab-btn-${tab}`);
-            if (activeBtn) {
-                activeBtn.classList.remove('border-transparent', 'text-slate-500');
-                activeBtn.classList.add('border-green-600', 'text-green-700', 'bg-green-50/50');
-            }
-
-            const dailyCard = document.getElementById('chart-card-daily');
-            const cumulCard = document.getElementById('chart-card-cumul');
-            const weatherCard = document.getElementById('chart-card-weather');
-
-            if (tab === 'all') {
-                dailyCard.classList.remove('hidden');
-                cumulCard.classList.remove('hidden');
-                weatherCard.classList.remove('hidden');
-            } else if (tab === 'daily') {
-                dailyCard.classList.remove('hidden');
-                cumulCard.classList.add('hidden');
-                weatherCard.classList.add('hidden');
-            } else if (tab === 'cumul') {
-                dailyCard.classList.add('hidden');
-                cumulCard.classList.remove('hidden');
-                weatherCard.classList.add('hidden');
-            } else if (tab === 'weather') {
-                dailyCard.classList.add('hidden');
-                cumulCard.classList.add('hidden');
-                weatherCard.classList.remove('hidden');
-            }
+            document.getElementById('chart-card-daily').classList.toggle('hidden', tab !== 'all' && tab !== 'daily');
+            document.getElementById('chart-card-cumul').classList.toggle('hidden', tab !== 'all' && tab !== 'cumul');
+            document.getElementById('chart-card-weather').classList.toggle('hidden', tab !== 'all' && tab !== 'weather');
         }
     </script>
 </body>
