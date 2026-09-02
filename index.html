@@ -480,8 +480,28 @@
 
         function loadFromLocalStorage() {
             try {
-                const storedData = localStorage.getItem(STORAGE_KEY_PARCELLES);
-                const storedActiveId = localStorage.getItem(STORAGE_KEY_ACTIVE);
+                let storedData = localStorage.getItem(STORAGE_KEY_PARCELLES);
+                let storedActiveId = localStorage.getItem(STORAGE_KEY_ACTIVE);
+
+                // SCRIPT DE SAUVETAGE : Si la V3 est vide, on cherche dans les anciennes versions
+                if (!storedData) {
+                    const oldKeys = ['cercomodel_parcelles_data', 'cercomodel_parcelles_data_v2', 'cercomodel_data', 'parcelles'];
+                    for (let key of oldKeys) {
+                        storedData = localStorage.getItem(key);
+                        if (storedData) break;
+                    }
+                    
+                    const oldIdKeys = ['cercomodel_active_id', 'cercomodel_active_id_v2'];
+                    for (let key of oldIdKeys) {
+                        if (!storedActiveId) storedActiveId = localStorage.getItem(key);
+                    }
+
+                    // Si on a retrouvé les vieilles données, on les bascule immédiatement sur la V3
+                    if (storedData) {
+                        localStorage.setItem(STORAGE_KEY_PARCELLES, storedData);
+                        if (storedActiveId) localStorage.setItem(STORAGE_KEY_ACTIVE, storedActiveId);
+                    }
+                }
 
                 if (storedData) {
                     const parsed = JSON.parse(storedData);
