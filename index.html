@@ -23,6 +23,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Leaflet (Carte Interactive) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
@@ -45,10 +49,15 @@
         
         .tab-content { transition: opacity 0.2s ease-in-out; }
         
-        /* Focus doux pour les champs */
+        /* Focus doux pour les champs V3 */
+        .input-soft {
+            background-color: #f8fafc;
+            border-color: #e2e8f0;
+        }
         .input-soft:focus {
             box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
-            border-color: #10b981;
+            border-color: #34d399;
+            background-color: #ffffff;
         }
     </style>
 </head>
