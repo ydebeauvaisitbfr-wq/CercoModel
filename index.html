@@ -905,6 +905,97 @@
             if (e.target !== cityInput && e.target !== suggestionsList) suggestionsList.classList.add('hidden');
         });
 
+       function openMapModal() {
+            const modal = document.getElementById('map-modal');
+            modal.classList.remove('hidden');
+            
+            const currentLat = parseFloat(latInput.value) || 50.292;
+            const currentLon = parseFloat(lonInput.value) || 2.780;
+            const currentName = cityInput.value || "Position actuelle";
+
+            // Un petit délai est nécessaire pour que Leaflet calcule la taille de son conteneur dans la modale
+            setTimeout(() => {
+                if (!mapInstance) {
+                    mapInstance = L.map('map-container').setView([currentLat, currentLon], 10);
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        attribution: '&copy; OpenStreetMap contributors'
+                    }).addTo(mapInstance);
+
+                    mapInstance.on('click', handleMapClick);
+                } else {
+                    mapInstance.invalidateSize();
+                    mapInstance.setView([currentLat, currentLon], 10);
+                }
+
+                if (mapMarker) mapInstance.removeLayer(mapMarker);
+                mapMarker = L.marker([currentLat, currentLon]).addTo(mapInstance);
+                
+                pendingLocation = { lat: currentLat, lon: currentLon, name: currentName };
+                updateMapInfoText(currentName, currentLat, currentLon);
+                document.getElementById('btn-confirm-map').disabled = false;
+            }, 100);
+        }
+
+        function closeMapModal() {
+            document.getElementById('map-modal').classList.add('hidden');
+        }
+
+        async function handleMapClick(e) {
+            const lat = e.latlng.lat;
+            const lon = e.latlng.lng;
+
+            if (mapMarker) {
+                mapMarker.setLatLng(e.latlng);
+            } else {
+                mapMarker = L.marker(e.latlng).addTo(mapInstance);
+            }
+
+            const infoDiv = document.getElementById('map-selection-info');
+            infoDiv.innerHTML = '<i class="fa-solid fa-spinner fa-spin text-emerald-500 mr-2"></i> Recherche de la commune...';
+            document.getElementById('btn-confirm-map').disabled = true;
+
+            try {
+                // Géocodage inverse gratuit via Nominatim (OpenStreetMap)
+                const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=10`);
+                const data = await res.json();
+                
+                let placeName = "Lieu inconnu";
+                if (data && data.address) {
+                    placeName = data.address.city || data.address.town || data.address.village || data.address.municipality || data.address.county || "Coordonnées GPS";
+                    if(data.address.country) placeName += ` (${data.address.country})`;
+                }
+
+                pendingLocation = { lat: lat, lon: lon, name: placeName };
+                updateMapInfoText(placeName, lat, lon);
+                document.getElementById('btn-confirm-map').disabled = false;
+            } catch (err) {
+                console.error("Erreur géocodage inverse", err);
+                pendingLocation = { lat: lat, lon: lon, name: "Coordonnées GPS" };
+                updateMapInfoText("Position sélectionnée", lat, lon);
+                document.getElementById('btn-confirm-map').disabled = false;
+            }
+        }
+
+        function updateMapInfoText(name, lat, lon) {
+            document.getElementById('map-selection-info').innerHTML = `
+                <span class="flex items-center gap-2">
+                    <i class="fa-solid fa-location-dot text-emerald-500"></i>
+                    <strong>${name}</strong> 
+                    <span class="text-slate-400 font-normal">(${lat.toFixed(4)}, ${lon.toFixed(4)})</span>
+                </span>
+            `;
+        }
+
+        function confirmMapLocation() {
+            if (pendingLocation) {
+                cityInput.value = pendingLocation.name;
+                latInput.value = pendingLocation.lat;
+                lonInput.value = pendingLocation.lon;
+                handleInputChange(); // Met à jour l'objet parcelle
+                closeMapModal();
+            }
+        }
+
         document.getElementById('model-form').addEventListener('submit', async function(e) {
             e.preventDefault();
             hideError();
@@ -937,7 +1028,6 @@
             document.getElementById('results-content').classList.add('hidden');
             document.getElementById('loader').classList.remove('hidden');
             document.getElementById('loader').classList.add('flex');
-
             try {
                 const eightyFiveDaysAgo = new Date(today);
                 eightyFiveDaysAgo.setDate(today.getDate() - 85);
